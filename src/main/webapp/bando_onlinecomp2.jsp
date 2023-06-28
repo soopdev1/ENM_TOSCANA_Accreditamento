@@ -106,11 +106,7 @@
                     var ch4 = document.getElementsByName("ch4")[0].checked;
                     var ch5 = document.getElementsByName("ch5")[0].checked;
                     var ch6 = document.getElementsByName("ch6")[0].checked;
-                    var ch7 = document.getElementsByName("ch7")[0].checked;
-                    var regione = document.getElementById("regione").value.trim();
                     var iscrizione = document.getElementById("iscrizione").value.trim();
-                    var regione2 = document.getElementById("regione2").value.trim();
-                    var iscrizione2 = document.getElementById("iscrizione2").value.trim();
                     var aule = document.getElementById("aule").value.trim();
 
                     var ctrlAula1 = false;
@@ -193,143 +189,14 @@
                     var mailresponsabileAmm5 = document.getElementById("mailresponsabileAmm5").value.trim();
                     var telresponsabileAmm5 = document.getElementById("telresponsabileAmm5").value.trim();
 
-                    // REQUISITO 1
-
-                    var area = document.getElementById("area").value.trim();
-                    var periododa = document.getElementById("periododa").value.trim();
-                    var periodoa = document.getElementById("periodoa").value.trim();
-                    var committente = document.getElementById("committente").value.trim();
-                    var destinatari = document.getElementById("destinatari").value.trim();
-                    var attivita = document.getElementById("attivita").value.trim();
-                    //REQUISITO 2
-                    var area2 = document.getElementById("area2").value.trim();
-                    var periododa2 = document.getElementById("periododa2").value.trim();
-                    var periodoa2 = document.getElementById("periodoa2").value.trim();
-                    var committente2 = document.getElementById("committente2").value.trim();
-                    var destinatari2 = document.getElementById("destinatari2").value.trim();
-                    var attivita2 = document.getElementById("attivita2").value.trim();
-                    //REQUISITO 3
-                    var area3 = document.getElementById("area3").value.trim();
-                    var periododa3 = document.getElementById("periododa3").value.trim();
-                    var periodoa3 = document.getElementById("periodoa3").value.trim();
-                    var committente3 = document.getElementById("committente3").value.trim();
-                    var destinatari3 = document.getElementById("destinatari3").value.trim();
-                    var attivita3 = document.getElementById("attivita3").value.trim();
-                    //REQUISITO 4
-                    var area4 = document.getElementById("area4").value.trim();
-                    var periododa4 = document.getElementById("periododa4").value.trim();
-                    var periodoa4 = document.getElementById("periodoa4").value.trim();
-                    var committente4 = document.getElementById("committente4").value.trim();
-                    var destinatari4 = document.getElementById("destinatari4").value.trim();
-                    var attivita4 = document.getElementById("attivita4").value.trim();
-                    // REQQUISITO 5
-                    var area5 = document.getElementById("area5").value.trim();
-                    var periododa5 = document.getElementById("periododa5").value.trim();
-                    var periodoa5 = document.getElementById("periodoa5").value.trim();
-                    var committente5 = document.getElementById("committente5").value.trim();
-                    var destinatari5 = document.getElementById("destinatari5").value.trim();
-                    var attivita5 = document.getElementById("attivita5").value.trim();
-                    // PUNTO F)
-                    var consorzioSelezioneA = document.getElementById("consorzioSelezioneA").checked;
-                    var consorzioSelezioneB = document.getElementById("consorzioSelezioneB").checked;
-                    var consorzio = document.getElementById("consorzio").value.trim();
-
-                    if (consorzioSelezioneA === false && consorzioSelezioneB === false) {
+                    if (ch1 === false && ch2 === false && ch3 === false && ch4 === false && ch5 === false) {
                         output = "1";
-                        msg += "<span style='color:red;'>Selezionare una delle due possibili scelte del 'PUNTO 3)'</span><br/>";
+                        msg += "<span style='color:red;'>E' obbligatorio selezionare almeno una delle possibili voci del 'Punto 1'</span><br/>";
                     }
-                    if (consorzioSelezioneB === true && (consorzio === null || consorzio === "")) {
+                    
+                    if (ch6 === true && iscrizione === "") {
                         output = "1";
-                        msg += "<span style='color:red;'>Hai selezionato di aderire al Consorzio, indicare la denominazione.</span><br/>";
-                    }
-                    if (consorzioSelezioneA === true) {
-                        $('#consorzio').val('');
-                    }
-                    if (area === "" || periododa === "" || periodoa === "" || committente === "" || destinatari === "" || attivita === "") {
-                        output = "1";
-                        msg += "<span style='color:red;'> E' obbligatorio compilare tutti i campi della sezione <b>'Requisito 1'</b> ad eccezione del campo 'Fonte di finanziamento (se pertinente)'</span><br/>";
-                    }
-
-                    if (area2 !== "" || periododa2 !== "" || periodoa2 !== "" || committente2 !== "" || destinatari2 !== "" || attivita2 !== "") {
-                        if (area2 === "" || periododa2 === "" || periodoa2 === "" || committente2 === "" || destinatari2 === "" || attivita2 === "") {
-                            output = "1";
-                            msg += "E' obbligatorio compilare i campi della sezione <b>'Requisito 2'</b> qualora solo uno di essi sia valorizzato:<span style='color:red;'><br> - Area di attivit&#224;<br> - Descrizione delle attivit&#224; realizzate <br> - Committente <br> - Destinatari <br> - Periodo (dal gg/mm/aa al gg/mm/aa )</span><br/>";
-                        }
-                    }
-                    if (area3 !== "" || periododa3 !== "" || periodoa3 !== "" || committente3 !== "" || destinatari3 !== "" || attivita3 !== "") {
-                        if (area3 === "" || periododa3 === "" || periodoa3 === "" || committente3 === "" || destinatari3 === "" || attivita3 === "") {
-                            output = "1";
-                            msg += "E' obbligatorio compilare i campi della sezione <b>'Requisito 3'</b> qualora solo uno di essi sia valorizzato:<span style='color:red;'><br> - Area di attivit&#224;<br> - Descrizione delle attivit&#224; realizzate <br> - Committente <br> - Destinatari <br> - Periodo (dal gg/mm/aa al gg/mm/aa )</span><br/>";
-                        }
-                    }
-                    if (area4 !== "" || periododa4 !== "" || periodoa4 !== "" || committente4 !== "" || destinatari4 !== "" || attivita4 !== "") {
-                        if (area4 === "" || periododa4 === "" || periodoa4 === "" || committente4 === "" || destinatari4 === "" || attivita4 === "") {
-                            output = "1";
-                            msg += "E' obbligatorio compilare i campi della sezione <b>'Requisito 4'</b> qualora solo uno di essi sia valorizzato:<span style='color:red;'><br> - Area di attivit&#224;<br> - Descrizione delle attivit&#224; realizzate <br> - Committente <br> - Destinatari <br> - Periodo (dal gg/mm/aa al gg/mm/aa )</span><br/>";
-                        }
-                    }
-                    if (area5 !== "" || periododa5 !== "" || periodoa5 !== "" || committente5 !== "" || destinatari5 !== "" || attivita5 !== "") {
-                        if (area5 === "" || periododa5 === "" || periodoa5 === "" || committente5 === "" || destinatari5 === "" || attivita5 === "") {
-                            output = "1";
-                            msg += "E' obbligatorio compilare i campi della sezione <b>'Requisito 5'</b> qualora solo uno di essi sia valorizzato:<span style='color:red;'><br> - Area di attivit&#224;<br> - Descrizione delle attivit&#224; realizzate <br> - Committente <br> - Destinatari <br> - Periodo (dal gg/mm/aa al gg/mm/aa )</span><br/>";
-                        }
-                    }
-                    if (ch1 === false && ch2 === false && ch3 === false && ch4 === false) {
-                        output = "1";
-                        msg += "<span style='color:red;'>E' obbligatorio selezionare almeno una delle possibili voci del vincolo 'Punto 1'</span><br/>";
-                    }
-
-                    if (ch4 === true && ch5 === false && ch6 === false && ch7 === false) {
-                        output = "1";
-                        msg += "<span style='color:red;'>E' obbligatorio selezionare almeno una delle possibili voci del vincolo 'Soggetto privato con i seguenti requisiti:'</span><br/>";
-                    }
-                    if (ch7 === true && ch4 === false) {
-                        output = "1";
-                        msg += "<span style='color:red;'>Hai selezionato 'Previsione nell’oggetto sociale e/o nel codice ATECO dell’attivit&#224; di formazione o consulenza per la creazione, gestione, accompagnamento all’attivit&#224; d’impresa'.<br>E' obbligatorio selezionare 'Soggetto privato con i seguenti requisiti:'</span><br/>";
-                    }
-                    if (ch4 === true && ch5 === true && (regione === "" || iscrizione === "")) {
-                        output = "1";
-                        msg += "<span style='color:red;'>E' obbligatorio copilare i campi che seguono 'presso la Regione' e 'n. di iscrizione'</span><br/>";
-                    }
-
-                    if (regione !== ""
-                            && ch4 === false) {
-                        output = "1";
-                        msg += "<span style='color:red;'>Hai compilato il campo 'presso la Regione', devi selezionare la voce: 'Soggetto privato con i seguenti requisiti:'</span><br/>";
-                    }
-
-                    if (regione !== ""
-                            && ch5 === false) {
-                        output = "1";
-                        msg += "<span style='color:red;'>Hai compilato il campo 'presso la Regione', devi selezionare la voce: 'Accreditato per la formazione' </span><br/>";
-                    }
-                    if (iscrizione !== "" && ch4 === false) {
-                        output = "1";
-                        msg += "<span style='color:red;'>Hai compilato il campo 'n. di iscrizione', devi selezionare la voce: 'Soggetto privato con i seguenti requisiti:' </span><br/>";
-                    }
-                    if (iscrizione !== "" && ch5 === false) {
-                        output = "1";
-                        msg += "<span style='color:red;'>Hai compilato il campo 'n. di iscrizione', devi selezionare la voce: 'Accreditato per la formazione' </span><br/>";
-                    }
-                    if (regione2 !== "" && ch4 === false) {
-                        output = "1";
-                        msg += "<span style='color:red;'>Hai compilato il campo 'presso la Regione', devi selezionare la voce: 'Soggetto privato con i seguenti requisiti:' </span><br/>";
-                    }
-                    if (regione2 !== "" && ch6 === false) {
-                        output = "1";
-                        msg += "<span style='color:red;'>Hai compilato il campo 'presso la Regione', devi selezionare la voce: 'Accreditato per i servizi' </span><br/>";
-                    }
-                    if (iscrizione2 !== "" && ch4 === false) {
-                        output = "1";
-                        msg += "<span style='color:red;'>Hai compilato il campo 'n. di iscrizione', devi selezionare la voce: 'Soggetto privato con i seguenti requisiti:' </span><br/>";
-                    }
-                    if (iscrizione2 !== "" && ch6 === false) {
-                        output = "1";
-                        msg += "<span style='color:red;'>Hai compilato il campo 'n. di iscrizione', devi selezionare la voce: 'Accreditato per i servizi' </span><br/>";
-                    }
-                    if (ch4 === true && ch6 === true && (regione2 === "" || iscrizione2 === "")) {
-                        output = "1";
-                        msg += "<span style='color:red;'>E' obbligatorio copilare i campi che seguono 'presso la Regione' e 'n. di iscrizione'</span><br/>";
+                        msg += "<span style='color:red;'>E' obbligatorio copilare il campo 'n. di iscrizione'</span><br/>";
                     }
                     //PUNTO 4
 
@@ -930,7 +797,6 @@
                     %>
                     <br>
                     <div class="modal fade" role="dialog" >
-
                         <button type="button" class="btn btn-info btn-lg" data-toggle="modal" id="myModal4but" data-target="#myModal4"></button>
                         <script>
                             $(document).ready(function () {
@@ -993,7 +859,7 @@
                                                     <label for="ch1">
                                                         <span></span>
                                                         <span class="check"></span>
-                                                        <span class="box"></span> Ente/istituzione pubblica.
+                                                        <span class="box"></span> Soggetto Singolo
                                                     </label>
                                                 </div>
                                                 <div class="md-checkbox">
@@ -1001,7 +867,7 @@
                                                     <label for="ch2">
                                                         <span></span>
                                                         <span class="check"></span>
-                                                        <span class="box"></span> Associazione datoriale.
+                                                        <span class="box"></span> Costituenda ATI/ATS o costituenda rete di imprese.
                                                     </label>
                                                 </div>
                                                 <div class="md-checkbox">
@@ -1009,7 +875,7 @@
                                                     <label for="ch3">
                                                         <span></span>
                                                         <span class="check"></span>
-                                                        <span class="box"></span> Ordine professionale.
+                                                        <span class="box"></span> Costituita ATI/ATS che preveda mandato di rappresentanza specifico al capofila.
                                                     </label>
                                                 </div>
                                                 <div class="md-checkbox">
@@ -1017,70 +883,30 @@
                                                     <label for="ch4">
                                                         <span></span>
                                                         <span class="check"></span>
-                                                        <span class="box"></span> Soggetto privato con i seguenti requisiti:
+                                                        <span class="box"></span> Costituita rete contratto dotata di organo comune con potere di rappresentanza.
                                                     </label>
                                                 </div>
-                                                <ul>
-                                                    <div class="md-checkbox">
-                                                        <input type="checkbox" name="ch5" id="ch5" class="md-checkbox" /> 
-                                                        <label for="ch5">
-                                                            <span></span>
-                                                            <span class="check"></span>
-                                                            <span class="box"></span>
-                                                        </label>
-                                                        Accreditato per la formazione professionale presso la Regione 
-                                                        <select id="regione" name="regione" class="form-control select2" data-placeholder="..." >
-                                                            <option value="">...</option>
-                                                            <%for (int p = 0; p < reg.size(); p++) {%>
-                                                            <option value="<%=reg.get(p).getCodiceprovincia()%>"><%=reg.get(p).getProvincia().toUpperCase()%></option>
-                                                            <%}%>
-                                                        </select>
-                                                        <script type="text/javascript">
-                                                            $('#' + 'regione').select2({
-                                                                allowClear: true,
-                                                                theme: "classic",
-                                                                language: 'it'
-                                                            });
-                                                        </script>
-                                                        n. di iscrizione 
-                                                        <input class="form-control form-control-static uppercase" maxlength="20"
-                                                               id="iscrizione" name="iscrizione" style="width: 200px" placeholder="...." type="text"/>
-                                                    </div><br/>
-                                                    <div class="md-checkbox">
-                                                        <input type="checkbox" name="ch6" id="ch6" class="md-checkbox" /> 
-                                                        <label for="ch6">
-                                                            <span></span>
-                                                            <span class="check"></span>
-                                                            <span class="box"></span> 
-                                                        </label>
-                                                        Accreditato per i servizi per il lavoro presso la Regione 
-                                                        <select id="regione2" name="regione2" class="form-control select2" data-placeholder="..." >
-                                                            <option value="">...</option>
-                                                            <%for (int p = 0; p < reg.size(); p++) {%>
-                                                            <option value="<%=reg.get(p).getCodiceprovincia()%>"><%=reg.get(p).getProvincia().toUpperCase()%></option>
-                                                            <%}%>
-                                                        </select>
-                                                        <script type="text/javascript">
-                                                            $('#' + 'regione2').select2({
-                                                                allowClear: true,
-                                                                theme: "classic",
-                                                                language: 'it'
-                                                            });
-                                                        </script>
-                                                        n. di iscrizione
-                                                        <input class="form-control form-control-static  uppercase" id="iscrizione2" name="iscrizione2" style="width: 200px"  maxlength="20"
-                                                               placeholder="...." type="text" />
-                                                    </div><br/>
-                                                    <div class="md-checkbox">
-                                                        <input type="checkbox" name="ch7" id="ch7" class="md-checkbox" /> 
-                                                        <label for="ch7">
-                                                            <span></span>
-                                                            <span class="check"></span>
-                                                            <span class="box"></span> 
-                                                        </label>
-                                                        Previsione nell’oggetto sociale e/o nel codice ATECO dell’attivit&#224; di formazione o consulenza per la creazione, gestione, accompagnamento all’attivit&#224; d’impresa;
-                                                    </div>
-                                                </ul>
+                                                <div class="md-checkbox">
+                                                    <input type="checkbox" name="ch5" id="ch5" class="md-checkbox" /> 
+                                                    <label for="ch5">
+                                                        <span></span>
+                                                        <span class="check"></span>
+                                                        <span class="box"></span> Consorzio/Fondazione/Rete soggetto (Rete di imprese dotata di organo comune e di soggettività giuridica).
+                                                    </label>
+                                                </div>
+                                                <br/>
+                                                Con il seguente requisito:<br/>
+                                                <div class="md-checkbox">
+                                                    <input type="checkbox" name="ch6" id="ch6" class="md-checkbox" /> 
+                                                    <label for="ch6">
+                                                        <span></span>
+                                                        <span class="check"></span>
+                                                        <span class="box"></span>
+                                                    </label>
+                                                    Agenzia Formativa accreditata presso la Regione Toscana ai sensi della Delibera n.1407/2016. N. di iscrizione 
+                                                    <input class="form-control form-control-static uppercase" maxlength="20"
+                                                           id="iscrizione" name="iscrizione" style="width: 200px" placeholder="...." type="text" readonly="readonly"/>
+                                                </div>                                                    
                                             </ul>
                                             <script type="text/javascript">
 
@@ -1090,25 +916,6 @@
                                                         $('#ch3').prop('checked', false);
                                                         $('#ch4').prop('checked', false);
                                                         $('#ch5').prop('checked', false);
-                                                        $('#ch6').prop('checked', false);
-                                                        $('#ch7').prop('checked', false);
-                                                        /////////////////////////////////
-                                                        $('#ch5').attr("disabled", true);
-                                                        $('#ch6').attr("disabled", true);
-                                                        $('#ch7').attr("disabled", true);
-                                                        disable_sel2('regione', 'formModelloA');
-                                                        disable_sel2('regione2', 'formModelloA');
-                                                        $('#iscrizione').prop('readonly', true);
-                                                        $('#iscrizione2').prop('readonly', true);
-                                                    } else {
-                                                        /////////////////////////////////
-                                                        $('#ch5').attr("disabled", false);
-                                                        $('#ch6').attr("disabled", false);
-                                                        $('#ch7').attr("disabled", false);
-                                                        enable_sel2('regione', 'formModelloA');
-                                                        enable_sel2('regione2', 'formModelloA');
-                                                        $('#iscrizione').prop('readonly', false);
-                                                        $('#iscrizione2').prop('readonly', false);
                                                     }
                                                 });
 
@@ -1118,25 +925,6 @@
                                                         $('#ch3').prop('checked', false);
                                                         $('#ch4').prop('checked', false);
                                                         $('#ch5').prop('checked', false);
-                                                        $('#ch6').prop('checked', false);
-                                                        $('#ch7').prop('checked', false);
-                                                        /////////////////////////////////
-                                                        $('#ch5').attr("disabled", true);
-                                                        $('#ch6').attr("disabled", true);
-                                                        $('#ch7').attr("disabled", true);
-                                                        disable_sel2('regione', 'formModelloA');
-                                                        disable_sel2('regione2', 'formModelloA');
-                                                        $('#iscrizione').prop('readonly', true);
-                                                        $('#iscrizione2').prop('readonly', true);
-                                                    } else {
-                                                        /////////////////////////////////
-                                                        $('#ch5').attr("disabled", false);
-                                                        $('#ch6').attr("disabled", false);
-                                                        $('#ch7').attr("disabled", false);
-                                                        enable_sel2('regione', 'formModelloA');
-                                                        enable_sel2('regione2', 'formModelloA');
-                                                        $('#iscrizione').prop('readonly', false);
-                                                        $('#iscrizione2').prop('readonly', false);
                                                     }
                                                 });
 
@@ -1146,25 +934,6 @@
                                                         $('#ch2').prop('checked', false);
                                                         $('#ch4').prop('checked', false);
                                                         $('#ch5').prop('checked', false);
-                                                        $('#ch6').prop('checked', false);
-                                                        $('#ch7').prop('checked', false);
-                                                        /////////////////////////////////
-                                                        $('#ch5').attr("disabled", true);
-                                                        $('#ch6').attr("disabled", true);
-                                                        $('#ch7').attr("disabled", true);
-                                                        disable_sel2('regione', 'formModelloA');
-                                                        disable_sel2('regione2', 'formModelloA');
-                                                        $('#iscrizione').prop('readonly', true);
-                                                        $('#iscrizione2').prop('readonly', true);
-                                                    } else {
-                                                        /////////////////////////////////
-                                                        $('#ch5').attr("disabled", false);
-                                                        $('#ch6').attr("disabled", false);
-                                                        $('#ch7').attr("disabled", false);
-                                                        enable_sel2('regione', 'formModelloA');
-                                                        enable_sel2('regione2', 'formModelloA');
-                                                        $('#iscrizione').prop('readonly', false);
-                                                        $('#iscrizione2').prop('readonly', false);
                                                     }
                                                 });
 
@@ -1174,56 +943,24 @@
                                                         $('#ch2').prop('checked', false);
                                                         $('#ch3').prop('checked', false);
                                                         $('#ch5').prop('checked', false);
-                                                        $('#ch6').prop('checked', false);
-                                                        /////////////////////////////////
-                                                        $('#ch5').attr("disabled", false);
-                                                        $('#ch6').attr("disabled", false);
-                                                        $('#ch7').prop('checked', true);
-                                                        $('#ch7').attr('disabled', false);
-                                                        $('#ch7').click(function () {
-                                                            return false;
-                                                        });
-
-                                                        enable_sel2('regione', 'formModelloA');
-                                                        enable_sel2('regione2', 'formModelloA');
-                                                        $('#iscrizione').prop('readonly', false);
-                                                        $('#iscrizione2').prop('readonly', false);
-                                                    } else {
-                                                        $('#ch5').attr("disabled", false);
-                                                        $('#ch6').attr("disabled", false);
-                                                        $('#ch7').attr("disabled", false);
-                                                        $('#ch7').prop("onclick", null);
-                                                        /////////////////////////////
-                                                        $('#ch5').prop('checked', false);
-                                                        $('#regione').val($('#regione option:first-child').val()).trigger('change');
-                                                        $('#iscrizione').val('');
-                                                        $('#ch6').prop('checked', false);
-                                                        $('#regione2').val($('#regione2 option:first-child').val()).trigger('change');
-                                                        $('#iscrizione2').val('');
-                                                        $('#ch7').prop('checked', false);
-                                                        disable_sel2('regione', 'formModelloA');
-                                                        disable_sel2('regione2', 'formModelloA');
-                                                        $('#iscrizione').prop('readonly', true);
-                                                        $('#iscrizione2').prop('readonly', true);
                                                     }
                                                 });
 
-                                                $('#ch5, #ch6, #ch7').on('change', function () {
+                                                $('#ch5').on('change', function () {
                                                     if (this.checked) {
-                                                        $('#ch4').prop('checked', true);
-                                                    } else {
-                                                        if (this.id === 'ch5') {
-                                                            $('#regione').val($('#regione option:first-child').val()).trigger('change');
-                                                            $('#iscrizione').val('');
-                                                        } else if (this.id === 'ch6') {
-                                                            $('#regione2').val($('#regione2 option:first-child').val()).trigger('change');
-                                                            $('#iscrizione2').val('');
-                                                        }
-                                                    }
-                                                    if ($("#ch5").is(':checked') || $("#ch6").is(':checked') || $("#ch7").is(':checked')) {
-
-                                                    } else {
+                                                        $('#ch1').prop('checked', false);
+                                                        $('#ch2').prop('checked', false);
+                                                        $('#ch3').prop('checked', false);
                                                         $('#ch4').prop('checked', false);
+                                                    }
+                                                });
+
+                                                $('#ch6').on('change', function () {
+                                                    $('#iscrizione').val("");
+                                                    if (this.checked) {
+                                                        $('#iscrizione').prop('readonly', false);
+                                                    } else {
+                                                        $('#iscrizione').prop('readonly', true);
                                                     }
                                                 });
 
@@ -1263,7 +1000,7 @@
                                                     }
                                                 }
                                             </script>
-                                            &nbsp;aula/e da destinare alle attivit&#224; formativa oggetto di affidamento dell’Avviso in parola
+                                            &nbsp;aula/e da destinare alle attivit&#224; formativa oggetto di affidamento dell’Avviso in parola - Qualora, tra le sedi sottoindicate, ci siano locali non registrati ai sensi della DGR 1407/2016 e ss.mm.ii., è necessario redigere l’Allegato F.
                                             <br>
                                         </div>
                                         <div class="clearfix"></div>
@@ -1465,7 +1202,7 @@
                                                                 <div class="form-group">
                                                                     <div class="col-md-6">
                                                                         <span class="help-block">
-                                                                            Estremi -Mq aula<span class="font-red popovers" data-trigger="hover" 
+                                                                            Estremi - Mq aula<span class="font-red popovers" data-trigger="hover" 
                                                                                                   data-container="body" data-placement="bottom"
                                                                                                   data-content="CAMPO OBBLIGATORIO"> &#42;</span>
                                                                         </span>
@@ -1677,184 +1414,15 @@
                                             <thead>
                                                 <tr>
                                                     <th colspan="2" style="text-align: center; background-color: silver;">
-                                                        <h4><b>Compilazione requisiti d'esperienza nell'ultimo biennio</b> (Inserire <u>massimo</u> 5 esperienze)</h4>
-                                                    </th>
-                                                </tr>
-                                            </thead>
-                                        </table>
-                                        <hr>
-                                        <table style="width: 100%;">
-                                            <%
-                                                String indicet = "";
-                                                for (int i = 1; i < 6; i++) {
-                                                    if (i > 1) {
-                                                        indicet = String.valueOf(i);
-                                                    }
-                                            %>
-                                            <tr style="border-bottom: 3px;">
-                                                <th colspan="4" style="text-align: center;" ><span class="help-block bordered">
-                                                        Requisito <%=i%> 
-                                                    </span> <hr>
-                                                </th>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class="row">
-                                                        <div class="col-md-12">
-                                                            <div class="col-md-4">
-                                                                <div class="form-group">
-                                                                    <div class="col-md-12">
-                                                                        <span class="help-block">
-                                                                            Area di attivit&#224;<span class="font-red popovers" data-trigger="hover" 
-                                                                                                       data-container="body" data-placement="bottom"
-                                                                                                       data-content="CAMPO OBBLIGATORIO"> &#42;</span>
-                                                                        </span>
-                                                                        <select id="area<%=indicet%>" name="area<%=indicet%>" class="form-control select2" data-placeholder="..." style="width: 100%">
-                                                                            <option value="">...</option>
-                                                                            <%for (int p = 0; p < aree.size(); p++) {%>
-                                                                            <option value="<%=aree.get(p).getCodice()%>"><%=aree.get(p).getDescrizione().toUpperCase()%></option>
-                                                                            <%}%>
-                                                                        </select>
-                                                                        <script type="text/javascript">
-                                                                            $('#area' + '<%=indicet%>').select2({
-                                                                                allowClear: true,
-                                                                                theme: "classic",
-                                                                                language: 'it'
-                                                                            });
-                                                                        </script>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-4">
-                                                                <div class="form-group">
-                                                                    <div class="col-md-12">
-                                                                        <span class="help-block">
-                                                                            Descrizione delle attivit&#224; realizzate<span class="font-red popovers" data-trigger="hover" 
-                                                                                                                            data-container="body" data-placement="bottom"
-                                                                                                                            data-content="CAMPO OBBLIGATORIO"> &#42;</span>
-                                                                        </span>
-                                                                        <input type="text" class="form-control uppercase" name="attivita<%=indicet%>" placeholder="..." id="attivita<%=indicet%>" maxlength="50" />
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-4">
-                                                                <div class="form-group">
-                                                                    <div class="col-md-12">
-                                                                        <span class="help-block">
-                                                                            Destinatari<span class="font-red popovers" data-trigger="hover" 
-                                                                                             data-container="body" data-placement="bottom"
-                                                                                             data-content="CAMPO OBBLIGATORIO"> &#42;</span>
-                                                                        </span>
-                                                                        <input type="text" class="form-control uppercase" name="destinatari<%=indicet%>" placeholder="..." id="destinatari<%=indicet%>" maxlength="50" />
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-12"> 
-                                                            <div class="col-md-4">
-                                                                <div class="form-group">
-                                                                    <div class="col-md-12">
-                                                                        <span class="help-block">
-                                                                            Fonte di finanziamento (se pertinente)
-                                                                        </span>
-                                                                        <select id="finanziamento<%=indicet%>" name="finanziamento<%=indicet%>" class="form-control select2" data-placeholder="..." style="width: 100%">
-                                                                            <option value="">...</option>
-                                                                            <%for (int p = 0; p < fonti.size(); p++) {%>
-                                                                            <option value="<%=fonti.get(p).getCodice()%>"><%=fonti.get(p).getDescrizione().toUpperCase()%></option>
-                                                                            <%}%>
-                                                                        </select>
-                                                                        <script type="text/javascript">
-                                                                            $('#' + 'finanziamento' + '<%=indicet%>').select2({
-                                                                                allowClear: true,
-                                                                                theme: "classic",
-                                                                                language: 'it'
-                                                                            });
-                                                                        </script>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-4">
-                                                                <div class="form-group">
-                                                                    <div class="col-md-12">
-                                                                        <span class="help-block">
-                                                                            Committente<span class="font-red popovers" data-trigger="hover" 
-                                                                                             data-container="body" data-placement="bottom"
-                                                                                             data-content="CAMPO OBBLIGATORIO"> &#42;</span>
-                                                                        </span>
-                                                                        <input type="text" class="form-control uppercase" name="committente<%=indicet%>" placeholder="..." id="committente<%=indicet%>" maxlength="50" />
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-md-4">
-                                                                <div class="form-group">
-                                                                    <div class="col-md-12">
-                                                                        <span class="help-block">
-                                                                            Periodo (dal gg/mm/aa al gg/mm/aa)<span class="font-red popovers" data-trigger="hover" 
-                                                                                                                    data-container="body" data-placement="bottom"
-                                                                                                                    data-content="CAMPO OBBLIGATORIO"> &#42;</span>
-                                                                        </span>
-                                                                        <div class="row">
-                                                                            <div class="col-md-6">
-                                                                                <input class="form-control form-control-inline date-picker_r"
-                                                                                       size="16" type="text" id="periododa<%=indicet%>" name="periododa<%=indicet%>"
-                                                                                       onchange="return setperiodo(this.id);"/>
-                                                                            </div>
-                                                                            <div class="col-md-6">
-                                                                                <input class="form-control form-control-inline"
-                                                                                       size="16" type="text" id="periodoa<%=indicet%>" name="periodoa<%=indicet%>"/>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-
-                                            <%}%>
-                                        </table>
-                                        <div class="clearfix"></div>
-                                        <hr>
-                                        <table style="width: 100%;">
-                                            <thead>
-                                                <tr>
-                                                    <th colspan="2" style="text-align: center; background-color: silver;">
                                                         <h4><b>Compilazione requisiti d'esperienza</b></h4>
                                                     </th>
                                                 </tr>
                                             </thead>
                                         </table>
-
                                         <div class="row">
                                             <br/>
                                             <div class="col-md-12 form-inline">
-                                                <b>PUNTO 3)</b> In caso di appartenenza a consorzio (non applicabile per soggetti pubblici):<span class="font-red popovers" data-trigger="hover" 
-                                                                                                                                                  data-container="body" data-placement="bottom"
-                                                                                                                                                  data-content="CAMPO OBBLIGATORIO"> &#42;</span> <br>
-                                                <br>
-                                                <ul>
-                                                    <label class="container3 form-inline"> di non aderire ad alcun consorzio;
-                                                        <input type="radio" id="consorzioSelezioneA" name="consorzioSelezione" value="A">
-                                                        <span class="checkmark3"></span>
-                                                    </label>
-                                                    <label class="container3 form-inline"> 
-                                                        di aderire al Consorzio (indicare la denominazione e tipologia)
-                                                        <input type="radio" id="consorzioSelezioneB" name="consorzioSelezione" value="B">
-                                                        <span class="checkmark3"></span>
-                                                    </label>
-                                                    <input type="text" class="form-control uppercase" name="consorzio" placeholder="..." id="consorzio" style="width: 50%;" maxlength="100"/>
-                                                </ul>
-                                                <script type="text/javascript">
-                                                    $('input[type=radio][name=consorzioSelezione]').change(function () {
-                                                        if (this.value === 'A') {
-                                                            $('#consorzio').val('');
-                                                        }
-                                                    });
-                                                </script>
-                                                <br/>
-                                                <b>PUNTO 4)</b>
+                                                <b>PUNTO 3)</b>
 
                                                 <div class="row col-md-12">
                                                     che la PEC ove potranno essere inviate le comunicazioni relative al presente procedimento, 
@@ -1905,7 +1473,7 @@
                                                 <hr>
                                             </div>
                                             <div class="col-md-12 form-inline">
-                                                <b>PUNTO 5)</b> Saranno allegati 
+                                                <b>PUNTO 4)</b> Saranno allegati 
                                                 <select id="numeroDocenti" name="numeroDocenti" class="form-control select2" data-placeholder="...">
                                                     <option value="1">1</option>
                                                     <option value="2">2</option>
@@ -1930,7 +1498,7 @@
                                                 <hr>
                                             </div>
                                             <div class="col-md-12 form-inline">
-                                                <b>PUNTO 6)</b> Consenso al trattamento dei dati:
+                                                <b>PUNTO 5)</b> Consenso al trattamento dei dati:
                                             </div>
                                             <div class="col-md-12 form-inline">
                                                 <br/>
@@ -1941,7 +1509,7 @@
                                                     <label for="privacy1">
                                                         <span></span>
                                                         <span class="check"></span>
-                                                        <span class="box"></span> Autorizzo, ai sensi dell’art. 13 del Regolamento (UE) 2016/679, al trattamento dei propri dati, anche personali, per l'invio di newsletter ed eventi organizzati dall'Ente Nazionale Per il Microcredito.
+                                                        <span class="box"></span> Autorizzo, ai sensi dell’art. 13 del Regolamento (UE) 2016/679, al trattamento dei propri dati, anche personali, per l’invio di newsletter ed eventi organizzati dall’Ente Nazionale Per il Microcredito.
                                                     </label>
                                                 </div>
                                             </div>
@@ -1952,7 +1520,7 @@
                                                     <label for="privacy2">
                                                         <span></span>
                                                         <span class="check"></span>
-                                                        <span class="box"></span> Autorizzo l'analisi delle mie preferenze e degli interessi desunti, ad esempio, dai click online su articoli/sezioni del sito web dell'Ente Nazionale per il Microcredito per l'invio di comunicazioni personalizzate e per effettuare azioni mirate di business intelligence.
+                                                        <span class="box"></span> Autorizzo l'analisi delle mie preferenze e degli interessi desunti, ad esempio, dai click online su articoli/sezioni del sito web dell’Ente Nazionale per il Microcredito per l’invio di comunicazioni personalizzate e per effettuare azioni mirate di business intelligence.
                                                     </label>
                                                 </div>
                                             </div>

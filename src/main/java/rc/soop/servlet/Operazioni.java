@@ -584,24 +584,22 @@ public class Operazioni extends HttpServlet {
 
 //            File filedainviare = ActionB.creaZip_Convenzione(username, protocollo, ragsoc);
             List<FileDownload> listafiledainviare = ActionB.lista_file_Convenzione(username, protocollo, ragsoc);
-            
+
             if (Constant.test
                     && username.toLowerCase().startsWith("lmarin")) { //RIMUOVERE
                 to[0] = "raffaele.cosco@faultless.it";
                 cc[0] = "raffaele.cosco@faultless.it";
             }
-                        
+
 //            boolean mailok = sendMail(
 //                    Constant.nomevisual, to, cc, text,
 //                    Constant.nomevisual + " - Invio convenzione da parte del Soggetto Attuatore: " + ragsoc,
 //                    filedainviare);
-
             boolean mailok = sendMailListAttach(
                     Constant.nomevisual, to, cc, text,
                     Constant.nomevisual + " - Invio convenzione da parte del Soggetto Attuatore: " + ragsoc,
                     listafiledainviare);
-            
-            
+
             if (mailok) {
                 if (settaInvioEmailROMA(username)) {
                     response.sendRedirect("bando_conv.jsp?esito=ok&userdoc=" + username);
@@ -783,19 +781,14 @@ public class Operazioni extends HttpServlet {
     public void salva_allegato_a(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String username = getRequestValue(request, "username");
 
-        String enteistituzionepubblica = getRequestCheckbox(request, "ch1");
-        String associazione = getRequestCheckbox(request, "ch2");
-        String ordineprofessionale = getRequestCheckbox(request, "ch3");
-        String soggettoprivato = getRequestCheckbox(request, "ch4");
+        String soggettosingolo = getRequestCheckbox(request, "ch1");
+        String costituenda = getRequestCheckbox(request, "ch2");
+        String costituita = getRequestCheckbox(request, "ch3");
+        String rete = getRequestCheckbox(request, "ch4");
+        String consorzio = getRequestCheckbox(request, "ch5");
 
-        String formazione = getRequestCheckbox(request, "ch5");
-        String regione1 = getRequestValue(request, "regione");
-        String iscrizione1 = utf8(getRequestValue(request, "iscrizione"));
-        String servizi = getRequestCheckbox(request, "ch6");
-        String regione2 = getRequestValue(request, "regione2");
-        String iscrizione2 = utf8(getRequestValue(request, "iscrizione2"));
-        String ateco = getRequestCheckbox(request, "ch7");
-
+        String accreditata = getRequestCheckbox(request, "ch6");
+        String iscrizione = utf8(getRequestValue(request, "iscrizione"));
         String numaule = getRequestValue(request, "aule");
 
         String indirizzo1 = utf8(getRequestValue(request, "indirizzo"));
@@ -870,74 +863,6 @@ public class Operazioni extends HttpServlet {
         String mailamministrativo5 = utf8(getRequestValue(request, "mailresponsabileAmm5"));
         String telamministrativo5 = utf8(getRequestValue(request, "telresponsabileAmm5"));
 
-        String area = getRequestValue(request, "area");
-        String attivita = utf8(getRequestValue(request, "attivita"));
-        String destinatari = utf8(getRequestValue(request, "destinatari"));
-        String finanziamento = utf8(getRequestValue(request, "finanziamento"));
-        String committente = utf8(getRequestValue(request, "committente"));
-
-        String periodo = "";
-        String periododa = utf8(getRequestValue(request, "periododa"));
-        String periodoa = utf8(getRequestValue(request, "periodoa"));
-        if (!periododa.equals("") && !periodoa.equals("")) {
-            periodo = periododa + " - " + periodoa;
-        }
-
-        String area2 = getRequestValue(request, "area2");
-        String attivita2 = utf8(getRequestValue(request, "attivita2"));
-        String destinatari2 = utf8(getRequestValue(request, "destinatari2"));
-        String finanziamento2 = utf8(getRequestValue(request, "finanziamento2"));
-        String committente2 = utf8(getRequestValue(request, "committente2"));
-        String periodo2 = "";
-        String periododa2 = utf8(getRequestValue(request, "periododa2"));
-        String periodoa2 = utf8(getRequestValue(request, "periodoa2"));
-        if (!periododa2.equals("") && !periodoa2.equals("")) {
-            periodo2 = periododa2 + " - " + periodoa2;
-        }
-        String area3 = getRequestValue(request, "area3");
-        String attivita3 = utf8(getRequestValue(request, "attivita3"));
-        String destinatari3 = utf8(getRequestValue(request, "destinatari3"));
-        String finanziamento3 = utf8(getRequestValue(request, "finanziamento3"));
-        String committente3 = utf8(getRequestValue(request, "committente3"));
-        String periodo3 = "";
-        String periododa3 = utf8(getRequestValue(request, "periododa3"));
-        String periodoa3 = utf8(getRequestValue(request, "periodoa3"));
-        if (!periododa3.equals("") && !periodoa3.equals("")) {
-            periodo3 = periododa3 + " - " + periodoa3;
-        }
-        String area4 = getRequestValue(request, "area4");
-        String attivita4 = utf8(getRequestValue(request, "attivita4"));
-        String destinatari4 = utf8(getRequestValue(request, "destinatari4"));
-        String finanziamento4 = utf8(getRequestValue(request, "finanziamento4"));
-        String committente4 = utf8(getRequestValue(request, "committente4"));
-        String periodo4 = "";
-        String periododa4 = utf8(getRequestValue(request, "periododa4"));
-        String periodoa4 = utf8(getRequestValue(request, "periodoa4"));
-        if (!periododa4.equals("") && !periodoa4.equals("")) {
-            periodo4 = periododa4 + " - " + periodoa4;
-        }
-        String area5 = getRequestValue(request, "area5");
-        String attivita5 = utf8(getRequestValue(request, "attivita5"));
-        String destinatari5 = utf8(getRequestValue(request, "destinatari5"));
-        String finanziamento5 = utf8(getRequestValue(request, "finanziamento5"));
-        String committente5 = utf8(getRequestValue(request, "committente5"));
-        String periodo5 = "";
-        String periododa5 = utf8(getRequestValue(request, "periododa5"));
-        String periodoa5 = utf8(getRequestValue(request, "periodoa5"));
-        if (!periododa5.equals("") && !periodoa5.equals("")) {
-            periodo5 = periododa5 + " - " + periodoa5;
-        }
-
-        String consorzioSelezione = getRequestValue(request, "consorzioSelezione");
-        String noconsorzio = "NO";
-        String consorzio = "NO";
-        if (consorzioSelezione.equals("A")) {
-            noconsorzio = "SI";
-        } else if (consorzioSelezione.equals("B")) {
-            consorzio = "SI";
-        }
-
-        String nomeconsorzio = utf8(getRequestValue(request, "consorzio"));
         String pec = utf8(getRequestValue(request, "pec"));
         String numdocenti = utf8(getRequestValue(request, "numeroDocenti"));
 
@@ -945,12 +870,8 @@ public class Operazioni extends HttpServlet {
         String privacy2 = getRequestCheckbox(request, "privacy2");
 
         boolean esitoinserimento = insAllegatoA(
-                username, enteistituzionepubblica, associazione, ordineprofessionale, soggettoprivato,
-                formazione,
-                regione1,
-                iscrizione1, servizi,
-                regione2,
-                iscrizione2, ateco,
+                username, soggettosingolo, costituenda, costituita, rete, consorzio,
+                accreditata, iscrizione,
                 //PUNTO 2
                 numaule,
                 //AULA 1
@@ -981,20 +902,10 @@ public class Operazioni extends HttpServlet {
                 provincia5, regioneaula5, titolo5, estremi5, accreditamento5,
                 responsabile5, mailresponsabile5, telresponsabile5,
                 amministrativo5, mailamministrativo5, telamministrativo5,
-                //ESPERIENZE
-                attivita, destinatari, finanziamento, committente, periodo,
-                attivita2, destinatari2, finanziamento2, committente2, periodo2,
-                attivita3, destinatari3, finanziamento3, committente3, periodo3,
-                attivita4, destinatari4, finanziamento4, committente4, periodo4,
-                attivita5, destinatari5, finanziamento5, committente5, periodo5,
-                //PUNTO 3
-                noconsorzio, consorzio, nomeconsorzio,
                 //PUNTO 4
                 pec,
                 //PUNTO 5
                 numdocenti,
-                //EXTRA
-                area, area2, area3, area4, area5,
                 //PRIVACY
                 privacy1, privacy2);
 
@@ -1350,7 +1261,7 @@ public class Operazioni extends HttpServlet {
             elements.put("result", false);
             trackingAction("ERROR SYSTEM", estraiEccezione(ex));
         }
-        try (PrintWriter pw = response.getWriter()) {
+        try ( PrintWriter pw = response.getWriter()) {
             pw.write(new JSONObject(elements).toString());
         }
     }
@@ -1360,7 +1271,7 @@ public class Operazioni extends HttpServlet {
         String tipodoc = getRequestValue(request, "tipodoc");
         String user = (String) request.getSession().getAttribute("username");
         boolean esito = verificaOTP(bando, otp, user, 2);
-        try (PrintWriter out = response.getWriter()) {
+        try ( PrintWriter out = response.getWriter()) {
             if (esito) {
                 DateTime el = new DateTime();
                 String dateReg = el.toString("yyyy-MM-dd HH:mm:ss");
@@ -1388,7 +1299,7 @@ public class Operazioni extends HttpServlet {
 
         String esitoOTP = "SUCCESS";
 
-        try (PrintWriter out = response.getWriter()) {
+        try ( PrintWriter out = response.getWriter()) {
             if (esitoOTP.equals("SUCCESS")) {
                 out.print("true");
             } else {

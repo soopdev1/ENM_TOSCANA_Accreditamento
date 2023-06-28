@@ -212,16 +212,18 @@ public class ActionB {
         ArrayList<Docbandi> listart = db.listaDocRichiestiBando(bandorif);
         for (int i = 0; i < listart.size(); i++) {
             Docbandi dbb = listart.get(i);
-            if (getSino(username).equals("SI")) {
-                if (listart.get(i).getCodicedoc().equals("DOCR") || listart.get(i).getCodicedoc().equals("DONL")) {
-                    liout.add(dbb);
-                }
-            } else {
-                if (listart.get(i).getCodicedoc().equals("DOCR") || listart.get(i).getCodicedoc().equals("DONLA")
-                        || listart.get(i).getCodicedoc().equals("DONLB") || listart.get(i).getCodicedoc().equals("ALB1")) {
-                    liout.add(dbb);
-                }
-            }
+//            if (getSino(username).equals("SI")) {
+//                if (listart.get(i).getCodicedoc().equals("DOCR") || listart.get(i).getCodicedoc().equals("DONL")) {
+//                    liout.add(dbb);
+//                }
+//            } else {
+//                if (listart.get(i).getCodicedoc().equals("DOCR") 
+//                        || listart.get(i).getCodicedoc().equals("DONLA")
+//                        || listart.get(i).getCodicedoc().equals("DONLB") 
+//                        || listart.get(i).getCodicedoc().equals("ALB1")) {
+            liout.add(dbb);
+//                }
+//            }
         }
         return liout;
     }
@@ -466,8 +468,8 @@ public class ActionB {
 
     public static boolean insAllegatoA(
             //PUNTO 1
-            String username, String enteistituzionepubblica, String associazione, String ordineprofessionale, String soggettoprivato, String formazione,
-            String regione1, String iscrizione1, String servizi, String regione2, String iscrizione2, String ateco,
+            String username, String soggettosingolo, String costituenda, String costituita, String rete, String consorzio,
+            String accreditata, String iscrizione,
             //PUNTO 2
             String numaule,
             //AULA 1
@@ -496,19 +498,10 @@ public class ActionB {
             String responsabile5, String mailresponsabile5, String telresponsabile5,
             String amministrativo5, String mailamministrativo5, String telamministrativo5,
             //ESPERIENZE
-            String attivita, String destinatari, String finanziamento, String committente, String periodo,
-            String attivita2, String destinatari2, String finanziamento2, String committente2, String periodo2,
-            String attivita3, String destinatari3, String finanziamento3, String committente3, String periodo3,
-            String attivita4, String destinatari4, String finanziamento4, String committente4, String periodo4,
-            String attivita5, String destinatari5, String finanziamento5, String committente5, String periodo5,
-            //PUNTO 3
-            String noconsorzio, String consorzio, String nomeconsorzio,
             //PUNTO 4
             String pec,
             //PUNTO 5
             String numdocenti,
-            //EXTRA
-            String area, String area2, String area3, String area4, String area5,
             //PRIVACY
             String privacy1, String privacy2
     ) {
@@ -516,8 +509,8 @@ public class ActionB {
         boolean ctrl = db.insAllegatoA(
                 username,
                 //PUNTO 1
-                enteistituzionepubblica, associazione, ordineprofessionale, soggettoprivato, formazione,
-                regione1, iscrizione1, servizi, regione2, iscrizione2, ateco,
+                soggettosingolo, costituenda, costituita, rete, consorzio,
+                accreditata, iscrizione,
                 //PUNTO 2
                 numaule,
                 //AULA 1
@@ -545,20 +538,10 @@ public class ActionB {
                 provincia5, regioneaula5, titolo5, estremi5, accreditamento5,
                 responsabile5, mailresponsabile5, telresponsabile5,
                 amministrativo5, mailamministrativo5, telamministrativo5,
-                //ESPERIENZE
-                attivita, destinatari, finanziamento, committente, periodo,
-                attivita2, destinatari2, finanziamento2, committente2, periodo2,
-                attivita3, destinatari3, finanziamento3, committente3, periodo3,
-                attivita4, destinatari4, finanziamento4, committente4, periodo4,
-                attivita5, destinatari5, finanziamento5, committente5, periodo5,
-                //PUNTO 3
-                noconsorzio, consorzio, nomeconsorzio,
                 //PUNTO 4
                 pec,
                 //PUNTO 5
                 numdocenti,
-                //EXTRA
-                area, area2, area3, area4, area5,
                 //PRIVACY
                 privacy1, privacy2);
         db.closeDB();

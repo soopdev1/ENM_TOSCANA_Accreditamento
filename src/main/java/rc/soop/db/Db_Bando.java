@@ -82,13 +82,12 @@ public class Db_Bando {
         String driver = "com.mysql.cj.jdbc.Driver";
         String user = conf.getString("db.user");
         String password = conf.getString("db.pass");
-        String host = conf.getString("db.host") + ":3306/"+conf.getString("db.name");
+        String host = conf.getString("db.host") + ":3306/" + conf.getString("db.name");
 
 //        if (test) {
 //            host = "clustermicrocredito.cluster-c6m6yfqeypv3.eu-south-1.rds.amazonaws.com:3306/enm_neet";
 ////            host = "172.31.224.159:3306/enm_neet";
 //        }
-
         try {
             forName(driver).newInstance();
             Properties p = new Properties();
@@ -274,7 +273,7 @@ public class Db_Bando {
             String sql = "SELECT html FROM elencobandi WHERE codbando = ?";
             try ( PreparedStatement ps = this.c.prepareStatement(sql)) {
                 ps.setString(1, cod);
-                System.out.println("rc.soop.db.Db_Bando.getHTMLBando() "+ps.toString() );
+                System.out.println("rc.soop.db.Db_Bando.getHTMLBando() " + ps.toString());
                 try ( ResultSet rs = ps.executeQuery()) {
                     if (rs.next()) {
                         out = rs.getString(1);
@@ -1843,8 +1842,9 @@ public class Db_Bando {
 
     public boolean insAllegatoA(
             //PUNTO 1
-            String username, String enteistituzionepubblica, String associazione, String ordineprofessionale, String soggettoprivato, String formazione,
-            String regione1, String iscrizione1, String servizi, String regione2, String iscrizione2, String ateco,
+            String username,
+            String soggettosingolo, String costituenda, String costituita, String rete, String consorzio,
+            String accreditata, String iscrizione,
             //PUNTO 2
             String numaule,
             //AULA 1
@@ -1872,20 +1872,10 @@ public class Db_Bando {
             String provincia5, String regioneaula5, String titolo5, String estremi5, String accreditamento5,
             String responsabile5, String mailresponsabile5, String telresponsabile5,
             String amministrativo5, String mailamministrativo5, String telamministrativo5,
-            //ESPERIENZE
-            String attivita, String destinatari, String finanziamento, String committente, String periodo,
-            String attivita2, String destinatari2, String finanziamento2, String committente2, String periodo2,
-            String attivita3, String destinatari3, String finanziamento3, String committente3, String periodo3,
-            String attivita4, String destinatari4, String finanziamento4, String committente4, String periodo4,
-            String attivita5, String destinatari5, String finanziamento5, String committente5, String periodo5,
-            //PUNTO 3
-            String noconsorzio, String consorzio, String nomeconsorzio,
             //PUNTO 4
             String pec,
             //PUNTO 5
             String numdocenti,
-            //EXTRA
-            String area, String area2, String area3, String area4, String area5,
             //PRIVACY
             String privacy1, String privacy2
     ) {
@@ -1894,141 +1884,92 @@ public class Db_Bando {
                 + "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?," //20
                 + "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?," //20
                 + "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?," //20
-                + "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?," //20
-                + "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?," //20
-                + "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?" //16
+                + "?,?,?,?,?,?,?,?,?,?,?,?,?,?" //14
                 + ")";
         try {
             try ( PreparedStatement ps = this.c.prepareStatement(insert)) {
                 ps.setString(1, username);
-                ps.setString(2, enteistituzionepubblica);
-                ps.setString(3, associazione);
-                ps.setString(4, ordineprofessionale);
-                ps.setString(5, soggettoprivato);
-                ps.setString(6, formazione);
-                ps.setString(7, regione1);
-                ps.setString(8, iscrizione1);
-                ps.setString(9, servizi);
-                ps.setString(10, regione2);
-                ps.setString(11, iscrizione2);
-                ps.setString(12, ateco);
-                ps.setString(13, numaule);
+                ps.setString(2, soggettosingolo);
+                ps.setString(3, costituenda);
+                ps.setString(4, costituita);
+                ps.setString(5, rete);
+                ps.setString(6, consorzio);
+                ps.setString(7, accreditata);
+                ps.setString(8, iscrizione);
+                ps.setString(9, numaule);
 
-                ps.setString(14, indirizzo1);
-                ps.setString(15, citta1);
-                ps.setString(16, provincia1);
-                ps.setString(17, regioneaula1);
-                ps.setString(18, estremi1);
-                ps.setString(19, accreditamento1);
-                ps.setString(20, responsabile1);
-                ps.setString(21, mailresponsabile1);
-                ps.setString(22, telresponsabile1);
-                ps.setString(23, amministrativo1);
-                ps.setString(24, mailamministrativo1);
-                ps.setString(25, telamministrativo1);
+                ps.setString(10, indirizzo1);
+                ps.setString(11, citta1);
+                ps.setString(12, provincia1);
+                ps.setString(13, regioneaula1);
+                ps.setString(14, estremi1);
+                ps.setString(15, accreditamento1);
+                ps.setString(16, responsabile1);
+                ps.setString(17, mailresponsabile1);
+                ps.setString(18, telresponsabile1);
+                ps.setString(19, amministrativo1);
+                ps.setString(20, mailamministrativo1);
+                ps.setString(21, telamministrativo1);
 
-                ps.setString(26, indirizzo2);
-                ps.setString(27, citta2);
-                ps.setString(28, provincia2);
-                ps.setString(29, regioneaula2);
-                ps.setString(30, estremi2);
-                ps.setString(31, accreditamento2);
-                ps.setString(32, responsabile2);
-                ps.setString(33, mailresponsabile2);
-                ps.setString(34, telresponsabile2);
-                ps.setString(35, amministrativo2);
-                ps.setString(36, mailamministrativo2);
-                ps.setString(37, telamministrativo2);
+                ps.setString(22, indirizzo2);
+                ps.setString(23, citta2);
+                ps.setString(24, provincia2);
+                ps.setString(25, regioneaula2);
+                ps.setString(26, estremi2);
+                ps.setString(27, accreditamento2);
+                ps.setString(28, responsabile2);
+                ps.setString(29, mailresponsabile2);
+                ps.setString(30, telresponsabile2);
+                ps.setString(31, amministrativo2);
+                ps.setString(32, mailamministrativo2);
+                ps.setString(33, telamministrativo2);
 
-                ps.setString(38, indirizzo3);
-                ps.setString(39, citta3);
-                ps.setString(40, provincia3);
-                ps.setString(41, regioneaula3);
-                ps.setString(42, estremi3);
-                ps.setString(43, accreditamento3);
-                ps.setString(44, responsabile3);
-                ps.setString(45, mailresponsabile3);
-                ps.setString(46, telresponsabile3);
-                ps.setString(47, amministrativo3);
-                ps.setString(48, mailamministrativo3);
-                ps.setString(49, telamministrativo3);
+                ps.setString(34, indirizzo3);
+                ps.setString(35, citta3);
+                ps.setString(36, provincia3);
+                ps.setString(37, regioneaula3);
+                ps.setString(38, estremi3);
+                ps.setString(39, accreditamento3);
+                ps.setString(40, responsabile3);
+                ps.setString(41, mailresponsabile3);
+                ps.setString(42, telresponsabile3);
+                ps.setString(43, amministrativo3);
+                ps.setString(44, mailamministrativo3);
+                ps.setString(45, telamministrativo3);
 
-                ps.setString(50, indirizzo4);
-                ps.setString(51, citta4);
-                ps.setString(52, provincia4);
-                ps.setString(53, regioneaula4);
-                ps.setString(54, estremi4);
-                ps.setString(55, accreditamento4);
-                ps.setString(56, responsabile4);
-                ps.setString(57, mailresponsabile4);
-                ps.setString(58, telresponsabile4);
-                ps.setString(59, amministrativo4);
-                ps.setString(60, mailamministrativo4);
-                ps.setString(61, telamministrativo4);
+                ps.setString(46, indirizzo4);
+                ps.setString(47, citta4);
+                ps.setString(48, provincia4);
+                ps.setString(49, regioneaula4);
+                ps.setString(50, estremi4);
+                ps.setString(51, accreditamento4);
+                ps.setString(52, responsabile4);
+                ps.setString(53, mailresponsabile4);
+                ps.setString(54, telresponsabile4);
+                ps.setString(55, amministrativo4);
+                ps.setString(56, mailamministrativo4);
+                ps.setString(57, telamministrativo4);
 
-                ps.setString(62, indirizzo5);
-                ps.setString(63, citta5);
-                ps.setString(64, provincia5);
-                ps.setString(65, regioneaula5);
-                ps.setString(66, estremi5);
-                ps.setString(67, accreditamento5);
-                ps.setString(68, responsabile5);
-                ps.setString(69, mailresponsabile5);
-                ps.setString(70, telresponsabile5);
-                ps.setString(71, amministrativo5);
-                ps.setString(72, mailamministrativo5);
-                ps.setString(73, telamministrativo5);
+                ps.setString(58, indirizzo5);
+                ps.setString(59, citta5);
+                ps.setString(60, provincia5);
+                ps.setString(61, regioneaula5);
+                ps.setString(62, estremi5);
+                ps.setString(63, accreditamento5);
+                ps.setString(64, responsabile5);
+                ps.setString(65, mailresponsabile5);
+                ps.setString(66, telresponsabile5);
+                ps.setString(67, amministrativo5);
+                ps.setString(68, mailamministrativo5);
+                ps.setString(69, telamministrativo5);
                 ////////////////////////////////////
-                ps.setString(74, attivita);
-                ps.setString(75, destinatari);
-                ps.setString(76, finanziamento);
-                ps.setString(77, committente);
-                ps.setString(78, periodo);
-                ps.setString(79, attivita2);
-                ps.setString(80, destinatari2);
-                ps.setString(81, finanziamento2);
-                ps.setString(82, committente2);
-                ps.setString(83, periodo2);
-                ps.setString(84, attivita3);
-                ps.setString(85, destinatari3);
-                ps.setString(86, finanziamento3);
-                ps.setString(87, committente3);
-                ps.setString(88, periodo3);
-                ps.setString(89, attivita4);
-                ps.setString(90, destinatari4);
-                ps.setString(91, finanziamento4);
-                ps.setString(92, committente4);
-                ps.setString(93, periodo4);
-                ps.setString(94, attivita5);
-                ps.setString(95, destinatari5);
-                ps.setString(96, finanziamento5);
-                ps.setString(97, committente5);
-                ps.setString(98, periodo5);
-                ps.setString(99, noconsorzio);
-                ps.setString(100, consorzio);
-                ps.setString(101, nomeconsorzio);
-                ps.setString(102, pec);
-                ps.setString(103, numdocenti);
-
-                //EXTRA
-                ps.setString(104, area);
-                ps.setString(105, area2);
-                ps.setString(106, area3);
-                ps.setString(107, area4);
-                ps.setString(108, area5);
-
-                //EXTRA
-                ps.setString(109, titolo1);
-                ps.setString(110, titolo2);
-                ps.setString(111, titolo3);
-                ps.setString(112, titolo4);
-                ps.setString(113, titolo5);
-
+                ps.setString(70, pec);
+                ps.setString(71, numdocenti);
                 //PRIVACY
-                ps.setString(114, privacy1);
-                ps.setString(115, privacy2);
+                ps.setString(72, privacy1);
+                ps.setString(73, privacy2);
 
-                ps.setString(116, curdate());
+                ps.setString(74, curdate());
                 ps.executeUpdate();
             }
             return true;
@@ -3473,6 +3414,7 @@ public class Db_Bando {
         }
         return pathRoma;
     }
+
     public boolean isConvenzioneROMA(String username) {
         boolean pathRoma = false;
         try {

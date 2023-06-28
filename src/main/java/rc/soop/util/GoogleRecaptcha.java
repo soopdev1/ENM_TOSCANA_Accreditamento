@@ -10,7 +10,6 @@ import static rc.soop.action.ActionB.getPath;
 import javax.net.ssl.HttpsURLConnection;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import org.json.JSONObject;
@@ -20,7 +19,7 @@ import org.json.JSONObject;
  * @author srotella
  */
 public class GoogleRecaptcha {
-    
+
     public static boolean isValid(String clientRecaptchaResponse) {
 
         try {
@@ -43,13 +42,13 @@ public class GoogleRecaptcha {
                     + "&response=" + clientRecaptchaResponse;
 
             con.setDoOutput(true);
-            try (DataOutputStream wr = new DataOutputStream(con.getOutputStream())) {
+            try ( DataOutputStream wr = new DataOutputStream(con.getOutputStream())) {
                 wr.writeBytes(postParams);
                 wr.flush();
             }
             int responseCode = con.getResponseCode();
             StringBuilder response;
-            try (BufferedReader in = new BufferedReader(new InputStreamReader(
+            try ( BufferedReader in = new BufferedReader(new InputStreamReader(
                     con.getInputStream()))) {
                 String inputLine;
                 response = new StringBuilder();
@@ -60,18 +59,16 @@ public class GoogleRecaptcha {
 //            JSONParser parser = new JSONParser();
 //            JSONObject json = (JSONObject) parser.parse(response.toString());
             JSONObject json = new JSONObject(response.toString());
-            
-//            System.out.println("rc.soop.util.GoogleRecaptcha.isValid() "+json.toString());
-            
-            Boolean success = (Boolean) json.get("success");
-            Double score = (Double) json.get("score");
-            boolean ctrl1 = success;
-            boolean ctrl2 = score >= 0.5;
-            return (ctrl1 && ctrl2);
 
+//            System.out.println("rc.soop.util.GoogleRecaptcha.isValid() " + json.toString());
+
+            boolean success = json.getBoolean("success");
+            double score = json.getBigDecimal("score").doubleValue();
+            return success && score >= 0.5;
         } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
     }
-    
+
 }
