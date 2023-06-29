@@ -110,19 +110,19 @@ public class Pdf_new {
             createDir(pathtemp);
 
             File pdfOut = new File(pathtemp + username + dataconsegna.toString("ddMMyyyyHHmmSSS") + ".A.pdf");
-            try (InputStream is = new ByteArrayInputStream(decodeBase64(contentb64)); PdfReader reader = new PdfReader(is); PdfWriter writer = new PdfWriter(pdfOut); PdfDocument pdfDoc = new PdfDocument(reader, writer)) {
+            try ( InputStream is = new ByteArrayInputStream(decodeBase64(contentb64));  PdfReader reader = new PdfReader(is);  PdfWriter writer = new PdfWriter(pdfOut);  PdfDocument pdfDoc = new PdfDocument(reader, writer)) {
                 PdfAcroForm form = getAcroForm(pdfDoc, true);
                 form.setGenerateAppearance(true);
                 Map<String, PdfFormField> fields = form.getFormFields();
-                fields.get("privacy0").setValue("On");
-//                fields.get("dataconsegna").setValue(dataconsegna.toString("dd/MM/yyyy"));
+                setFieldsValue(form, fields, "privacy0", "On");
+
                 try {
                     String comunecciaa = listavalori.stream().filter(re -> (re.getCampo().equals("comunecciaa"))).findAny().get().getValore().toUpperCase();
                     String proccciaa = listavalori.stream().filter(re -> (re.getCampo().equals("proccciaa"))).findAny().get().getValore().toUpperCase();
                     String regccciaa = listavalori.stream().filter(re -> (re.getCampo().equals("regccciaa"))).findAny().get().getValore().toUpperCase();
                     if (!comunecciaa.equals("") && !proccciaa.equals("") && !regccciaa.equals("")) {
                         String cciaa = comunecciaa + " - " + proccciaa + " - " + regccciaa;
-                        fields.get("cciaa").setValue(cciaa);
+                        setFieldsValue(form, fields, "cciaa", cciaa);
                     }
                 } catch (Exception e) {
                 }
@@ -131,28 +131,25 @@ public class Pdf_new {
 
                     UserValoriReg va  = listavalori.stream().filter(re -> re.getCampo().equals(K)).findAny().orElse(null);
                     if (va  != null) {
-//                        if (K.equals("societa") && fields.get("nodefinito") != null) {
-//                            fields.get("nodefinito").setValue(va.getValore().toUpperCase());
-//                        }
-                        fields.get(K).setValue(va.getValore().toUpperCase());
+                        setFieldsValue(form, fields, K, va.getValore().toUpperCase());
                     } else {
                         if (mappavalori.get(K) != null) {
-                            boolean checkbox = asList(V.getAppearanceStates()).size() > 0;
+                            boolean checkbox = !asList(V.getAppearanceStates()).isEmpty();
                             if (checkbox) {
                                 if (mappavalori.get(K).toUpperCase().equals("SI")) {
-                                    fields.get(K).setValue(V.getAppearanceStates()[0]);
+                                    setFieldsValue(form, fields, K, V.getAppearanceStates()[0]);
                                 }
                                 if (K.equals("privacy1")) {
                                     if (mappavalori.get("privacy1").equals("NO")) {
-                                        fields.get(K + "_1").setValue(V.getAppearanceStates()[0]);
+                                        setFieldsValue(form, fields, K + "_1", V.getAppearanceStates()[0]);
                                     }
                                 } else if (K.equals("privacy2")) {
                                     if (mappavalori.get("privacy2").equals("NO")) {
-                                        fields.get(K + "_1").setValue(V.getAppearanceStates()[0]);
+                                        setFieldsValue(form, fields, K + "_1", V.getAppearanceStates()[0]);
                                     }
                                 }
                             } else {
-                                fields.get(K).setValue(mappavalori.get(K).toUpperCase());
+                                setFieldsValue(form, fields, K, mappavalori.get(K).toUpperCase());
                             }
                         }
                     }
@@ -187,7 +184,7 @@ public class Pdf_new {
             createDir(pathtemp);
             File pdfOut = new File(pathtemp + username + dataconsegna.toString("ddMMyyyyHHmmSSS") + ".B.pdf");
 
-            try (InputStream is = new ByteArrayInputStream(decodeBase64(contentb64)); PdfReader reader = new PdfReader(is); PdfWriter writer = new PdfWriter(pdfOut); PdfDocument pdfDoc = new PdfDocument(reader, writer)) {
+            try ( InputStream is = new ByteArrayInputStream(decodeBase64(contentb64));  PdfReader reader = new PdfReader(is);  PdfWriter writer = new PdfWriter(pdfOut);  PdfDocument pdfDoc = new PdfDocument(reader, writer)) {
 
                 PdfAcroForm form = getAcroForm(pdfDoc, true);
                 form.setGenerateAppearance(true);
@@ -211,7 +208,7 @@ public class Pdf_new {
                         fields.get(K).setValue(va.getValore().toUpperCase());
                     } else {
                         if (mappavaloriDOCA.get(K) != null) {
-                            boolean checkbox = asList(V.getAppearanceStates()).size() > 0;
+                            boolean checkbox = !asList(V.getAppearanceStates()).isEmpty();
                             if (checkbox) {
                                 if (mappavaloriDOCA.get(K).toUpperCase().equals("SI")) {
                                     fields.get(K).setValue(V.getAppearanceStates()[0]);
@@ -239,8 +236,6 @@ public class Pdf_new {
                                         fields.get(K).setValue(alB.getCognome().toUpperCase());
                                     } else if (K.equals("docentecf" + indicedocente.get())) {
                                         fields.get(K).setValue(alB.getCF().toUpperCase());
-                                    } else if (K.equals("docentefascia" + indicedocente.get())) {
-                                        fields.get(K).setValue(alB.getFascia().toUpperCase());
                                     } else if (K.equals("docenteinquadramento" + indicedocente.get())) {
                                         fields.get(K).setValue(alB.getInquadramento().toUpperCase());
                                     }
@@ -278,7 +273,7 @@ public class Pdf_new {
             dbb.closeDB();
             createDir(pathtemp);
             File pdfOut = new File(pathtemp + username + dataconsegna.toString("ddMMyyyyHHmmSSS") + ".B1.pdf");
-            try (InputStream is = new ByteArrayInputStream(decodeBase64(contentb64)); PdfReader reader = new PdfReader(is); PdfWriter writer = new PdfWriter(pdfOut); PdfDocument pdfDoc = new PdfDocument(reader, writer);) {
+            try ( InputStream is = new ByteArrayInputStream(decodeBase64(contentb64));  PdfReader reader = new PdfReader(is);  PdfWriter writer = new PdfWriter(pdfOut);  PdfDocument pdfDoc = new PdfDocument(reader, writer);) {
 
                 PdfAcroForm form = getAcroForm(pdfDoc, true);
                 form.setGenerateAppearance(true);
@@ -354,7 +349,7 @@ public class Pdf_new {
 
             createDir(pathtemp);
             File pdfOut = new File(pathtemp + username + dataconsegna.toString("ddMMyyyyHHmmSSS") + ".C.pdf");
-            try (InputStream is = new ByteArrayInputStream(decodeBase64(contentb64)); PdfReader reader = new PdfReader(is); PdfWriter writer = new PdfWriter(pdfOut); PdfDocument pdfDoc = new PdfDocument(reader, writer)) {
+            try ( InputStream is = new ByteArrayInputStream(decodeBase64(contentb64));  PdfReader reader = new PdfReader(is);  PdfWriter writer = new PdfWriter(pdfOut);  PdfDocument pdfDoc = new PdfDocument(reader, writer)) {
                 PdfAcroForm form = getAcroForm(pdfDoc, true);
                 form.setGenerateAppearance(true);
                 Map<String, PdfFormField> fields = form.getFormFields();
@@ -402,7 +397,7 @@ public class Pdf_new {
             dbb.closeDB();
             createDir(pathtemp);
             File pdfOut = new File(pathtemp + username + dataconsegna.toString("ddMMyyyyHHmmSSS") + ".A.pdf");
-            try (InputStream is = new ByteArrayInputStream(decodeBase64(contentb64)); PdfReader reader = new PdfReader(is); PdfWriter writer = new PdfWriter(pdfOut); PdfDocument pdfDoc = new PdfDocument(reader, writer)) {
+            try ( InputStream is = new ByteArrayInputStream(decodeBase64(contentb64));  PdfReader reader = new PdfReader(is);  PdfWriter writer = new PdfWriter(pdfOut);  PdfDocument pdfDoc = new PdfDocument(reader, writer)) {
                 BarcodeQRCode barcode = new BarcodeQRCode(username + " / ALLEGATO 1 / " + dataconsegna.toString("ddMMyyyyHHmmSSS"));
                 printbarcode(barcode, pdfDoc);
             }
@@ -428,7 +423,7 @@ public class Pdf_new {
 
             createDir(pathtemp);
             File pdfOut = new File(pathtemp + username + dataconsegna.toString("ddMMyyyyHHmmSSS") + ".C2.pdf");
-            try (InputStream is = new ByteArrayInputStream(decodeBase64(contentb64)); PdfReader reader = new PdfReader(is); PdfWriter writer = new PdfWriter(pdfOut); PdfDocument pdfDoc = new PdfDocument(reader, writer)) {
+            try ( InputStream is = new ByteArrayInputStream(decodeBase64(contentb64));  PdfReader reader = new PdfReader(is);  PdfWriter writer = new PdfWriter(pdfOut);  PdfDocument pdfDoc = new PdfDocument(reader, writer)) {
                 PdfAcroForm form = getAcroForm(pdfDoc, true);
                 form.setGenerateAppearance(true);
                 Map<String, PdfFormField> fields = form.getFormFields();
@@ -446,7 +441,7 @@ public class Pdf_new {
                                 String name = field.getName();
                                 field.setAccessible(true);
                                 if (K.equals(name)) {
-                                    boolean checkbox = asList(V.getAppearanceStates()).size() > 0;
+                                    boolean checkbox = !asList(V.getAppearanceStates()).isEmpty();
                                     if (checkbox) {
                                         if (field.get(allegato_c2).toString().toUpperCase().equals("SI")) {
                                             setFieldsValue(form, fields, K, V.getAppearanceStates()[0]);
@@ -523,7 +518,7 @@ public class Pdf_new {
             createDir(pathtemp);
             File pdfOut = new File(pathtemp + username + dataconsegna.toString("ddMMyyyyHHmmSSS") + ".NO.pdf");
             InputStream is = new ByteArrayInputStream(decodeBase64(contentb64));
-            try (PdfReader reader = new PdfReader(is); PdfWriter writer = new PdfWriter(pdfOut); PdfDocument pdfDoc = new PdfDocument(reader, writer)) {
+            try ( PdfReader reader = new PdfReader(is);  PdfWriter writer = new PdfWriter(pdfOut);  PdfDocument pdfDoc = new PdfDocument(reader, writer)) {
                 PdfAcroForm form = getAcroForm(pdfDoc, true);
                 form.setGenerateAppearance(true);
                 Map<String, PdfFormField> fields = form.getFormFields();
@@ -622,7 +617,7 @@ public class Pdf_new {
             File pdfOutA = new File(replace(pdf_ing.getPath(), ".pdf", "_pdfA.pdf"));
             FileInputStream in = new FileInputStream(pdf_ing);
             setProperty("sun.java2d.cmm", "sun.java2d.cmm.kcms.KcmsServiceProvider");
-            try (PDDocument doc = load(pdf_ing)) {
+            try ( PDDocument doc = load(pdf_ing)) {
                 int numPageTOT = 0;
                 Iterator<PDPage> it1 = doc.getPages().iterator();
                 while (it1.hasNext()) {
@@ -631,7 +626,7 @@ public class Pdf_new {
                 }
                 PDPage page = new PDPage();
                 doc.setVersion(1.7f);
-                try (PDPageContentStream contents = new PDPageContentStream(doc, page)) {
+                try ( PDPageContentStream contents = new PDPageContentStream(doc, page)) {
                     PDDocument docSource = load(in);
                     PDFRenderer pdfRenderer = new PDFRenderer(docSource);
                     for (int i = 0; i < numPageTOT; i++) {
@@ -798,7 +793,7 @@ public class Pdf_new {
             if (!allCerts.isEmpty()) {
                 X509CertificateHolder x509h = allCerts.iterator().next();
                 CertificateFactory certFactory = getInstance("X.509");
-                try (InputStream in = new ByteArrayInputStream(x509h.getEncoded())) {
+                try ( InputStream in = new ByteArrayInputStream(x509h.getEncoded())) {
                     X509Certificate cert = (X509Certificate) certFactory.generateCertificate(in);
                     Principal principal = cert.getSubjectDN();
                     try {
@@ -834,9 +829,7 @@ public class Pdf_new {
         try {
             BouncyCastleProvider provider = new BouncyCastleProvider();
             addProvider(provider);
-            try (InputStream is = new ByteArrayInputStream(pdf_bytes);
-                    PdfReader read = new PdfReader(is); 
-                    PdfDocument pdfDoc = new PdfDocument(read, new PdfWriter(out))) {
+            try ( InputStream is = new ByteArrayInputStream(pdf_bytes);  PdfReader read = new PdfReader(is);  PdfDocument pdfDoc = new PdfDocument(read, new PdfWriter(out))) {
                 AtomicInteger error = new AtomicInteger(0);
                 SignatureUtil signatureUtil = new SignatureUtil(pdfDoc);
                 List<String> li = signatureUtil.getSignatureNames();
@@ -898,7 +891,7 @@ public class Pdf_new {
             try {
                 setProperty("sun.java2d.cmm", "sun.java2d.cmm.kcms.KcmsServiceProvider");
                 if (content != null) {
-                    try (InputStream is1 = new ByteArrayInputStream(content); PDDocument doc = load(is1)) {
+                    try ( InputStream is1 = new ByteArrayInputStream(content);  PDDocument doc = load(is1)) {
                         PDDocumentInformation info = doc.getDocumentInformation();
 
                         if (info.getSubject() != null) {
@@ -932,7 +925,7 @@ public class Pdf_new {
             try {
                 setProperty("sun.java2d.cmm", "sun.java2d.cmm.kcms.KcmsServiceProvider");
                 if (content != null) {
-                    try (InputStream is1 = new ByteArrayInputStream(content); PDDocument doc = load(is1)) {
+                    try ( InputStream is1 = new ByteArrayInputStream(content);  PDDocument doc = load(is1)) {
                         PDPage page = doc.getPage(0);
                         page.setCropBox(new PDRectangle(20, 0, 50, 50));
                         PDFRenderer pr = new PDFRenderer(doc);
@@ -953,31 +946,36 @@ public class Pdf_new {
                                         out = "OK";
                                     } else {
                                         out = "ERRORE - DOCUMENTO NON CORRISPONDE A QUANTO RICHIESTO";
-                                    }   break;
+                                    }
+                                    break;
                                 case "DONLB":
                                     if (qr.contains("ALLEGATO B")) {
                                         out = "OK";
                                     } else {
                                         out = "ERRORE - DOCUMENTO NON CORRISPONDE A QUANTO RICHIESTO";
-                                    }   break;
+                                    }
+                                    break;
                                 case "CONV":
                                     if (qr.contains("ALLEGATO C")) {
                                         out = "OK";
                                     } else {
                                         out = "ERRORE - DOCUMENTO NON CORRISPONDE A QUANTO RICHIESTO";
-                                    }   break;
+                                    }
+                                    break;
                                 case "MOD1":
                                     if (qr.contains("ALLEGATO 1")) {
                                         out = "OK";
                                     } else {
                                         out = "ERRORE - DOCUMENTO NON CORRISPONDE A QUANTO RICHIESTO";
-                                    }   break;
+                                    }
+                                    break;
                                 case "MOD2":
                                     if (qr.contains("ALLEGATO 2")) {
                                         out = "OK";
                                     } else {
                                         out = "ERRORE - DOCUMENTO NON CORRISPONDE A QUANTO RICHIESTO";
-                                    }   break;
+                                    }
+                                    break;
                                 default:
                                     out = "ERRORE - DOCUMENTO NON CORRISPONDE A QUANTO RICHIESTO";
                                     break;
@@ -995,7 +993,7 @@ public class Pdf_new {
                     trackingAction("ERROR SYSTEM", estraiEccezione(e));
                     out = "ERRORE NEL FILE - " + e.getMessage();
                 }
-                
+
             }
         } else { // non richiesto
             out = "OK";
@@ -1017,7 +1015,7 @@ public class Pdf_new {
                 try {
                     setProperty("sun.java2d.cmm", "sun.java2d.cmm.kcms.KcmsServiceProvider");
                     if (content != null) {
-                        try (InputStream is1 = new ByteArrayInputStream(content); PDDocument doc = load(is1)) {
+                        try ( InputStream is1 = new ByteArrayInputStream(content);  PDDocument doc = load(is1)) {
                             PDPage page = doc.getPage(0);
                             page.setCropBox(new PDRectangle(20, 0, 50, 50));
                             PDFRenderer pr = new PDFRenderer(doc);
@@ -1038,31 +1036,36 @@ public class Pdf_new {
                                             out = "OK";
                                         } else {
                                             out = "ERRORE - DOCUMENTO NON CORRISPONDE A QUANTO RICHIESTO";
-                                        }   break;
+                                        }
+                                        break;
                                     case "DONLB":
                                         if (qr.contains("ALLEGATO B")) {
                                             out = "OK";
                                         } else {
                                             out = "ERRORE - DOCUMENTO NON CORRISPONDE A QUANTO RICHIESTO";
-                                        }   break;
+                                        }
+                                        break;
                                     case "CONV":
                                         if (qr.contains("ALLEGATO C")) {
                                             out = "OK";
                                         } else {
                                             out = "ERRORE - DOCUMENTO NON CORRISPONDE A QUANTO RICHIESTO";
-                                        }   break;
+                                        }
+                                        break;
                                     case "MOD1":
                                         if (qr.contains("ALLEGATO 1")) {
                                             out = "OK";
                                         } else {
                                             out = "ERRORE - DOCUMENTO NON CORRISPONDE A QUANTO RICHIESTO";
-                                        }   break;
+                                        }
+                                        break;
                                     case "MOD2":
                                         if (qr.contains("ALLEGATO 2")) {
                                             out = "OK";
                                         } else {
                                             out = "ERRORE - DOCUMENTO NON CORRISPONDE A QUANTO RICHIESTO";
-                                        }   break;
+                                        }
+                                        break;
                                     default:
                                         out = "ERRORE - DOCUMENTO NON CORRISPONDE A QUANTO RICHIESTO";
                                         break;
@@ -1079,7 +1082,7 @@ public class Pdf_new {
                         trackingAction("ERROR SYSTEM", estraiEccezione(e));
                         out = "ERRORE NEL FILE - " + e.getMessage();
                     }
-                    
+
                 }
             } else { // non richiesto
                 out = "OK";
@@ -1092,7 +1095,7 @@ public class Pdf_new {
         if (pdffile.exists()) {
             try {
                 int pag;
-                try (InputStream is = new FileInputStream(pdffile); PdfReader pdfReader = new PdfReader(is); PdfDocument pd = new PdfDocument(pdfReader)) {
+                try ( InputStream is = new FileInputStream(pdffile);  PdfReader pdfReader = new PdfReader(is);  PdfDocument pd = new PdfDocument(pdfReader)) {
                     pag = pd.getNumberOfPages();
                 }
                 return pag > 0;

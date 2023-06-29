@@ -26,12 +26,12 @@ public class AllegatoB {
         this.Tel = "";
         this.Titolistudio = "";
         this.Qualifiche = "";
-        this.Fascia = "";
+        this.elencoenti = "";
         this.Inquadramento = "";
     }
 
     public AllegatoB(String username, int id, String Nome, String Cognome, String CF, String Comune, String Datanascita,
-            String Sesso, String Regione, String Mail, String Pec, String Tel, String Titolistudio, String Qualifiche, String Fascia, String Inquadramento) {
+            String Sesso, String Regione, String Mail, String Pec, String Tel, String Titolistudio, String Qualifiche, String elencoenti, String Inquadramento) {
         this.username = username;
         this.id = id;
         this.Nome = Nome;
@@ -46,13 +46,13 @@ public class AllegatoB {
         this.Tel = Tel;
         this.Titolistudio = Titolistudio;
         this.Qualifiche = Qualifiche;
-        this.Fascia = Fascia;
+        this.elencoenti = elencoenti;
         this.Inquadramento = Inquadramento;
     }
 
     String username;
     int id;
-    String Nome, Cognome, CF, Comune, Datanascita, Sesso, Regione, Mail, Pec, Tel, Titolistudio, Qualifiche, Fascia, Inquadramento;
+    String Nome, Cognome, CF, Comune, Datanascita, Sesso, Regione, Mail, Pec, Tel, Titolistudio, Qualifiche, elencoenti, Inquadramento;
 
     public int getId() {
         return id;
@@ -166,12 +166,12 @@ public class AllegatoB {
         this.Qualifiche = Qualifiche;
     }
 
-    public String getFascia() {
-        return Fascia;
+    public String getElencoenti() {
+        return elencoenti;
     }
 
-    public void setFascia(String Fascia) {
-        this.Fascia = Fascia;
+    public void setElencoenti(String elencoenti) {
+        this.elencoenti = elencoenti;
     }
 
     public String getInquadramento() {

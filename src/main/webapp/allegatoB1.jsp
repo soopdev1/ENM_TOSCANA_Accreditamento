@@ -341,10 +341,8 @@
                             <div class="portlet-body">
                                 <blockquote class="blockquote col-md-12">
                                     <div class="row">
-                                        <p class="mb-0 col-md-3 uppercase"><u><b>Docente:</b> <%=docente.getNome()%>&nbsp;<%=docente.getCognome()%></u></p>
-                                        <p class="mb-0 col-md-3"><b>CF:</b> <%=docente.getCF()%></p>
-                                        <p class="mb-0 col-md-3"><b>Fascia Inserita:</b> <%=docente.getFascia()%></p>
-                                        <p class="mb-0 col-md-3"><b>Fascia Calcolata:</b> <span class="text-info bold" id="fasciacalcolata">DATI NON SUFFICIENTI</span></p>
+                                        <p class="mb-0 col-md-6 uppercase"><u><b>Docente:</b> <%=docente.getNome()%>&nbsp;<%=docente.getCognome()%></u></p>
+                                        <p class="mb-0 col-md-6"><b>CF:</b> <%=docente.getCF()%></p>
                                     </div>
                                     <div class="row">
                                         <hr>
@@ -357,7 +355,7 @@
                                                 <tr>
                                                     <th colspan="2" style="text-align: center;">
                                                         <label class="control-label"><i class="fa fa-edit"></i>
-                                                            TABELLA RIEPILOGATIVA DELLE ATTIVIT&#192; SVOLTE (Inserire le attivit&#224; a partire da quelle pi&#249; rilevanti per l'attribuzione della fascia)</label>
+                                                            TABELLA RIEPILOGATIVA DELLE ATTIVIT&#192; SVOLTE</label>
                                                     </th>
                                                 </tr>
                                             </thead>
@@ -466,7 +464,7 @@
                                                                                                       data-container="body" data-placement="bottom"
                                                                                                       data-content="CAMPO OBBLIGATORIO"> &#42;</span>
                                                                         </span>
-                                                                        <select id="ggmm<%=s%>" name="ggmm<%=s%>" class="form-control select2" data-placeholder="..." onchange="return calcolafascia();">
+                                                                        <select id="ggmm<%=s%>" name="ggmm<%=s%>" class="form-control select2" data-placeholder="...">
                                                                             <option value="">...</option>
                                                                             <option value="gg">GIORNI</option>
                                                                             <option value="mm">MESI</option>
@@ -545,9 +543,7 @@
                                                                                 data-trigger="hover" 
                                                                                 data-container="body" 
                                                                                 data-placement="bottom"
-                                                                                data-content="Nel caso in cui le esperienze utili al raggiungimento della fascia di appartenenza dichiarata per il docente siano contenute in sezioni separate del cv, 
-                                                           raggruppare le attivit&#224; per tipologia e attribuire un numero progressivo da 1 a 5.
-                                                           Tale numero deve essere trascritto (anche a penna) sul cv in modo da consentire la verifica della fascia di appartenenza." 
+                                                                                data-content="Nel caso in cui le esperienze per il docente siano contenute in sezioni separate del cv, raggruppare le attivit&#224; per tipologia e attribuire un numero progressivo da 1 a 5." 
                                                                                 data-original-title="NUMERO PROGRESSIVO DI RIFERIMENTO CV"></i>
                                                                         </span>
                                                                         <input type="text" class="form-control" name="progr<%=s%>" placeholder="..." 
@@ -570,46 +566,6 @@
                                     <script type="text/javascript">
                                         function changedurata(idfield) {
                                             fieldOnlyNumber(idfield);
-                                            calcolafascia();
-                                        }
-                                        function calcolafascia() {
-                                            var msanni = 0;
-                                            ////////////////////////////////////////////
-                                            var days = (1000 * 60 * 60 * 24);
-                                            var months = 30 * (1000 * 60 * 60 * 24);
-                                            var years = 365 * (1000 * 60 * 60 * 24);
-                                            ////////////////////////////////////////////
-                                            for (var indice = 1; indice < 6; indice++) {
-                                                var dur1 = $('#durata' + indice).val();
-                                                var ggmm = $('#ggmm' + indice).val();
-                                                if (dur1 === "" || ggmm === "") {
-                                                    break;
-                                                } else {
-                                                    if (ggmm === 'gg') {
-                                                        msanni = msanni + (dur1 * days);
-                                                    } else if (ggmm === 'mm') {
-                                                        msanni = msanni + (dur1 * months);
-                                                    } else if (ggmm === 'aa') {
-                                                        msanni = msanni + (dur1 * years);
-                                                    }
-                                                }
-                                            }
-                                            var anni = -1;
-                                            if (msanni > 0) {
-                                                var my = 31536000000;
-                                                anni = msanni / my;
-                                            }
-                                            if (anni >= 0) {
-                                                if (anni >= 3 && anni < 5) {
-                                                    $('#fasciacalcolata').text("B");
-                                                } else if (anni >= 5) {
-                                                    $('#fasciacalcolata').text("A");
-                                                } else {
-                                                    $('#fasciacalcolata').html("<span class='font-red'>INFERIORE A 3 ANNI</span>");
-                                                }
-                                            } else {
-                                                $('#fasciacalcolata').text("DATI NON SUFFICIENTI");
-                                            }
                                         }
                                     </script>
                                 </blockquote>

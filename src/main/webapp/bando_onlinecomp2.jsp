@@ -85,8 +85,6 @@
 
                 ArrayList<Prov_rc> province = li.getProvince();
                 ArrayList<Prov_rc> reg = li.getReg();
-                ArrayList<Items> fonti = li.getFonti();
-                ArrayList<Items> aree = li.getAree();
                 ArrayList<Items> titolistudio = li.getTitolistudio();
                 ArrayList<Items> qualifiche = li.getQualifiche();
                 ArrayList<Items> inquadr = li.getInquadr();
@@ -193,7 +191,7 @@
                         output = "1";
                         msg += "<span style='color:red;'>E' obbligatorio selezionare almeno una delle possibili voci del 'Punto 1'</span><br/>";
                     }
-                    
+
                     if (ch6 === true && iscrizione === "") {
                         output = "1";
                         msg += "<span style='color:red;'>E' obbligatorio copilare il campo 'n. di iscrizione'</span><br/>";
@@ -543,7 +541,6 @@
                         var Titolistudio1 = document.getElementById("doctitolistudio" + indice).value.trim();
                         var Qualifiche1 = document.getElementById("docqualifiche" + indice).value.trim();
 
-                        var Fascia1 = document.getElementById("docfascia" + indice).value.trim();
                         var Inquadr = document.getElementById("docinquadr" + indice).value.trim();
 
                         if ($("#docenteclasse" + indice).is(":visible")) {
@@ -553,7 +550,7 @@
                                     || Regione1 === "" || Mail1 === ""
                                     || Pec1 === "" || Tel1 === ""
                                     || Titolistudio1 === "" || Qualifiche1 === ""
-                                    || Fascia1 === "" || Inquadr === ""
+                                    || Inquadr === ""
                                     )
                             {
                                 output = "1";
@@ -1203,8 +1200,8 @@
                                                                     <div class="col-md-6">
                                                                         <span class="help-block">
                                                                             Estremi - Mq aula<span class="font-red popovers" data-trigger="hover" 
-                                                                                                  data-container="body" data-placement="bottom"
-                                                                                                  data-content="CAMPO OBBLIGATORIO"> &#42;</span>
+                                                                                                   data-container="body" data-placement="bottom"
+                                                                                                   data-content="CAMPO OBBLIGATORIO"> &#42;</span>
                                                                         </span>
                                                                         <input type="text" class="form-control uppercase decimalvalue" 
                                                                                name="estremi<%=indicet1%>" 
@@ -1541,12 +1538,44 @@
                             </div>
                             <%} else if (allegato_A_B.equals("B") && !esisteAllegatoB) {
                                 int totaledocenti = ActionB.getDocentiAllegatoA(username);
+                                String tiposoggetto = ActionB.getTipoSoggetto(username);
                             %>
                             <div class="portlet-body">
                                 <form name="formregist" role="form" action="Operazioni?action=allegato_B" method="post"  class="form-horizontal" id="formModelloB">
                                     <input type="hidden" name="username" value="<%=username%>"/>
                                     <input type="hidden" name="totaledocenti" value="<%=totaledocenti%>"/>
-
+                                    <%
+                                        if (tiposoggetto.equals("costituenda") || tiposoggetto.equals("rete")) {%>
+                                    <hr>
+                                    <table style="width: 100%;">
+                                        <thead>
+                                            <tr>
+                                                <th colspan="2" style="text-align: center; background-color: silver;">
+                                                    <h4><b>Costituenda ATI/ATS o Costituenda rete di imprese – Rete contratto</b></h4>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <div class="col-md-12">
+                                                    <span class="help-block">
+                                                        Elencare gli Enti/Società mandanti<span class="font-red popovers" data-trigger="hover" 
+                                                                                                data-container="body" data-placement="bottom"
+                                                                                                data-content="CAMPO OBBLIGATORIO"> &#42;</span>
+                                                    </span>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <input class="form-control uppercase" id="elencoenti" name="elencoenti" required
+                                                           placeholder="...." type="text" onchange="return fieldNoEuro(this.id);" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <%}else{%>
+                                    <input type="hiddan" name="elencoenti" id="elencoenti" value="" />
+                                    <%}%>
                                     <hr>
                                     <table style="width: 100%;">
                                         <thead>
@@ -1900,31 +1929,6 @@
                                                     </div>
 
                                                     <div class="col-md-12">
-                                                        <div class="col-md-3">
-                                                            <div class="form-group">
-                                                                <label class="control-label col-md-1"></label>
-                                                                <div class="col-md-11">
-                                                                    <span class="help-block">
-                                                                        Fascia di Appartenza<span class="font-red popovers" data-trigger="hover" 
-                                                                                                  data-container="body" data-placement="bottom"
-                                                                                                  data-content="CAMPO OBBLIGATORIO"> &#42;</span>
-                                                                    </span>
-                                                                    <select id="docfascia<%=s%>" name="docfascia<%=s%>" class="form-control select2" data-placeholder="..." required >
-                                                                        <option value="">...</option>
-                                                                        <option value="A">FASCIA A</option>
-                                                                        <option value="B">FASCIA B</option>
-                                                                    </select>
-                                                                    </select>
-                                                                    <script type="text/javascript">
-                                                                        $('#docfascia' + '<%=s%>').select2({
-                                                                            allowClear: true,
-                                                                            theme: "classic",
-                                                                            language: 'it'
-                                                                        });
-                                                                    </script>
-                                                                </div>
-                                                            </div>
-                                                        </div>
                                                         <div class="col-md-3">
                                                             <div class="form-group">
                                                                 <label class="control-label col-md-1"></label>

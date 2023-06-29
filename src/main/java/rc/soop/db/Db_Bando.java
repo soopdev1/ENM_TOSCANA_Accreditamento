@@ -750,6 +750,34 @@ public class Db_Bando {
         return sino;
     }
 
+    public String getTipoSoggetto(String username) {
+        String tipo = "";
+        try {
+            String query = "SELECT * FROM allegato_a WHERE username = ?";
+            try ( PreparedStatement ps = this.c.prepareStatement(query)) {
+                ps.setString(1, username);
+                try ( ResultSet rs = ps.executeQuery()) {
+                    if (rs.next()) {
+                        if (rs.getString("soggettosingolo").equals("SI")) {
+                            tipo = "soggettosingolo";
+                        } else if (rs.getString("costituenda").equals("SI")) {
+                            tipo = "costituenda";
+                        } else if (rs.getString("costituita").equals("SI")) {
+                            tipo = "costituita";
+                        } else if (rs.getString("rete").equals("SI")) {
+                            tipo = "rete";
+                        } else if (rs.getString("consorzio").equals("SI")) {
+                            tipo = "consorzio";
+                        }
+                    }
+                }
+            }
+        } catch (Exception ex) {
+            insertTracking("ERROR SYSTEM", estraiEccezione(ex));
+        }
+        return tipo;
+    }
+
     public boolean esisteUserMail(String user, String mail) {
         boolean out = false;
         try {
@@ -1884,7 +1912,7 @@ public class Db_Bando {
                 + "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?," //20
                 + "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?," //20
                 + "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?," //20
-                + "?,?,?,?,?,?,?,?,?,?,?,?,?,?" //14
+                + "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?" //19
                 + ")";
         try {
             try ( PreparedStatement ps = this.c.prepareStatement(insert)) {
@@ -1969,7 +1997,13 @@ public class Db_Bando {
                 ps.setString(72, privacy1);
                 ps.setString(73, privacy2);
 
-                ps.setString(74, curdate());
+                ps.setString(74, titolo1);
+                ps.setString(75, titolo2);
+                ps.setString(76, titolo3);
+                ps.setString(77, titolo4);
+                ps.setString(78, titolo5);
+                
+                ps.setString(79, curdate());
                 ps.executeUpdate();
             }
             return true;
@@ -2000,7 +2034,7 @@ public class Db_Bando {
                         ps.setString(12, allegatob.getTel());
                         ps.setString(13, allegatob.getTitolistudio());
                         ps.setString(14, allegatob.getQualifiche());
-                        ps.setString(15, allegatob.getFascia());
+                        ps.setString(15, allegatob.getElencoenti());
                         ps.setString(16, allegatob.getInquadramento());
                         ps.setString(17, datetime);
                         ps.executeUpdate();
@@ -2011,11 +2045,7 @@ public class Db_Bando {
                 error.addAndGet(1);
             }
         });
-        if (error.get() == 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return error.get() == 0;
     }
 
     public boolean insertAllegatoC2(AllegatoC2 dainserire, String datetime) {
@@ -2576,7 +2606,7 @@ public class Db_Bando {
                                         rs.getString("username"), rs.getInt("id"), rs.getString("nome"), rs.getString("cognome"),
                                         rs.getString("cf"), rs.getString("comune"), rs.getString("datanascita"), rs.getString("sesso"),
                                         rs.getString("regione"), rs.getString("mail"), rs.getString("pec"), rs.getString("tel"),
-                                        rs.getString("titolistudio"), rs.getString("qualifiche"), rs.getString("fascia"), inquadramento1
+                                        rs.getString("titolistudio"), rs.getString("qualifiche"), rs.getString("elencoenti"), inquadramento1
                                 )
                         );
                     }
@@ -2601,7 +2631,7 @@ public class Db_Bando {
                                 rs.getString("username"), rs.getInt("id"), rs.getString("nome"), rs.getString("cognome"),
                                 rs.getString("cf"), rs.getString("comune"), rs.getString("datanascita"), rs.getString("sesso"),
                                 rs.getString("regione"), rs.getString("mail"), rs.getString("pec"), rs.getString("tel"),
-                                rs.getString("titolistudio"), rs.getString("qualifiche"), rs.getString("fascia"), rs.getString("inquadramento")
+                                rs.getString("titolistudio"), rs.getString("qualifiche"), rs.getString("elencoenti"), rs.getString("inquadramento")
                         );
                     }
                 }

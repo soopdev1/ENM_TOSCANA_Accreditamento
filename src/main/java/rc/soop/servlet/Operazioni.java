@@ -1007,6 +1007,7 @@ public class Operazioni extends HttpServlet {
 
         String username = getRequestValue(request, "username");
         int totaledocenti = parseIntR(getRequestValue(request, "totaledocenti"));
+        String elencoenti = utf8(getRequestValue(request, "elencoenti"));
         boolean ok = false;
         List<AllegatoB> valori = new ArrayList<>();
 
@@ -1018,7 +1019,7 @@ public class Operazioni extends HttpServlet {
                     utf8(getRequestValue(request, "docregione" + indice)), utf8(getRequestValue(request, "docmail" + indice)),
                     utf8(getRequestValue(request, "docpec" + indice)), utf8(getRequestValue(request, "doctel" + indice)),
                     utf8(getRequestValue(request, "doctitolistudio" + indice)), utf8(getRequestValue(request, "docqualifiche" + indice)),
-                    utf8(getRequestValue(request, "docfascia" + indice)), utf8(getRequestValue(request, "docinquadr" + indice))));
+                    elencoenti, utf8(getRequestValue(request, "docinquadr" + indice))));
             ok = true;
         }
 

@@ -465,6 +465,12 @@ public class ActionB {
         db.closeDB();
         return var;
     }
+    public static String getTipoSoggetto(String username) {
+        Db_Bando db = new Db_Bando();
+        String var = db.getTipoSoggetto(username);
+        db.closeDB();
+        return var;
+    }
 
     public static boolean insAllegatoA(
             //PUNTO 1
