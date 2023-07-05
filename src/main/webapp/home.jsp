@@ -142,9 +142,10 @@
         </div>
         <!-- BEGIN LOGO -->
         <div class="logo">
-            <img src="assets/soop/img/l3-cu.png" alt="" height="54px"/>
-            <img src="assets/soop/img/l2-gg.png" alt="" height="54px"/>
-            <img src="assets/soop/img/l1-an.png" alt="" height="54px"/>
+            <img src="assets/soop/img/l1-AR.png" alt="" height="54px"/>
+            <img src="assets/soop/img/l2-EU.jpg" alt="" height="54px"/>
+            <img src="assets/soop/img/l3-ML.jpg" alt="" height="54px"/>
+            <img src="assets/soop/img/l4-RT.jpg" alt="" height="54px"/>
         </div>
         <!-- END LOGO -->
         <!-- BEGIN LOGIN -->
@@ -235,7 +236,7 @@
                 </div>
             </form>
             <hr>
-            
+
             <form id="link1" action="bando_reg.jsp" method="post">
                 <input type="hidden" name="bando" value="<%=Constant.bando%>"/>
                 <div class="create-account">
@@ -264,9 +265,9 @@
                 </div>
 
                 <div class="logo"> 
-                    <img src="assets/soop/img/logo_blue_1.png" alt="" height="75"/>
-                    <img src="assets/soop/img/l4-yis.png" alt="" height="75"/>
-
+                    <img src="assets/soop/img/logo_blue_1.png" alt="" height="54px"/>
+                    <img src="assets/soop/img/l6-GO.jpg" alt="" height="54px"/>
+                    <img src="assets/soop/img/l7-AN.png" alt="" height="54px"/>
                 </div>
                 <div class="logo"><%
                     String link = ActionB.getPath("linkmanuale");

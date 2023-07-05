@@ -48,9 +48,10 @@
     <body class=" login" onload="sel();" style="background-image: url(assets/pages/img/bg-3.jpg);">
         <!-- BEGIN LOGO -->
         <div class="logo">
-            <img src="assets/soop/img/l3-cu.png" alt="" height="54px"/>
-            <img src="assets/soop/img/l2-gg.png" alt="" height="54px"/>
-            <img src="assets/soop/img/l1-an.png" alt="" height="54px"/>
+            <img src="assets/soop/img/l1-AR.png" alt="" height="54px"/>
+            <img src="assets/soop/img/l2-EU.jpg" alt="" height="54px"/>
+            <img src="assets/soop/img/l3-ML.jpg" alt="" height="54px"/>
+            <img src="assets/soop/img/l4-RT.jpg" alt="" height="54px"/>
         </div>
         <!-- END LOGO -->
         <!-- BEGIN LOGIN -->
@@ -104,8 +105,9 @@
         </div>
 
         <div class="logo"> 
-            <img src="assets/soop/img/logo_blue_1.png" alt="" height="75"/>
-            <img src="assets/soop/img/l4-yis.png" alt="" height="75"/>
+            <img src="assets/soop/img/logo_blue_1.png" alt="" height="54px"/>
+            <img src="assets/soop/img/l6-GO.jpg" alt="" height="54px"/>
+            <img src="assets/soop/img/l7-AN.png" alt="" height="54px"/>
         </div>
         <!-- END LOGIN -->
         <!--[if lt IE 9]>

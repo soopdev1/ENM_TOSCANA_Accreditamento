@@ -354,15 +354,21 @@
                                 <div class="col-md-6"><center>
                                         <table>
                                             <tr>
-                                                <td><img src="assets/soop/img/l3-cu.png" alt="" height="54px"/></td>
-                                                <td><img src="assets/soop/img/l2-gg.png" alt="" height="54px"/></td>
-                                                <td><img src="assets/soop/img/l1-an.png" alt="" height="54px"/></td>
-                                                <td><img src="assets/soop/img/l4-yis.png" alt="" height="54px"/></td>
+                                                <td><img src="assets/soop/img/l1-AR.png" alt="" height="54px"/></td>
+                                                <td><img src="assets/soop/img/l2-EU.jpg" alt="" height="54px"/></td>
+                                                <td><img src="assets/soop/img/l3-ML.jpg" alt="" height="54px"/></td>
+                                                
+                                            </tr>
+                                            <tr>
+                                                <td><img src="assets/soop/img/l4-RT.jpg" alt="" height="54px"/></td>
+                                                <td><img src="assets/soop/img/l6-GO.jpg" alt="" height="54px"/></td>
+                                                <td><img src="assets/soop/img/l7-AN.png" alt="" height="54px"/></td>
                                             </tr>
                                         </table>
                                     </center> 
                                 </div>
-                                <div class="col-md-3" style="text-align: right;"><img src="assets/soop/img/logo_blue_1.png" alt="logo" height="74px" class="img-responsivelogo"/></div> 
+                                <div class="col-md-3" style="text-align: right;">
+                                    <img src="assets/soop/img/logo_blue_1.png" alt="logo" height="74px" class="img-responsivelogo"/></div> 
                             </div>                         
                         </div>
 
