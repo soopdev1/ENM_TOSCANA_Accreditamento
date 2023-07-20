@@ -265,7 +265,7 @@
                     $('#g-recaptcha-response').val(token);
                 });
 
-                
+
                 if (output !== "0") {
                     document.getElementById("valoretxt").innerHTML = msg;
                     document.getElementById("static").className = document.getElementById("static").className + " in";
@@ -354,15 +354,14 @@
                                 <div class="col-md-6"><center>
                                         <table>
                                             <tr>
-                                                <td><img src="assets/soop/img/l1-AR.png" alt="" height="54px"/></td>
                                                 <td><img src="assets/soop/img/l2-EU.jpg" alt="" height="54px"/></td>
                                                 <td><img src="assets/soop/img/l3-ML.jpg" alt="" height="54px"/></td>
-                                                
+                                                <td><img src="assets/soop/img/l7-AN.png" alt="" height="54px"/></td>
+                                                <td><img src="assets/soop/img/l6-GO.jpg" alt="" height="54px"/></td>
                                             </tr>
                                             <tr>
-                                                <td><img src="assets/soop/img/l4-RT.jpg" alt="" height="54px"/></td>
-                                                <td><img src="assets/soop/img/l6-GO.jpg" alt="" height="54px"/></td>
-                                                <td><img src="assets/soop/img/l7-AN.png" alt="" height="54px"/></td>
+                                                <td colspan="2"><img src="assets/soop/img/l4-RT.jpg" alt="" height="54px"/></td>
+                                                <td colspan="2"><img src="assets/soop/img/l1-AR.png" alt="" height="54px"/></td>
                                             </tr>
                                         </table>
                                     </center> 

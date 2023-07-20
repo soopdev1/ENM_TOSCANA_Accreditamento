@@ -267,7 +267,12 @@ public class Upload extends HttpServlet {
                         || tipodoc.equals("DONLB")
                         || tipodoc.equals("CONV")
                         || tipodoc.equals("MOD1")
-                        || tipodoc.equals("MOD2")) { //DOCUMENTI CHE DEVONO ESSERE FIRMATI
+                        || tipodoc.equals("MOD2")
+                        || tipodoc.equals("DONLC")
+                        || tipodoc.equals("DONLD")
+                        || tipodoc.equals("DONLE")
+                        || tipodoc.equals("DONLF")
+                        ) { //DOCUMENTI CHE DEVONO ESSERE FIRMATI
                     SignedDoc dc = extractSignatureInformation_PDF(readFileToByteArray(nomefile), new File(nomefile.getPath() + "_tempcheck.pdf"));
                     if (dc.isValido()) {
                         String cfuser = dbb.getCF_user(username);
@@ -462,13 +467,7 @@ public class Upload extends HttpServlet {
 
                         String[] dest = {emailuser};
 
-                        if (Constant.test
-                                && username.toLowerCase().startsWith("lmarin")) { //   RIMUOVERE
-
-                            dest[0] = "raffaele.cosco@faultless.it";
-                            numuser = "3286137172";
-                        }
-
+                        
                         try {
                             sendMail(
                                     Constant.nomevisual, dest, new String[]{}, text,

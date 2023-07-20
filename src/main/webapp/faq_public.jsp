@@ -115,7 +115,7 @@
                                                 <%=f1.getRisposta()%>
                                             </div>
                                         </div>
-                                            
+
                                     </div>
                                     <div>
                                         <hr>
@@ -149,9 +149,9 @@
             <!-- BEGIN FORGOT PASSWORD FORM -->
         </div>
         <div class="logo"> 
+            <img src="assets/soop/img/l4-RT.jpg" alt="" height="54px"/>
+            <img src="assets/soop/img/l1-AR.png" alt="" height="54px"/>
             <img src="assets/soop/img/logo_blue_1.png" alt="" height="54px"/>
-            <img src="assets/soop/img/l6-GO.jpg" alt="" height="54px"/>
-            <img src="assets/soop/img/l7-AN.png" alt="" height="54px"/>
         </div>
         <!-- END LOGIN -->
         <!--[if lt IE 9]>

@@ -509,7 +509,9 @@ public class ActionB {
             //PUNTO 5
             String numdocenti,
             //PRIVACY
-            String privacy1, String privacy2
+            String privacy1, String privacy2,
+            //ELENCOENTI
+            String elencoenti, String numiscrreg
     ) {
         Db_Bando db = new Db_Bando();
         boolean ctrl = db.insAllegatoA(
@@ -549,7 +551,8 @@ public class ActionB {
                 //PUNTO 5
                 numdocenti,
                 //PRIVACY
-                privacy1, privacy2);
+                privacy1, privacy2,
+                elencoenti,numiscrreg);
         db.closeDB();
         return ctrl;
     }

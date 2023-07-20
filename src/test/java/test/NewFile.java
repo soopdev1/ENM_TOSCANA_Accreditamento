@@ -35,9 +35,9 @@ public class NewFile {
             System.out.println(getExtension(new File("C:\\Users\\Administrator\\Desktop\\da caricare\\FMIGLI2000171020220947443.A_All.A.pdf.p7m").getName()));
             
             SignedDoc dc = extractSignatureInformation_P7M(readFileToByteArray(new File("C:\\Users\\Administrator\\Desktop\\da caricare\\FMIGLI2000171020220947443.A_All.A.pdf.p7m")));
-            System.out.println("test.NewFile.main() "+dc.getCodicefiscale());
-            System.out.println("test.NewFile.main() "+dc.getErrore());
-            System.out.println("test.NewFile.main() "+dc.isValido());
+//            System.out.println("test.NewFile.main() "+dc.getCodicefiscale());
+//            System.out.println("test.NewFile.main() "+dc.getErrore());
+//            System.out.println("test.NewFile.main() "+dc.isValido());
 ////        File out1 = allegatoC("FVALOC6567");
 ////        System.out.println(out1.getPath());
 //

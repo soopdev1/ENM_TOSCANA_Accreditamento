@@ -5,6 +5,7 @@
  */
 package rc.soop.action;
 
+import java.util.ResourceBundle;
 import static rc.soop.action.ActionB.trackingAction;
 import static rc.soop.util.Utility.estraiEccezione;
 import static rc.soop.util.Utility.formatStringtoStringDate;
@@ -15,14 +16,15 @@ import org.joda.time.format.DateTimeFormatter;
 
 public class Constant {
 
+    public static final ResourceBundle conf = ResourceBundle.getBundle("conf.conf");
+
     public static final String bando = "BAT1";
-    public static final boolean test = false;
+    public static final boolean test = conf.getString("test").equals("SI");
     public static final boolean demo = false;
     public static final boolean faq = true;
-    public static final String nomevisual = "YES I START UP - TOSCANA";
-    public static final String version = "1.0.0";
-    
-    
+    public static final String nomevisual = conf.getString("name.visual");
+    public static final String version = conf.getString("version");
+
     //Classic
     public static final String slash = "/";
 
@@ -50,9 +52,11 @@ public class Constant {
     public static final String timestamp = "yyyyMMddHHmmssSSS";
 
     ///////////////////////////////////////////////////////////////////
-    public static final String datainizio = formatStringtoStringDate("2021-03-01",
-            patternSql, patternITA, false);
+    public static final String datainizio = formatStringtoStringDate("2023-07-01", patternSql, patternITA, false);
     ///////////////////////////////////////////////////////////////////
+
+    public static final String extpdf = ".pdf";
+    public static final String extdocx = ".docx";
 
     public static boolean checkRegistrazione() {
         try {

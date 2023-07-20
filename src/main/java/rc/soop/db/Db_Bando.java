@@ -8,10 +8,8 @@ package rc.soop.db;
 
 import static rc.soop.action.ActionB.query_unitamisura_rc;
 import static rc.soop.action.Constant.bando;
-import static rc.soop.action.Constant.demo;
 import static rc.soop.action.Constant.patternITA;
 import static rc.soop.action.Constant.patternSql;
-import static rc.soop.action.Constant.test;
 import static rc.soop.action.Constant.timestampITA;
 import static rc.soop.action.Constant.timestampSQL;
 import rc.soop.entity.AllegatoB;
@@ -68,6 +66,7 @@ import static org.apache.commons.validator.routines.EmailValidator.getInstance;
 import org.joda.time.DateTime;
 import static org.joda.time.format.DateTimeFormat.forPattern;
 import org.joda.time.format.DateTimeFormatter;
+import static rc.soop.action.Constant.conf;
 
 /**
  * @author raffaele
@@ -75,7 +74,6 @@ import org.joda.time.format.DateTimeFormatter;
 public class Db_Bando {
 
     private Connection c = null;
-    private static final ResourceBundle conf = ResourceBundle.getBundle("conf.conf");
 
     public Db_Bando() {
 
@@ -98,7 +96,6 @@ public class Db_Bando {
             p.put("useSSL", "false");
             p.put("connectTimeout", "1000");
             p.put("useUnicode", "true");
-
             this.c = DriverManager.getConnection("jdbc:mysql://" + host, p);
         } catch (Exception ex) {
             if (this.c != null) {
@@ -1905,14 +1902,17 @@ public class Db_Bando {
             //PUNTO 5
             String numdocenti,
             //PRIVACY
-            String privacy1, String privacy2
+            String privacy1, String privacy2,
+            // ELENCOENTI
+            String elencoenti, String numiscrreg
     ) {
 
         String insert = "INSERT INTO allegato_a VALUES ("
                 + "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?," //20
                 + "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?," //20
                 + "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?," //20
-                + "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?" //19
+                + "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?," //20
+                + "?"//1
                 + ")";
         try {
             try ( PreparedStatement ps = this.c.prepareStatement(insert)) {
@@ -2002,8 +2002,11 @@ public class Db_Bando {
                 ps.setString(76, titolo3);
                 ps.setString(77, titolo4);
                 ps.setString(78, titolo5);
-                
-                ps.setString(79, curdate());
+
+                ps.setString(79, elencoenti);
+                ps.setString(80, numiscrreg);
+
+                ps.setString(81, curdate());
                 ps.executeUpdate();
             }
             return true;

@@ -50,6 +50,7 @@ import org.apache.commons.codec.binary.Base64;
 import static org.apache.commons.codec.binary.Base64.decodeBase64;
 import org.apache.commons.io.FileUtils;
 import org.joda.time.DateTime;
+import static rc.soop.action.Constant.extdocx;
 
 /**
  *
@@ -57,7 +58,7 @@ import org.joda.time.DateTime;
  */
 @SuppressWarnings("serial")
 public class Download extends HttpServlet {
-    
+
     protected void guidabando(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String b64 = getPath("pdf.guida");
         if (b64 != null) {
@@ -72,7 +73,7 @@ public class Download extends HttpServlet {
             redirect(request, response, "page_fnf.html");
         }
     }
-    
+
     protected void guidaConvenzioni(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String b64 = getPath("pdf.guidaconvenzione");
         if (b64 != null) {
@@ -88,7 +89,7 @@ public class Download extends HttpServlet {
             redirect(request, response, "page_fnf.html");
         }
     }
-    
+
     protected void avvisobando(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String b64 = getPath("pdf.avviso");
         if (b64 != null) {
@@ -104,7 +105,7 @@ public class Download extends HttpServlet {
             redirect(request, response, "page_fnf.html");
         }
     }
-    
+
     protected void viewFileConvenzioniRUP(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String codicedoc = request.getParameter("tipologia");
         String username = request.getParameter("userdoc");
@@ -131,7 +132,7 @@ public class Download extends HttpServlet {
             redirect(request, response, "page_fnf.html");
         }
     }
-    
+
     protected void viewFileConvenzioni(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String username = request.getSession().getAttribute("username").toString();
         String codicedoc = getRequestValue(request, "codicedoc");
@@ -164,11 +165,11 @@ public class Download extends HttpServlet {
         String tipodoc = request.getParameter("tipodoc");
         String bandorif = request.getSession().getAttribute("bandorif").toString();
         String username = request.getSession().getAttribute("username").toString();
-        
+
         Db_Bando dbb = new Db_Bando();
         String b64 = dbb.getPathDocUserBando(bandorif, username, tipodoc);
         dbb.closeDB();
-        
+
         if (b64 != null) {
             FileDownload fw = preparefilefordownload(b64);
             if (fw != null) {
@@ -191,7 +192,7 @@ public class Download extends HttpServlet {
             redirect(request, response, "page_fnf.html");
         }
     }
-    
+
     protected void docbandoconsrup(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String tipodoc = request.getParameter("tipodoc");
         String tipologia = request.getParameter("tipologia");
@@ -200,7 +201,7 @@ public class Download extends HttpServlet {
         String bandorif = request.getSession().getAttribute("bandorif").toString();
         String path = request.getParameter("path");
         String filePath = "";
-        
+
         if (path == null || path.trim().equals("")) {
             Db_Bando dbb = new Db_Bando();
             filePath = dbb.getPathDocUserBando(bandorif, username, tipodoc, tipologia, note);
@@ -208,9 +209,9 @@ public class Download extends HttpServlet {
         } else {
             filePath = path;
         }
-        
+
         FileDownload fw = preparefilefordownload(filePath);
-        
+
         if (fw != null) {
             trackingAction(request.getSession().getAttribute("username").toString(), "Download File " + fw.getName());
             String mimeType = fw.getMimeType();
@@ -227,25 +228,25 @@ public class Download extends HttpServlet {
         } else {
             redirect(request, response, "page_fnf.html");
         }
-        
+
     }
-    
+
     protected void docbandoconsConv(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String username = getRequestValue(request, "userdoc");
         if (username.equals("")) {
             username = request.getSession().getAttribute("username").toString();
         }
         String path = getRequestValue(request, "path");
-        
+
         String filePath = "";
         if (path == null || path.trim().equals("")) {
             filePath = getConvenzioneROMA(username);
         } else {
             filePath = path;
         }
-        
+
         FileDownload fw = preparefilefordownload(filePath);
-        
+
         if (fw != null) {
             trackingAction(request.getSession().getAttribute("username").toString(), "Download File " + fw.getName());
             String mimeType = fw.getMimeType();
@@ -263,9 +264,9 @@ public class Download extends HttpServlet {
             redirect(request, response, "page_fnf.html");
         }
     }
-    
+
     protected void docbandoconsrupB1(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        
+
         String username = getRequestValue(request, "username");
         String cod = getRequestValue(request, "cod");
         String indice = getRequestValue(request, "indice");
@@ -297,9 +298,9 @@ public class Download extends HttpServlet {
         } else {
             redirect(request, response, "page_fnf.html");
         }
-        
+
     }
-    
+
     protected void modellodoc(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if (request.getSession().getAttribute("username") == null) {
             redirect(request, response, "home.jsp");
@@ -313,6 +314,7 @@ public class Download extends HttpServlet {
             File downloadFile = null;
             String tiposoggetto = dbb.getTipoSoggetto(username);
             dbb.closeDB();
+            boolean pdf = true;
             switch (tipodoc) {
                 case "DONLA": {
                     File f1 = allegatoA_fase1(username);
@@ -331,33 +333,44 @@ public class Download extends HttpServlet {
                 case "DONLC": {
                     switch (tiposoggetto) {
                         case "soggettosingolo": {
-                            downloadFile = new File(pathtemp + File.separator + tipodoc + "_" + Utility.generaId(50) + ".pdf");
+                            downloadFile = new File(pathtemp + File.separator + tipodoc + "_" + Utility.generaId(50) + extdocx);
                             FileUtils.writeByteArrayToFile(downloadFile, Base64.decodeBase64(ActionB.getPath("allegatoc.1.soggettosingolo")));
                             break;
                         }
                         case "costituenda": {
-                            downloadFile = new File(pathtemp + File.separator + tipodoc + "_" + Utility.generaId(50) + ".pdf");
+                            downloadFile = new File(pathtemp + File.separator + tipodoc + "_" + Utility.generaId(50) + extdocx);
                             FileUtils.writeByteArrayToFile(downloadFile, Base64.decodeBase64(ActionB.getPath("allegatoc.2.costituenda")));
                             break;
                         }
                         case "costituita": {
-                            downloadFile = new File(pathtemp + File.separator + tipodoc + "_" + Utility.generaId(50) + ".pdf");
+                            downloadFile = new File(pathtemp + File.separator + tipodoc + "_" + Utility.generaId(50) + extdocx);
                             FileUtils.writeByteArrayToFile(downloadFile, Base64.decodeBase64(ActionB.getPath("allegatoc.3.costituita")));
                             break;
                         }
                         case "rete": {
-                            downloadFile = new File(pathtemp + File.separator + tipodoc + "_" + Utility.generaId(50) + ".pdf");
+                            downloadFile = new File(pathtemp + File.separator + tipodoc + "_" + Utility.generaId(50) + extdocx);
                             FileUtils.writeByteArrayToFile(downloadFile, Base64.decodeBase64(ActionB.getPath("allegatoc.4.rete")));
                             break;
                         }
                         case "consorzio": {
-                            downloadFile = new File(pathtemp + File.separator + tipodoc + "_" + Utility.generaId(50) + ".pdf");
+                            downloadFile = new File(pathtemp + File.separator + tipodoc + "_" + Utility.generaId(50) + extdocx);
                             FileUtils.writeByteArrayToFile(downloadFile, Base64.decodeBase64(ActionB.getPath("allegatoc.5.consorzio")));
                             break;
                         }
                         default:
                             downloadFile = null;
                             break;
+                    }
+                    break;
+                }
+                case "DONLD":
+                case "DONLE":
+                case "DONLF": {
+                    if (filePath.startsWith("/")) {
+                        downloadFile = new File(filePath);
+                    } else {
+                        downloadFile = new File(pathtemp + File.separator + tipodoc + "_" + Utility.generaId(50) + extdocx);
+                        FileUtils.writeByteArrayToFile(downloadFile, Base64.decodeBase64(filePath));
                     }
                     break;
                 }
@@ -371,7 +384,7 @@ public class Download extends HttpServlet {
                     break;
                 }
             }
-            
+
             if (downloadFile != null && downloadFile.exists()) {
                 trackingAction(request.getSession().getAttribute("username").toString(), "Download File (con modello) " + downloadFile.getName());
                 OutputStream outStream;
@@ -397,25 +410,25 @@ public class Download extends HttpServlet {
             }
         }
     }
-    
+
     protected void zipdomanda(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String bandorif = request.getSession().getAttribute("bandorif").toString();
         String username = request.getParameter("userdoc");
-        
+
         String tipo = request.getSession().getAttribute("tipo").toString();
-        
+
         ArrayList<Docuserbandi> lid1 = new ArrayList<>();
-        
+
         if (tipo.equals("0")) {
             lid1 = listaDocUserBando_nofilemcn(bandorif, username);
         } else if (tipo.equals("1")) {
             lid1 = listaDocuserbando(bandorif, username);
         }
-        
+
         ArrayList<DocumentiDocente> al = listaDocUserBandoDocenti(username, true);
-        
+
         ArrayList<FileDownload> ff = new ArrayList<>();
-        
+
         for (int i = 0; i < lid1.size(); i++) {
             if (!lid1.get(i).getPath().equals("-")) {
                 ff.add(preparefilefordownload(lid1.get(i).getPath()));
@@ -426,7 +439,7 @@ public class Download extends HttpServlet {
             ff.add(preparefilefordownload(al.get(i).getCv()));
             ff.add(preparefilefordownload(al.get(i).getDr()));
         }
-        
+
         Db_Bando dbb = new Db_Bando();
         String pathtemp = dbb.getPath("pathtemp");
         dbb.closeDB();
@@ -456,11 +469,11 @@ public class Download extends HttpServlet {
             redirect(request, response, "page_fnf.html");
         }
     }
-    
+
     protected void excelcom(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        
+
     }
-    
+
     protected void excelcomParziale(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             String data_da = request.getParameter("data_da");
@@ -507,9 +520,9 @@ public class Download extends HttpServlet {
             trackingAction("ERROR SYSTEM", estraiEccezione(e));
         }
     }
-    
+
     protected void downconv(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        
+
         String username = request.getSession().getAttribute("username").toString();
         File downloadFile = null;
         String var = request.getParameter("ctrl");
@@ -527,14 +540,14 @@ public class Download extends HttpServlet {
             }
         }
         if (var.equals("3")) {
-            
+
             File f1 = allegatoC_mod2(username);
             if (f1 != null) {
                 downloadFile = f1;
             }
         }
         dbb.closeDB();
-        
+
         if (downloadFile != null) {
             OutputStream outStream;
             try ( FileInputStream inStream = new FileInputStream(downloadFile)) {
@@ -558,11 +571,11 @@ public class Download extends HttpServlet {
             redirect(request, response, "page_fnf.html");
         }
     }
-    
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) {
-        
+
         try {
-            
+
             response.setContentType("text/html;charset=UTF-8");
             String action = request.getParameter("action");
             if (action.equals("guida")) {
@@ -669,7 +682,7 @@ public class Download extends HttpServlet {
         String pathing = "";
         ArrayList<AllegatoB1> al = getAllegatoB1(username, indice);
         for (int i = 0; i < al.size(); i++) {
-            
+
             if (tipodoc.equals("cv")) {
                 pathing = al.get(i).getAllegatocv();
             } else if (tipodoc.equals("b1")) {
@@ -681,7 +694,7 @@ public class Download extends HttpServlet {
 
         //new
         FileDownload fw = preparefilefordownload(pathing);
-        
+
         if (fw != null) {
             trackingAction(request.getSession().getAttribute("username").toString(), "Download File " + fw.getName());
             String mimeType = fw.getMimeType();
@@ -698,9 +711,9 @@ public class Download extends HttpServlet {
         } else {
             redirect(request, response, "page_fnf.html");
         }
-        
+
     }
-    
+
     protected void docAllegatoB1(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //     Utility.printRequest(request);
         String username = request.getSession().getAttribute("username").toString();
@@ -737,5 +750,5 @@ public class Download extends HttpServlet {
             trackingAction("ERROR SYSTEM", estraiEccezione(e));
         }
     }
-    
+
 }

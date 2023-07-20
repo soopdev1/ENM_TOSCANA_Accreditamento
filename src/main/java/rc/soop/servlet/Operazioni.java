@@ -413,12 +413,7 @@ public class Operazioni extends HttpServlet {
                 String numuser = dbb1.getCellUtente(username);
                 dbb1.closeDB();
 
-                if (Constant.test && username.toLowerCase().startsWith("lmarin")) { //RIMUOVERE
-                    indemail = "raffaele.cosco@faultless.it";
-                    emailmcn = "raffaele.cosco@faultless.it";
-                    numuser = "3286137172";
-                }
-
+              
                 if (es) {
                     String[] dest = {indemail};
                     String[] dest2 = {emailmcn};
@@ -585,11 +580,7 @@ public class Operazioni extends HttpServlet {
 //            File filedainviare = ActionB.creaZip_Convenzione(username, protocollo, ragsoc);
             List<FileDownload> listafiledainviare = ActionB.lista_file_Convenzione(username, protocollo, ragsoc);
 
-            if (Constant.test
-                    && username.toLowerCase().startsWith("lmarin")) { //RIMUOVERE
-                to[0] = "raffaele.cosco@faultless.it";
-                cc[0] = "raffaele.cosco@faultless.it";
-            }
+           
 
 //            boolean mailok = sendMail(
 //                    Constant.nomevisual, to, cc, text,
@@ -630,12 +621,7 @@ public class Operazioni extends HttpServlet {
                     String text_2 = db.getPath("mail.invioconvenzione.sogatt");
                     db.closeDB();
 
-                    if (Constant.test && username.toLowerCase().startsWith("lmarin")) { //RIMUOVERE
-                        for (int i = 0; i < dest.length; i++) {
-                            dest[i] = "raffaele.cosco@faultless.it";
-                        }
-                        emailuser = "raffaele.cosco@faultless.it";
-                    }
+                    
 
                     sendMail(
                             Constant.nomevisual, dest, new String[]{}, text,
@@ -699,10 +685,7 @@ public class Operazioni extends HttpServlet {
 
             db.closeDB();
 
-            if (Constant.test && username.toLowerCase().startsWith("lmarin")) { //RIMUOVERE
-                emailuser = "raffaele.cosco@faultless.it";
-                numuser = "3286137172";
-            }
+           
 
             try {
 
@@ -750,11 +733,7 @@ public class Operazioni extends HttpServlet {
                     .replaceAll("@motivazioni", motivazione);
             db.closeDB();
 
-            if (Constant.test && username.toLowerCase().startsWith("lmarin")) { //RIMUOVERE
-                emailuser = "raffaele.cosco@faultless.it";
-                numuser = "3286137172";
-            }
-
+            
             try {
 
                 String dest[] = {emailuser};
@@ -790,6 +769,9 @@ public class Operazioni extends HttpServlet {
         String accreditata = getRequestCheckbox(request, "ch6");
         String iscrizione = utf8(getRequestValue(request, "iscrizione"));
         String numaule = getRequestValue(request, "aule");
+
+        String elencoenti = utf8(getRequestValue(request, "elencoenti"));
+        String numiscrreg = utf8(getRequestValue(request, "numiscrreg"));
 
         String indirizzo1 = utf8(getRequestValue(request, "indirizzo"));
         String citta1 = getRequestValue(request, "citta");
@@ -907,7 +889,8 @@ public class Operazioni extends HttpServlet {
                 //PUNTO 5
                 numdocenti,
                 //PRIVACY
-                privacy1, privacy2);
+                privacy1, privacy2,
+                elencoenti, numiscrreg);
 
         if (esitoinserimento) {
             redirect(request, response, "bando_index.jsp?esito=ok1");
@@ -1007,7 +990,7 @@ public class Operazioni extends HttpServlet {
 
         String username = getRequestValue(request, "username");
         int totaledocenti = parseIntR(getRequestValue(request, "totaledocenti"));
-        String elencoenti = utf8(getRequestValue(request, "elencoenti"));
+
         boolean ok = false;
         List<AllegatoB> valori = new ArrayList<>();
 
@@ -1019,7 +1002,7 @@ public class Operazioni extends HttpServlet {
                     utf8(getRequestValue(request, "docregione" + indice)), utf8(getRequestValue(request, "docmail" + indice)),
                     utf8(getRequestValue(request, "docpec" + indice)), utf8(getRequestValue(request, "doctel" + indice)),
                     utf8(getRequestValue(request, "doctitolistudio" + indice)), utf8(getRequestValue(request, "docqualifiche" + indice)),
-                    elencoenti, utf8(getRequestValue(request, "docinquadr" + indice))));
+                    "", utf8(getRequestValue(request, "docinquadr" + indice))));
             ok = true;
         }
 

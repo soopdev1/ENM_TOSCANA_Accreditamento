@@ -142,10 +142,12 @@
         </div>
         <!-- BEGIN LOGO -->
         <div class="logo">
-            <img src="assets/soop/img/l1-AR.png" alt="" height="54px"/>
+
             <img src="assets/soop/img/l2-EU.jpg" alt="" height="54px"/>
             <img src="assets/soop/img/l3-ML.jpg" alt="" height="54px"/>
-            <img src="assets/soop/img/l4-RT.jpg" alt="" height="54px"/>
+            <img src="assets/soop/img/l7-AN.png" alt="" height="54px"/>
+            <img src="assets/soop/img/l6-GO.jpg" alt="" height="54px"/>
+
         </div>
         <!-- END LOGO -->
         <!-- BEGIN LOGIN -->
@@ -265,11 +267,12 @@
                 </div>
 
                 <div class="logo"> 
+                    <img src="assets/soop/img/l4-RT.jpg" alt="" height="54px"/>
+                    <img src="assets/soop/img/l1-AR.png" alt="" height="54px"/>
                     <img src="assets/soop/img/logo_blue_1.png" alt="" height="54px"/>
-                    <img src="assets/soop/img/l6-GO.jpg" alt="" height="54px"/>
-                    <img src="assets/soop/img/l7-AN.png" alt="" height="54px"/>
                 </div>
-                <div class="logo"><%
+                <div class="logo">
+                    <%
                     String link = ActionB.getPath("linkmanuale");
                     if (link != null) {%>
                     <iframe height="150" src="https://www.youtube.com/embed/8x-em_a9dGQ" frameborder="0" 

@@ -62,7 +62,7 @@
 
                 <div class="text-center">
                     <span class="bold text-center text-primary center-block h3">YES I STARTUP TOSCANA <br>CONFERMA REGISTRAZIONE</span>
-                    <%if (Constant.test) {%>
+                        <%if (Constant.test) {%>
                     <br>
                     <span class="bold text-center text-primary center-block"><img src="assets/soop/img/beta.png" alt="" height="100"/></span>
                         <%}%>
@@ -105,9 +105,9 @@
         </div>
 
         <div class="logo"> 
+            <img src="assets/soop/img/l4-RT.jpg" alt="" height="54px"/>
+            <img src="assets/soop/img/l1-AR.png" alt="" height="54px"/>
             <img src="assets/soop/img/logo_blue_1.png" alt="" height="54px"/>
-            <img src="assets/soop/img/l6-GO.jpg" alt="" height="54px"/>
-            <img src="assets/soop/img/l7-AN.png" alt="" height="54px"/>
         </div>
         <!-- END LOGIN -->
         <!--[if lt IE 9]>

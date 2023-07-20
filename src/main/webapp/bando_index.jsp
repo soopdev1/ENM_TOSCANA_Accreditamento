@@ -720,11 +720,13 @@
                             Docbandi doc_fase1 = Utility.estraidaLista(lidCONV, "CONV");
                             Docbandi doc_fase2 = Utility.estraidaLista(lidCONV, "MOD1");
                             Docbandi doc_fase3 = Utility.estraidaLista(lidCONV, "MOD2");
+                            Docbandi doc_fase4 = Utility.estraidaLista(lidCONV, "MOD3");
 
                             boolean convprontaperinvio = (ActionB.countDocumentConvenzioni(username) == 3) && !convenzioneinviata;
                             boolean conv_fase1 = ActionB.verPresenzaConvenzioni(username, doc_fase1.getCodicedoc());
                             boolean conv_fase2 = ActionB.verPresenzaConvenzioni(username, doc_fase2.getCodicedoc());
                             boolean conv_fase3 = ActionB.verPresenzaConvenzioni(username, doc_fase3.getCodicedoc());
+                            boolean conv_fase4 = ActionB.verPresenzaConvenzioni(username, doc_fase4.getCodicedoc());
 
                             int totali_conv = 3;
                             int presenti_conv = 0;
@@ -776,7 +778,7 @@
                                                     <div class="list-todo-line dark"></div>
                                                     <ul>
                                                         <%
-                                                            for (int i = 1; i < 4; i++) {
+                                                            for (int i = 1; i < 5; i++) {
                                                                 String tipol = "-";
                                                                 String titolo = "";
                                                                 String info = "";
@@ -799,7 +801,7 @@
                                                                             linkupload = "bando_updocacc.jsp?tipodoc=" + tipol;
                                                                         }
                                                                     }
-                                                                } else if (i == 2) {
+                                                                } else if (i == 3) {
                                                                     titolo = doc_fase2.getTitolo();
                                                                     info = doc_fase2.getInfo();
                                                                     tipol = "MOD1";
@@ -812,7 +814,7 @@
                                                                             linkupload = "bando_updocacc.jsp?tipodoc=" + tipol;
                                                                         }
                                                                     }
-                                                                } else if (i == 3) {
+                                                                } else if (i == 2) {
                                                                     titolo = doc_fase3.getTitolo();
                                                                     info = doc_fase3.getInfo();
                                                                     tipol = "MOD2";
@@ -824,6 +826,14 @@
                                                                             linkmodello = "Download?ctrl=3&action=downconv";
                                                                             linkupload = "bando_updocacc.jsp?tipodoc=" + tipol;
                                                                         }
+                                                                    }
+                                                                } else if (i == 4) {
+                                                                    titolo = doc_fase4.getTitolo();
+                                                                    info = doc_fase4.getInfo();
+                                                                    tipol = "MOD2";
+                                                                    if (conv_fase4) {
+                                                                        pres = true;
+                                                                        linkscarica = "Download?action=viewFileConvenzioni&codicedoc=" + tipol;
                                                                     }
                                                                 }
 

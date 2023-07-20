@@ -903,7 +903,17 @@
                                                     Agenzia Formativa accreditata presso la Regione Toscana ai sensi della Delibera n.1407/2016. N. di iscrizione 
                                                     <input class="form-control form-control-static uppercase" maxlength="20"
                                                            id="iscrizione" name="iscrizione" style="width: 200px" placeholder="...." type="text" readonly="readonly"/>
-                                                </div>                                                    
+                                                </div>                
+
+                                                <div id="tabati" style="display: none;">
+                                                    <hr>
+                                                    <label>In caso di costituenda/costituita ATI/ATS o di costituenda/costituita rete di imprese – Rete contratto, elencare gli Enti/Società mandanti e relativo numero di iscrizione presso la Regione Toscana ai sensi della Delibera n.1407/2016:</label>
+                                                    <br/>
+                                                    Elencare gli Enti/Società mandanti: <input class="form-control uppercase" id="elencoenti" name="elencoenti" 
+                                                                                               placeholder="...." type="text" onchange="return fieldNoEuro(this.id);" size="60" /> 
+                                                    ed il numero di iscrizione: <input class="form-control uppercase" id="numiscrreg" name="numiscrreg" 
+                                                                                               placeholder="...." type="text" onchange="return fieldNoEuro(this.id);" />
+                                                </div>
                                             </ul>
                                             <script type="text/javascript">
 
@@ -913,6 +923,7 @@
                                                         $('#ch3').prop('checked', false);
                                                         $('#ch4').prop('checked', false);
                                                         $('#ch5').prop('checked', false);
+                                                        document.getElementById("tabati").style.display = "none";
                                                     }
                                                 });
 
@@ -922,6 +933,9 @@
                                                         $('#ch3').prop('checked', false);
                                                         $('#ch4').prop('checked', false);
                                                         $('#ch5').prop('checked', false);
+                                                        document.getElementById("tabati").style.display = "block";
+                                                    } else {
+                                                        document.getElementById("tabati").style.display = "none";
                                                     }
                                                 });
 
@@ -931,6 +945,10 @@
                                                         $('#ch2').prop('checked', false);
                                                         $('#ch4').prop('checked', false);
                                                         $('#ch5').prop('checked', false);
+                                                        document.getElementById("tabati").style.display = "block";
+
+                                                    } else {
+                                                        document.getElementById("tabati").style.display = "none";
                                                     }
                                                 });
 
@@ -940,6 +958,10 @@
                                                         $('#ch2').prop('checked', false);
                                                         $('#ch3').prop('checked', false);
                                                         $('#ch5').prop('checked', false);
+                                                        document.getElementById("tabati").style.display = "block";
+
+                                                    } else {
+                                                        document.getElementById("tabati").style.display = "none";
                                                     }
                                                 });
 
@@ -949,6 +971,9 @@
                                                         $('#ch2').prop('checked', false);
                                                         $('#ch3').prop('checked', false);
                                                         $('#ch4').prop('checked', false);
+                                                        document.getElementById("tabati").style.display = "none";
+                                                    } else {
+                                                        document.getElementById("tabati").style.display = "none";
                                                     }
                                                 });
 
@@ -1538,45 +1563,13 @@
                             </div>
                             <%} else if (allegato_A_B.equals("B") && !esisteAllegatoB) {
                                 int totaledocenti = ActionB.getDocentiAllegatoA(username);
-                                String tiposoggetto = ActionB.getTipoSoggetto(username);
+                                //String tiposoggetto = ActionB.getTipoSoggetto(username);
                             %>
                             <div class="portlet-body">
                                 <form name="formregist" role="form" action="Operazioni?action=allegato_B" method="post"  class="form-horizontal" id="formModelloB">
                                     <input type="hidden" name="username" value="<%=username%>"/>
                                     <input type="hidden" name="totaledocenti" value="<%=totaledocenti%>"/>
-                                    <%
-                                        if (tiposoggetto.equals("costituenda") || tiposoggetto.equals("rete")) {%>
-                                    <hr>
-                                    <table style="width: 100%;">
-                                        <thead>
-                                            <tr>
-                                                <th colspan="2" style="text-align: center; background-color: silver;">
-                                                    <h4><b>Costituenda ATI/ATS o Costituenda rete di imprese – Rete contratto</b></h4>
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                    </table>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <div class="col-md-12">
-                                                    <span class="help-block">
-                                                        Elencare gli Enti/Società mandanti<span class="font-red popovers" data-trigger="hover" 
-                                                                                                data-container="body" data-placement="bottom"
-                                                                                                data-content="CAMPO OBBLIGATORIO"> &#42;</span>
-                                                    </span>
-                                                </div>
-                                                <div class="col-md-12">
-                                                    <input class="form-control uppercase" id="elencoenti" name="elencoenti" required
-                                                           placeholder="...." type="text" onchange="return fieldNoEuro(this.id);" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <%}else{%>
-                                    <input type="hiddan" name="elencoenti" id="elencoenti" value="" />
-                                    <%}%>
-                                    <hr>
+
                                     <table style="width: 100%;">
                                         <thead>
                                             <tr>
