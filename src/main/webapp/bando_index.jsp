@@ -1144,9 +1144,11 @@
                                                                             <div class="row">
                                                                                 <%
                                                                                     if (pres && mod) {
-                                                                                        if (!domandaCompleta && (dba.getCodicedoc().equals("DONLA")
-                                                                                                || dba.getCodicedoc().equals("DONLB") || dba.getCodicedoc().equals("DOCR")
-                                                                                                || dba.getCodicedoc().equals("DOCR") || dba.getCodicedoc().equals("DONL"))) {
+                                                                                        if (!domandaCompleta && (
+                                                                                        dba.getCodicedoc().equals("DONLA")
+                                                                                                || dba.getCodicedoc().equals("DONLB") 
+                                                                                                || dba.getCodicedoc().equals("DOCR")
+                                                                                                || dba.getCodicedoc().startsWith("DONL"))) {
                                                                                 %>
                                                                                 <div class="col-md-4">
                                                                                     <button class="btn btn-outline green-jungle" type="submit" onclick="return submitfor('f3<%=dba.getCodicedoc()%>');">
@@ -1159,7 +1161,8 @@
                                                                                     </button>
                                                                                 </div>
                                                                                 <%  } else {
-                                                                                    if (domandaCompleta && dba.getCodicedoc().equals("ALB1") || !domandaCompleta && dba.getCodicedoc().equals("ALB1")) {
+                                                                                    if (domandaCompleta && 
+dba.getCodicedoc().equals("ALB1") || !domandaCompleta && dba.getCodicedoc().equals("ALB1")) {
                                                                                 %>
                                                                                 <div class="col-md-4">
                                                                                     <button class="btn btn-outline blue" type="submit" onclick="return submitfor('x1<%=dba.getCodicedoc()%>');">
@@ -1169,7 +1172,7 @@
                                                                                 <%} else {%>
                                                                                 <div class="col-md-4">
                                                                                     <button class="btn btn-outline green" type="submit" onclick="return submitfor('f3<%=dba.getCodicedoc()%>');">
-                                                                                        Scarica  <i class="fa fa-download"></i>
+                                                                                        Scarica <i class="fa fa-download"></i>
                                                                                     </button> 
                                                                                 </div>
                                                                                 <%}
@@ -1265,7 +1268,7 @@
                                                                                     </button> 
                                                                                 </div>
                                                                                 <%}
-                                                                                if (!dba.getCodicedoc().equals("DONLA") && !dba.getCodicedoc().equals("DONLB") && !dba.getCodicedoc().equals("ALB1")) {%>
+                                                                                if (!dba.getCodicedoc().equals("DONLA")&& !dba.getCodicedoc().equals("DONLB") && !dba.getCodicedoc().equals("ALB1")) {%>
                                                                                 <div class="col-md-4">
                                                                                     <button class="btn btn-outline red" type="submit" onclick="return submitfor('f2<%=dba.getCodicedoc()%>');">
                                                                                         Carica <i class="fa fa-upload"></i>

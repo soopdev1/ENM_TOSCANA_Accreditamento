@@ -350,27 +350,23 @@
                     <div class="container min-hight"  style="background-image: url(assets/pages/img/bg-3.jpg);">
                         <div class="row">
                             <div class="col-md-12">
-                                <div class="col-md-3"><h3 class="page-title">Accreditamento</h3> </div>
-                                <div class="col-md-6"><center>
+                                <div class="col-md-9">
                                         <table>
                                             <tr>
                                                 <td><img src="assets/soop/img/l2-EU.jpg" alt="" height="54px"/></td>
                                                 <td><img src="assets/soop/img/l3-ML.jpg" alt="" height="54px"/></td>
                                                 <td><img src="assets/soop/img/l7-AN.png" alt="" height="54px"/></td>
                                                 <td><img src="assets/soop/img/l6-GO.jpg" alt="" height="54px"/></td>
-                                            </tr>
-                                            <tr>
                                                 <td colspan="2"><img src="assets/soop/img/l4-RT.jpg" alt="" height="54px"/></td>
-                                                <td colspan="2"><img src="assets/soop/img/l1-AR.png" alt="" height="54px"/></td>
+                                                <td colspan="2"><img src="assets/soop/img/l1-AR.png" alt="" height="34px"/></td>
                                             </tr>
                                         </table>
-                                    </center> 
                                 </div>
-                                <div class="col-md-3" style="text-align: right;">
-                                    <img src="assets/soop/img/logo_blue_1.png" alt="logo" height="74px" class="img-responsivelogo"/></div> 
+                                <div class="col-md-3">
+                                    <img src="assets/soop/img/logo_blue_1.png" alt="logo" height="54px" class="img-responsivelogo"/></div> 
                             </div>                         
                         </div>
-
+                        <hr><!-- comment -->
 
                         <!-- END PAGE TITLE -->
                         <!-- END PAGE HEADER -->

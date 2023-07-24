@@ -268,7 +268,7 @@
 
                 <div class="logo"> 
                     <img src="assets/soop/img/l4-RT.jpg" alt="" height="54px"/>
-                    <img src="assets/soop/img/l1-AR.png" alt="" height="54px"/>
+                    <img src="assets/soop/img/l1-AR.png" alt="" height="34px"/>
                     <img src="assets/soop/img/logo_blue_1.png" alt="" height="54px"/>
                 </div>
                 <div class="logo">

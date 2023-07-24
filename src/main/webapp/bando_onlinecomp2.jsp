@@ -901,6 +901,9 @@
                                                         <span class="box"></span>
                                                     </label>
                                                     Agenzia Formativa accreditata presso la Regione Toscana ai sensi della Delibera n.1407/2016. N. di iscrizione 
+                                                    <i class="fa fa-info-circle popovers" data-trigger="hover" 
+                                                       data-container="body" data-placement="bottom"
+                                                       data-content="in caso di costituenda/costituita ATI/ATS o di costituenda/costituita rete di imprese – Rete contratto, indicare il n° di iscrizione della Mandataria"></i>
                                                     <input class="form-control form-control-static uppercase" maxlength="20"
                                                            id="iscrizione" name="iscrizione" style="width: 200px" placeholder="...." type="text" readonly="readonly"/>
                                                 </div>                
@@ -912,7 +915,7 @@
                                                     Elencare gli Enti/Società mandanti: <input class="form-control uppercase" id="elencoenti" name="elencoenti" 
                                                                                                placeholder="...." type="text" onchange="return fieldNoEuro(this.id);" size="60" /> 
                                                     ed il numero di iscrizione: <input class="form-control uppercase" id="numiscrreg" name="numiscrreg" 
-                                                                                               placeholder="...." type="text" onchange="return fieldNoEuro(this.id);" />
+                                                                                       placeholder="...." type="text" onchange="return fieldNoEuro(this.id);" />
                                                 </div>
                                             </ul>
                                             <script type="text/javascript">
@@ -1432,15 +1435,6 @@
                                         </table>
                                         <div class="clearfix"></div>
                                         <hr>
-                                        <table style="width: 100%;">
-                                            <thead>
-                                                <tr>
-                                                    <th colspan="2" style="text-align: center; background-color: silver;">
-                                                        <h4><b>Compilazione requisiti d'esperienza</b></h4>
-                                                    </th>
-                                                </tr>
-                                            </thead>
-                                        </table>
                                         <div class="row">
                                             <br/>
                                             <div class="col-md-12 form-inline">
@@ -1564,7 +1558,7 @@
                             <%} else if (allegato_A_B.equals("B") && !esisteAllegatoB) {
                                 int totaledocenti = ActionB.getDocentiAllegatoA(username);
                                 //String tiposoggetto = ActionB.getTipoSoggetto(username);
-                            %>
+%>
                             <div class="portlet-body">
                                 <form name="formregist" role="form" action="Operazioni?action=allegato_B" method="post"  class="form-horizontal" id="formModelloB">
                                     <input type="hidden" name="username" value="<%=username%>"/>
