@@ -1423,6 +1423,8 @@ dba.getCodicedoc().equals("ALB1") || !domandaCompleta && dba.getCodicedoc().equa
                                                 </p>
                                                 <p class="text-justify">
                                                     <strong>Per la scadenza del bando, consultare il sito dell'Ente Nazionale per il microcredito.</strong>
+                                                    <br>
+                                                    <a href="https://www.microcredito.gov.it/gare-e-bandi-in-corso.html" target="_blank">https://www.microcredito.gov.it/gare-e-bandi-in-corso.html</a>
                                                 </p>
                                             </div>
                                         </div>

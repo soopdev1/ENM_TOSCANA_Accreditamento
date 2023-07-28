@@ -193,16 +193,16 @@ public class ActionB {
         ArrayList<String[]> liout = new ArrayList<>();
         ArrayList<String[]> listart = db.listaCodDocRichiestiBando(bandorif);
         for (int i = 0; i < listart.size(); i++) {
-            if (getSino(username).equals("SI")) {
-                if (listart.get(i)[0].equals("DOCR") || listart.get(i)[0].equals("DONL")) {
+//            if (getSino(username).equals("SI")) {
+//                if (listart.get(i)[0].equals("DOCR") || listart.get(i)[0].equals("DONL")) {
+//                    liout.add(listart.get(i));
+//                }
+//            } else {
+//                if (listart.get(i)[0].equals("DOCR") || listart.get(i)[0].equals("DONLA")
+//                        || listart.get(i)[0].equals("DONLB") || listart.get(i)[0].equals("ALB1")) {
                     liout.add(listart.get(i));
-                }
-            } else {
-                if (listart.get(i)[0].equals("DOCR") || listart.get(i)[0].equals("DONLA")
-                        || listart.get(i)[0].equals("DONLB") || listart.get(i)[0].equals("ALB1")) {
-                    liout.add(listart.get(i));
-                }
-            }
+//                }
+//            }
         }
         return liout;
     }

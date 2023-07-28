@@ -81,8 +81,8 @@
                     document.getElementById("static").className = document.getElementById("static").className + " in";
                     document.getElementById("static").style.display = "block";
                     return false;
-                } else if (ext !== ".pdf" && ext !== ".p7m") {
-                    document.getElementById("valoretxt").innerHTML = "Impossibile procedere. Estensione File non consentita. E' possibile caricare solamente file in formato PDF/.p7m.";
+                } else if (ext !== ".pdf" && ext !== ".p7m"&& ext !== ".zip") {
+                    document.getElementById("valoretxt").innerHTML = "Impossibile procedere. Estensione File non consentita. E' possibile caricare solamente file in formato PDF/P7M/ZIP.";
                     document.getElementById("static").className = document.getElementById("static").className + " in";
                     document.getElementById("static").style.display = "block";
                     return false;
@@ -513,6 +513,10 @@
                             if (es.equals("RA2")) {
                                 cl = "alert-danger";
                                 msg = "Il file caricato &#232; stato firmato da un utente diverso rispetto al richiedente. Verificare.";
+                            }
+                            if (es.equals("RA3")) {
+                                cl = "alert-danger";
+                                msg = "Il file caricato non &#232; conforme a quanto richiesto (.zip). Verificare.";
                             }
                     %>
                     <br>

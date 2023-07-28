@@ -37,7 +37,6 @@ import java.io.File;
 import static java.io.File.separator;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -259,70 +258,76 @@ public class Upload extends HttpServlet {
                 check = false;
             }
         } else {
-
             if (Constant.test) {
                 check = true;
             } else {
-                if (tipodoc.equals("DONLA")
-                        || tipodoc.equals("DONLB")
-                        || tipodoc.equals("CONV")
-                        || tipodoc.equals("MOD1")
-                        || tipodoc.equals("MOD2")
-                        || tipodoc.equals("DONLC")
-                        || tipodoc.equals("DONLD")
-                        || tipodoc.equals("DONLE")
-                        || tipodoc.equals("DONLF")
-                        ) { //DOCUMENTI CHE DEVONO ESSERE FIRMATI
-                    SignedDoc dc = extractSignatureInformation_PDF(readFileToByteArray(nomefile), new File(nomefile.getPath() + "_tempcheck.pdf"));
-                    if (dc.isValido()) {
-                        String cfuser = dbb.getCF_user(username);
-                        if (!dc.getCodicefiscale().toUpperCase().contains(cfuser.toUpperCase())) {
-                            msg = "RA2"; //
-                            trackingAction(username, "ERRORE NELL'UPLOAD - " + tipodoc + " -- CF NON CONFORME");
-                            check = false;
-                        } else {
-                            byte[] content = dc.getContenuto();
-                            if (content == null) {
-                                msg = "RA1"; //
+                switch (tipodoc) {
+                    case "DONLA":
+                    case "DONLB":
+                    case "CONV":
+                    case "MOD1":
+                    case "MOD2":
+                    case "DONLC":
+                    case "DONLF": {
+                        //DOCUMENTI CHE DEVONO ESSERE FIRMATI
+                        SignedDoc dc = extractSignatureInformation_PDF(readFileToByteArray(nomefile), new File(nomefile.getPath() + "_tempcheck.pdf"));
+                        if (dc.isValido()) {
+                            String cfuser = dbb.getCF_user(username);
+                            if (!dc.getCodicefiscale().toUpperCase().contains(cfuser.toUpperCase())) {
+                                msg = "RA2"; //
                                 trackingAction(username, "ERRORE NELL'UPLOAD - " + tipodoc + " -- CF NON CONFORME");
                                 check = false;
                             } else {
-                                String esitoqr = verificaQRNOPDFA(tipodoc, username, content);
-                                if (!esitoqr.equals("OK")) {
+                                byte[] content = dc.getContenuto();
+                                if (content == null) {
                                     msg = "RA1"; //
-                                    trackingAction(username, "ERRORE NELL'UPLOAD - " + tipodoc + " -- " + esitoqr);
+                                    trackingAction(username, "ERRORE NELL'UPLOAD - " + tipodoc + " -- CF NON CONFORME");
                                     check = false;
+                                } else {
+                                    String esitoqr = verificaQRNOPDFA(tipodoc, username, content);
+                                    if (!esitoqr.equals("OK")) {
+                                        msg = "RA1"; //
+                                        trackingAction(username, "ERRORE NELL'UPLOAD - " + tipodoc + " -- " + esitoqr);
+                                        check = false;
+                                    }
                                 }
                             }
+                        } else {
+                            msg = "RA1"; //
+                            trackingAction(username, "ERRORE NELL'UPLOAD - " + tipodoc + " -- " + dc.getErrore());
+                            check = false;
                         }
-                    } else {
-                        msg = "RA1"; //
-                        trackingAction(username, "ERRORE NELL'UPLOAD - " + tipodoc + " -- " + dc.getErrore());
-                        check = false;
+                        break;
                     }
-                } else {
-                    String esitoqr = verificaQR(tipodoc, username, readFileToByteArray(nomefile));
-                    if (!esitoqr.equals("OK")) {
-                        msg = "RA1"; //
-                        trackingAction(username, "ERRORE NELL'UPLOAD - " + tipodoc + " -- " + esitoqr);
-                        check = false;
+                    case "DONLD":
+                    case "DONLE": {
+                        if (!getExtension(nomefile.getName()).endsWith("zip")) {
+                            msg = "RA3";
+                            check = false;
+                        }
+                        break;
+                    }
+                    default: {
+                        String esitoqr = verificaQR(tipodoc, username, readFileToByteArray(nomefile));
+                        if (!esitoqr.equals("OK")) {
+                            msg = "RA1"; //
+                            trackingAction(username, "ERRORE NELL'UPLOAD - " + tipodoc + " -- " + esitoqr);
+                            check = false;
+                        }
+                        break;
                     }
                 }
             }
-
         }
-
         if (nomefile != null && check) {
             ArrayList<Docbandi> lid1 = listaDocRichiesti(bandorif);
             Docbandi d = null;
             for (int i = 0; i < lid1.size(); i++) {
-
                 if (lid1.get(i).getCodicedoc().equals(tipodoc)) {
                     d = lid1.get(i);
                 }
             }
             if (d != null) {
-
                 String fileb64 = preparefileforupload(nomefile);
                 if (fileb64.equals("FILE ERROR")) {
                     msg = "2";
@@ -467,7 +472,6 @@ public class Upload extends HttpServlet {
 
                         String[] dest = {emailuser};
 
-                        
                         try {
                             sendMail(
                                     Constant.nomevisual, dest, new String[]{}, text,

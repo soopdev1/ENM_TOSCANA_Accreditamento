@@ -349,12 +349,13 @@ public class Db_Bando {
                 try ( ResultSet rs = ps.executeQuery()) {
                     if (rs.next()) {
                         String dat_aper = rs.getString(1).split("\\.")[0];
-                        String dat_chiu = rs.getString(2).split("\\.")[0];
+//                        String dat_chiu = rs.getString(2).split("\\.")[0];
                         DateTimeFormatter fmt = forPattern("yyyy-MM-dd HH:mm:ss");
                         DateTime dt1 = fmt.parseDateTime(dat_aper);
-                        DateTime dt2 = fmt.parseDateTime(dat_chiu);
+//                        DateTime dt2 = fmt.parseDateTime(dat_chiu);
                         out = "L'accreditamento è disponibile dalle ore " + dt1.toString("HH:mm") + " del "
-                                + dt1.toString("dd/MM/yyyy") + " alle ore " + dt2.toString("HH:mm:ss") + " del " + dt2.toString("dd/MM/yyyy") + ".";
+                                + dt1.toString("dd/MM/yyyy") 
+                                + ".";
                     }
                 }
             }
@@ -814,6 +815,7 @@ public class Db_Bando {
             String sql = "SELECT codicedoc,titolo FROM docbandi WHERE codbando = ?";
             try ( PreparedStatement ps = this.c.prepareStatement(sql)) {
                 ps.setString(1, cod);
+                System.out.println("rc.soop.db.Db_Bando.listaCodDocRichiestiBando() "+ps.toString());
                 try ( ResultSet rs = ps.executeQuery()) {
                     while (rs.next()) {
                         String[] out = {rs.getString(1), rs.getString(2)};

@@ -423,7 +423,8 @@
                                 <%} else {%>
                                 <div class="col-md-12">
                                     <em><i class="fa fa-exclamation-circle font-red"></i></em>
-                                    <span class="bold">L'accreditamento a questo bando non è disponibile.</span>
+                                    <span class="bold">L'accreditamento a questo bando non è disponibile.</span><br/>
+                                    <span><%=ActionB.descr_bandochiuso(bando)%></span>
                                 </div>
                                 <%}%>
                             </div>

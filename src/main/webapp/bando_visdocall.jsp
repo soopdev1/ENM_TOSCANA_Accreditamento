@@ -96,8 +96,7 @@
                         ArrayList<String[]> richiesti = ActionB.listacodDocRichiesti(db1, bandorif, username);
                         ArrayList<Docuserbandi> listadoc = db1.listaDocUserBandoNocontent(bandorif, username);
                         db1.closeDB();
-                    %>
-                    <%if (!listadoc.isEmpty()) {
+                        if (!listadoc.isEmpty()) {
                             String ragsoc = ActionB.getRagioneSociale(username);
                     %>
                     <div class="row">
