@@ -105,7 +105,7 @@
                     var ch5 = document.getElementsByName("ch5")[0].checked;
                     var ch6 = document.getElementsByName("ch6")[0].checked;
                     var iscrizione = document.getElementById("iscrizione").value.trim();
-                    var aule = document.getElementById("aule").value.trim();
+                    var aule = document.getElementById("aule").value.trim() + "";
 
                     var ctrlAula1 = false;
                     var ctrlAula2 = false;
@@ -203,35 +203,36 @@
                         msg += "<span style='color:red;'>E' obbligatorio indicare una email PEC valida</span><br/>";
                     }
 
-                    if (aule === "1" || aule === "01") {
+                    if (aule === 1 || aule === "1" || aule === "01") {
                         ctrlAula1 = true;
                         ctrlAula2 = false;
                         ctrlAula3 = false;
                         ctrlAula4 = false;
                         ctrlAula5 = false;
                     }
-                    if (aule === "2" || aule === "02") {
+                    
+                    if (aule === 2 || aule === "2" || aule === "02") {
                         ctrlAula1 = true;
                         ctrlAula2 = true;
                         ctrlAula3 = false;
                         ctrlAula4 = false;
                         ctrlAula5 = false;
                     }
-                    if (aule === "3" || aule === "03") {
+                    if (aule === 3 || aule === "3" || aule === "03") {
                         ctrlAula1 = true;
                         ctrlAula2 = true;
                         ctrlAula3 = true;
                         ctrlAula4 = false;
                         ctrlAula5 = false;
                     }
-                    if (aule === "4" || aule === "04") {
+                    if (aule === 4 || aule === "4" || aule === "04") {
                         ctrlAula1 = true;
                         ctrlAula2 = true;
                         ctrlAula3 = true;
                         ctrlAula4 = true;
                         ctrlAula5 = false;
                     }
-                    if (aule === "5" || aule === "05") {
+                    if (aule === 5 || aule === "5" || aule === "05") {
                         ctrlAula1 = true;
                         ctrlAula2 = true;
                         ctrlAula3 = true;
@@ -1558,7 +1559,7 @@
                             <%} else if (allegato_A_B.equals("B") && !esisteAllegatoB) {
                                 int totaledocenti = ActionB.getDocentiAllegatoA(username);
                                 //String tiposoggetto = ActionB.getTipoSoggetto(username);
-%>
+                            %>
                             <div class="portlet-body">
                                 <form name="formregist" role="form" action="Operazioni?action=allegato_B" method="post"  class="form-horizontal" id="formModelloB">
                                     <input type="hidden" name="username" value="<%=username%>"/>

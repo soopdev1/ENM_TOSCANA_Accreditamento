@@ -4026,17 +4026,18 @@ public class Db_Bando {
 
     public String[] excelreport() {
         try {
-            String sql = "SELECT CONVERT_TZ(aggiornamento,'UTC','Europe/Rome'),content,aggiornamento FROM excelreport ORDER BY aggiornamento DESC LIMIT 1";
+            String sql = "SELECT aggiornamento,content FROM excelreport ORDER BY aggiornamento DESC LIMIT 1";
+//            String sql = "SELECT CONVERT_TZ(aggiornamento,'UTC','Europe/Rome'),content,aggiornamento FROM excelreport ORDER BY aggiornamento DESC LIMIT 1";
             try ( PreparedStatement ps1 = this.c.prepareStatement(sql, TYPE_SCROLL_INSENSITIVE, CONCUR_UPDATABLE);  ResultSet rs1 = ps1.executeQuery();) {
                 if (rs1.next()) {
-                    if (rs1.getString(1) == null) {
-                        String[] out = {formatStringtoStringDate(rs1.getString("aggiornamento"), timestampSQL, timestampITA, false), rs1.getString("content")};
-                        return out;
-                    } else {
+//                    if (rs1.getString(1) == null) {
+//                        String[] out = {formatStringtoStringDate(rs1.getString("aggiornamento"), timestampSQL, timestampITA, false), rs1.getString("content")};
+//                        return out;
+//                    } else {
                         String[] out = {formatStringtoStringDate((rs1.getString(1)),
                             timestampSQL, timestampITA, false), rs1.getString(2)};
                         return out;
-                    }
+//                    }
                 }
             }
         } catch (Exception e) {

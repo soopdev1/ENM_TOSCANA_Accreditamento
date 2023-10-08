@@ -50,7 +50,11 @@ import org.apache.commons.codec.binary.Base64;
 import static org.apache.commons.codec.binary.Base64.decodeBase64;
 import org.apache.commons.io.FileUtils;
 import org.joda.time.DateTime;
+import rc.soop.action.Constant;
+import static rc.soop.action.Constant.bando;
 import static rc.soop.action.Constant.extdocx;
+import static rc.soop.action.Constant.extpdf;
+import rc.soop.entity.Docbandi;
 
 /**
  *
@@ -66,7 +70,7 @@ public class Download extends HttpServlet {
             String headerKey = "Content-Disposition";
             String headerValue = format("attachment; filename=\"%s\"", "Manuale Candidato.pdf");
             response.setHeader(headerKey, headerValue);
-            try ( OutputStream outStream = response.getOutputStream()) {
+            try (OutputStream outStream = response.getOutputStream()) {
                 outStream.write(decodeBase64(b64));
             }
         } else {
@@ -82,7 +86,7 @@ public class Download extends HttpServlet {
             String headerKey = "Content-Disposition";
             String headerValue = format("attachment; filename=\"%s\"", "Manuale Gestione Convenzioni.pdf");
             response.setHeader(headerKey, headerValue);
-            try ( OutputStream outStream = response.getOutputStream()) {
+            try (OutputStream outStream = response.getOutputStream()) {
                 outStream.write(decodeBase64(b64));
             }
         } else {
@@ -98,7 +102,7 @@ public class Download extends HttpServlet {
             String headerKey = "Content-Disposition";
             String headerValue = format("attachment; filename=\"%s\"", "Avviso YISU 2122.pdf");
             response.setHeader(headerKey, headerValue);
-            try ( OutputStream outStream = response.getOutputStream()) {
+            try (OutputStream outStream = response.getOutputStream()) {
                 outStream.write(decodeBase64(b64));
             }
         } else {
@@ -122,7 +126,7 @@ public class Download extends HttpServlet {
                 String headerKey = "Content-Disposition";
                 String headerValue = format("attachment; filename=\"%s\"", fw.getName());
                 response.setHeader(headerKey, headerValue);
-                try ( OutputStream outStream = response.getOutputStream()) {
+                try (OutputStream outStream = response.getOutputStream()) {
                     outStream.write(decodeBase64(fw.getContent()));
                 }
             } else {
@@ -149,7 +153,7 @@ public class Download extends HttpServlet {
                 String headerKey = "Content-Disposition";
                 String headerValue = format("attachment; filename=\"%s\"", fw.getName());
                 response.setHeader(headerKey, headerValue);
-                try ( OutputStream outStream = response.getOutputStream()) {
+                try (OutputStream outStream = response.getOutputStream()) {
                     outStream.write(decodeBase64(fw.getContent()));
                 }
             } else {
@@ -182,7 +186,7 @@ public class Download extends HttpServlet {
                 String headerKey = "Content-Disposition";
                 String headerValue = format("attachment; filename=\"%s\"", fw.getName());
                 response.setHeader(headerKey, headerValue);
-                try ( OutputStream outStream = response.getOutputStream()) {
+                try (OutputStream outStream = response.getOutputStream()) {
                     outStream.write(decodeBase64(fw.getContent()));
                 }
             } else {
@@ -222,7 +226,7 @@ public class Download extends HttpServlet {
             String headerKey = "Content-Disposition";
             String headerValue = format("attachment; filename=\"%s\"", fw.getName());
             response.setHeader(headerKey, headerValue);
-            try ( OutputStream outStream = response.getOutputStream()) {
+            try (OutputStream outStream = response.getOutputStream()) {
                 outStream.write(decodeBase64(fw.getContent()));
             }
         } else {
@@ -257,7 +261,7 @@ public class Download extends HttpServlet {
             String headerKey = "Content-Disposition";
             String headerValue = format("attachment; filename=\"%s\"", fw.getName());
             response.setHeader(headerKey, headerValue);
-            try ( OutputStream outStream = response.getOutputStream()) {
+            try (OutputStream outStream = response.getOutputStream()) {
                 outStream.write(decodeBase64(fw.getContent()));
             }
         } else {
@@ -292,7 +296,7 @@ public class Download extends HttpServlet {
             String headerKey = "Content-Disposition";
             String headerValue = format("attachment; filename=\"%s\"", fw.getName());
             response.setHeader(headerKey, headerValue);
-            try ( OutputStream outStream = response.getOutputStream()) {
+            try (OutputStream outStream = response.getOutputStream()) {
                 outStream.write(decodeBase64(fw.getContent()));
             }
         } else {
@@ -388,7 +392,7 @@ public class Download extends HttpServlet {
             if (downloadFile != null && downloadFile.exists()) {
                 trackingAction(request.getSession().getAttribute("username").toString(), "Download File (con modello) " + downloadFile.getName());
                 OutputStream outStream;
-                try ( FileInputStream inStream = new FileInputStream(downloadFile)) {
+                try (FileInputStream inStream = new FileInputStream(downloadFile)) {
                     String mimeType = probeContentType(downloadFile.toPath());
                     if (mimeType == null) {
                         mimeType = "application/octet-stream";
@@ -448,7 +452,7 @@ public class Download extends HttpServlet {
         File zipout = new File(pathtemp + name);
         if (zipListFiles(ff, zipout)) {
             OutputStream outStream;
-            try ( FileInputStream inStream = new FileInputStream(zipout)) {
+            try (FileInputStream inStream = new FileInputStream(zipout)) {
                 String mimeType = probeContentType(zipout.toPath());
                 if (mimeType == null) {
                     mimeType = "application/octet-stream";
@@ -496,7 +500,7 @@ public class Download extends HttpServlet {
             File downloadFile = new File(path);
             if (downloadFile.exists()) {
                 OutputStream outStream;
-                try ( FileInputStream inStream = new FileInputStream(downloadFile)) {
+                try (FileInputStream inStream = new FileInputStream(downloadFile)) {
                     String mimeType = probeContentType(downloadFile.toPath());
                     if (mimeType == null) {
                         mimeType = "application/octet-stream";
@@ -527,30 +531,42 @@ public class Download extends HttpServlet {
         File downloadFile = null;
         String var = request.getParameter("ctrl");
         Db_Bando dbb = new Db_Bando();
+        String pathtemp = dbb.getPath("pathtemp");
+        ArrayList<Docbandi> lidCONV = dbb.listaDocRichiestiBando(bando + "_A");
+        Docbandi doc_fase2 = Utility.estraidaLista(lidCONV, "MOD1");
+        Docbandi doc_fase3 = Utility.estraidaLista(lidCONV, "MOD2");
+        Docbandi doc_fase4 = Utility.estraidaLista(lidCONV, "MOD3");
+        
+        
+        System.out.println("rc.soop.servlet.Download.downconv() "+var);
+        
         if (var.equals("1")) {
             File f1 = allegatoC(username);
             if (f1 != null) {
                 downloadFile = f1;
             }
         }
-        if (var.equals("2")) {
-            File f1 = allegatoC_mod1(username);
-            if (f1 != null) {
-                downloadFile = f1;
-            }
-        }
-        if (var.equals("3")) {
 
-            File f1 = allegatoC_mod2(username);
-            if (f1 != null) {
-                downloadFile = f1;
-            }
+        if (var.equals("2")) {
+            downloadFile = new File(pathtemp + File.separator + "G1_" + Utility.generaId(50) + extdocx);
+            FileUtils.writeByteArrayToFile(downloadFile, Base64.decodeBase64(doc_fase2.getDownload()));
         }
+
+        if (var.equals("3")) {
+            downloadFile = new File(pathtemp + File.separator + "G2_" + Utility.generaId(50) + extpdf);
+            FileUtils.writeByteArrayToFile(downloadFile, Base64.decodeBase64(doc_fase3.getDownload()));
+        }
+
+        if (var.equals("4")) {
+            downloadFile = new File(pathtemp + File.separator + "G3_" + Utility.generaId(50) + extpdf);
+            FileUtils.writeByteArrayToFile(downloadFile, Base64.decodeBase64(doc_fase4.getDownload()));
+        }
+
         dbb.closeDB();
 
         if (downloadFile != null) {
             OutputStream outStream;
-            try ( FileInputStream inStream = new FileInputStream(downloadFile)) {
+            try (FileInputStream inStream = new FileInputStream(downloadFile)) {
                 String mimeType = probeContentType(downloadFile.toPath());
                 if (mimeType == null) {
                     mimeType = "application/octet-stream";
@@ -568,7 +584,7 @@ public class Download extends HttpServlet {
             }
             outStream.close();
         } else {
-            redirect(request, response, "page_fnf.html");
+            //redirect(request, response, "page_fnf.html");
         }
     }
 
@@ -705,7 +721,7 @@ public class Download extends HttpServlet {
             String headerKey = "Content-Disposition";
             String headerValue = format("attachment; filename=\"%s\"", fw.getName());
             response.setHeader(headerKey, headerValue);
-            try ( OutputStream outStream = response.getOutputStream()) {
+            try (OutputStream outStream = response.getOutputStream()) {
                 outStream.write(decodeBase64(fw.getContent()));
             }
         } else {
@@ -726,7 +742,7 @@ public class Download extends HttpServlet {
             if (downloadFile != null && downloadFile.exists()) {
                 trackingAction(request.getSession().getAttribute("username").toString(), "Download File (con modello) " + downloadFile.getName());
                 OutputStream outStream;
-                try ( FileInputStream inStream = new FileInputStream(downloadFile)) {
+                try (FileInputStream inStream = new FileInputStream(downloadFile)) {
                     String mimeType = probeContentType(downloadFile.toPath());
                     if (mimeType == null) {
                         mimeType = "application/octet-stream";

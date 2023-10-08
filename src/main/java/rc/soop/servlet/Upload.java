@@ -611,7 +611,9 @@ public class Upload extends HttpServlet {
                             || tipodoc.equals("DONLB")
                             || tipodoc.equals("CONV")
                             || tipodoc.equals("MOD1")
-                            || tipodoc.equals("MOD2")) { //DOCUMENTI CHE DEVONO ESSERE FIRMATI
+                            || tipodoc.equals("MOD2")
+                            || tipodoc.equals("MOD3")
+                            ) { //DOCUMENTI CHE DEVONO ESSERE FIRMATI
                         SignedDoc dc = extractSignatureInformation_PDF(readFileToByteArray(nomefile),
                                 new File(nomefile.getPath() + "_tempcheck.pdf"));
                         if (dc.isValido()) {

@@ -228,7 +228,7 @@
 
                     <%
                         String coddoc = Utility.getRequestValue(request, "tipodoc");
-                        String tipiFile[] = {"CONV", "MOD1", "MOD2"};
+                        String tipiFile[] = {"CONV", "MOD1", "MOD2", "MOD3"};
                         boolean var = false;
                         for (int i = 0; i < tipiFile.length; i++) {
                             if (tipiFile[i].equals(coddoc)) {
@@ -247,9 +247,11 @@
                         if (coddoc.equals("CONV")) {
                             titolo = "CONVENZIONE";
                         } else if (coddoc.equals("MOD1")) {
-                            titolo = "MODELLO DI PERCORSO FORMATIVO (A.1)";
+                            titolo = "ALLEGATO G1 - DICHIARAZIONE SOSTITUTIVA &#34;TRACCIABILIT&#192; DEI FLUSSI FINANZIARI&#34;";
                         } else if (coddoc.equals("MOD2")) {
-                            titolo = "DICHIARAZIONE SOSTITUTIVA &#34;TRACCIABILIT&#192; DEI FLUSSI FINANZIARI.&#34; (A.2)";
+                            titolo = "ALLEGATO G2 - MODELLO DI PERCORSO FORMATIVO";
+                        } else if (coddoc.equals("MOD3")) {
+                            titolo = "ALLEGATO G3 - ATTO COSTITUTIVO";
                         }
                     %>
 

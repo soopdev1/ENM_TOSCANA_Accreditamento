@@ -253,7 +253,7 @@
 
             function confirmRemConvenzioni(nameform) {
                 document.getElementById("confirmRemConvenzionisi").onclick = function () {
-                    eseguiForm('Operazioni', {'tipodoc': 'CONV', 'username': '<%=username%>', 'action': 'eliminaconv'});
+                    eseguiForm('Operazioni', {'tipodoc': nameform, 'username': '<%=username%>', 'action': 'eliminaconv'});
                 };
                 document.getElementById("confirmRemConvenzioni").className = document.getElementById("confirmRemConvenzioni").className + " in";
                 document.getElementById("confirmRemConvenzioni").style.display = "block";
@@ -638,7 +638,6 @@
                         boolean esisteAllegatoA = ActionB.esisteAllegatoA(username);
                         boolean esisteAllegatoB = ActionB.esisteAllegatoB(username);
                         boolean esisteAllegatoB1 = ActionB.esisteAllegatoB1(username);
-                        boolean esisteAllegatoC2 = ActionB.esisteAllegatoC2(username);
                         boolean domandaCompleta = ActionB.verificaDomandaCompleta(username);
                     %>
 
@@ -713,22 +712,23 @@
                         String conv_collapsed = "";
 
                         if (statoDomanda) {
-
                             tipeexp = "expand";
                             collapsed = "portlet-collapsed";
-
                             Docbandi doc_fase1 = Utility.estraidaLista(lidCONV, "CONV");
                             Docbandi doc_fase2 = Utility.estraidaLista(lidCONV, "MOD1");
                             Docbandi doc_fase3 = Utility.estraidaLista(lidCONV, "MOD2");
                             Docbandi doc_fase4 = Utility.estraidaLista(lidCONV, "MOD3");
-
-                            boolean convprontaperinvio = (ActionB.countDocumentConvenzioni(username) == 3) && !convenzioneinviata;
+                            String sog_tipo = ActionB.getTipoSoggetto(username);
+                            int totali_conv = 4;
+                            if (sog_tipo.equals("soggettosingolo")) {
+                                totali_conv = 3;
+                            }
+                            boolean convprontaperinvio = (ActionB.countDocumentConvenzioni(username) == totali_conv) && !convenzioneinviata;
                             boolean conv_fase1 = ActionB.verPresenzaConvenzioni(username, doc_fase1.getCodicedoc());
                             boolean conv_fase2 = ActionB.verPresenzaConvenzioni(username, doc_fase2.getCodicedoc());
                             boolean conv_fase3 = ActionB.verPresenzaConvenzioni(username, doc_fase3.getCodicedoc());
                             boolean conv_fase4 = ActionB.verPresenzaConvenzioni(username, doc_fase4.getCodicedoc());
 
-                            int totali_conv = 3;
                             int presenti_conv = 0;
 
                             if (conv_fase1) {
@@ -740,8 +740,12 @@
                             if (conv_fase3) {
                                 presenti_conv++;
                             }
+                            if (conv_fase4) {
+                                presenti_conv++;
+                            }
 
-                            if (convenzionefirmataROMA || convenzioneinviata) {
+                            if (convenzionefirmataROMA
+                                    || convenzioneinviata) {
                                 conv_tipeexp = "expand";
                                 conv_collapsed = "portlet-collapsed";
                             }
@@ -778,7 +782,7 @@
                                                     <div class="list-todo-line dark"></div>
                                                     <ul>
                                                         <%
-                                                            for (int i = 1; i < 5; i++) {
+                                                            for (int i = 1; i < (totali_conv+1); i++) {
                                                                 String tipol = "-";
                                                                 String titolo = "";
                                                                 String info = "";
@@ -793,7 +797,6 @@
                                                                     tipol = "CONV";
                                                                     if (conv_fase1) {
                                                                         pres = true;
-
                                                                         linkscarica = "Download?action=viewFileConvenzioni&codicedoc=" + tipol;
                                                                     } else {
                                                                         if (!doc_fase1.getDownload().equals("-")) {
@@ -801,7 +804,7 @@
                                                                             linkupload = "bando_updocacc.jsp?tipodoc=" + tipol;
                                                                         }
                                                                     }
-                                                                } else if (i == 3) {
+                                                                } else if (i == 2) {
                                                                     titolo = doc_fase2.getTitolo();
                                                                     info = doc_fase2.getInfo();
                                                                     tipol = "MOD1";
@@ -814,7 +817,7 @@
                                                                             linkupload = "bando_updocacc.jsp?tipodoc=" + tipol;
                                                                         }
                                                                     }
-                                                                } else if (i == 2) {
+                                                                } else if (i == 3) {
                                                                     titolo = doc_fase3.getTitolo();
                                                                     info = doc_fase3.getInfo();
                                                                     tipol = "MOD2";
@@ -830,7 +833,9 @@
                                                                 } else if (i == 4) {
                                                                     titolo = doc_fase4.getTitolo();
                                                                     info = doc_fase4.getInfo();
-                                                                    tipol = "MOD2";
+                                                                    tipol = "MOD3";
+                                                                    linkmodello = "-";
+                                                                    linkupload = "bando_updocacc.jsp?tipodoc=" + tipol;
                                                                     if (conv_fase4) {
                                                                         pres = true;
                                                                         linkscarica = "Download?action=viewFileConvenzioni&codicedoc=" + tipol;
@@ -851,13 +856,6 @@
                                                                     done = "done";
                                                                     pres_string = "<i class='fa fa-check'></i>";
                                                                     in = "";
-                                                                } else {
-                                                                    if (tipol.equals("MOD2") && esisteAllegatoC2) {
-                                                                        fontcolor = "";
-                                                                        badgecolor = "badge-info";
-                                                                        color = "blue";
-                                                                        pres_string = "<i class='fa fa-hourglass-half'></i>";
-                                                                    }
                                                                 }
 
 
@@ -891,41 +889,14 @@
                                                                     <hr>
                                                                     <div class="task-footer bordered">
                                                                         <div class="row">
-
-                                                                            <div class="col-md-4">
-                                                                                <%if (tipol.equals("MOD2") && !esisteAllegatoC2) {%>
-
-                                                                                <form action="bando_onlinecomp2.jsp" method="POST">
-                                                                                    <input type="hidden" name="allegato_A_B" value="C2" />
-                                                                                    <button class="btn btn-outline red" type="submit">
-                                                                                        Compila <i class="fa fa-pencil-square-o"></i>
-                                                                                    </button>  
-                                                                                </form>
-
-
-                                                                                <%} else if (!pres && tipol.equals("MOD2") && esisteAllegatoC2) {%>
-                                                                                <button class="btn btn-outline blue" type="submit" 
-                                                                                        onclick="return confirmremAllegatoC2('f5MOD2');">
-                                                                                    Elimina Dati inseriti <i class="fa fa-trash-o"></i>
-                                                                                </button>
-
-
-                                                                                <%}%>
-                                                                            </div>
                                                                             <div class="col-md-4">
                                                                                 <%if (pres) {%>
                                                                                 <a class="btn btn-outline green-jungle" href="<%=linkscarica%>">
                                                                                     Scarica Documento <i class="fa fa-download"></i>
                                                                                 </a>
                                                                                 <%} else {
-                                                                                    if (tipol.equals("MOD2")) {
-                                                                                        if (esisteAllegatoC2 && !linkmodello.equals("")) {
+                                                                                        if (!linkmodello.equals("-")) {
                                                                                 %>
-                                                                                <a class="btn btn-outline green-jungle" href="<%=linkmodello%>">
-                                                                                    Scarica Modello <i class="fa fa-download"></i>
-                                                                                </a>
-                                                                                <%}
-                                                                                } else if (!linkmodello.equals("")) {%>
                                                                                 <a class="btn btn-outline green-jungle" href="<%=linkmodello%>">
                                                                                     Scarica Modello <i class="fa fa-download"></i>
                                                                                 </a>
@@ -933,39 +904,15 @@
                                                                                     }%>
                                                                             </div>
                                                                             <div class="col-md-4">
-                                                                                <%
-                                                                                    if (pres && !convenzioneinviata) {%>
-                                                                                <%if (i == 1) {%>
-                                                                                <a class="btn btn-outline red" onclick="return confirmRemConvenzioni('CONV');">
+                                                                                <%if (pres && !convenzioneinviata) {%>
+                                                                                <a class="btn btn-outline red" onclick="return confirmRemConvenzioni('<%=tipol%>');">
                                                                                     Elimina <i class="fa fa-trash"></i>
                                                                                 </a>                                                       
-                                                                                <%}%>
-                                                                                <%if (i == 2) {%>
-                                                                                <a class="btn btn-outline red" onclick="return confirmRemConvenzioni1('MOD1');">
-                                                                                    Elimina <i class="fa fa-trash"></i>
-                                                                                </a>                                                       
-                                                                                <%}%>
-                                                                                <%if (i == 3) {%>
-                                                                                <a class="btn btn-outline red" onclick="return confirmRemConvenzioni2('MOD2');">
-                                                                                    Elimina <i class="fa fa-trash"></i>
-                                                                                </a>                                                       
-                                                                                <%}%>
-                                                                                <%} else {
-
-                                                                                    if (tipol.equals("MOD2")) {
-                                                                                        if (esisteAllegatoC2 && !linkmodello.equals("")) {%>
-
+                                                                                <%} else if (!pres) {%>                                                                                
                                                                                 <a class="btn btn-outline red"  href="<%=linkupload%>">
                                                                                     Carica <i class="fa fa-upload"></i>
-                                                                                </a>  
-
-                                                                                <%}
-                                                                                } else if (!pres && !linkmodello.equals("")) {%>
-                                                                                <a class="btn btn-outline red"  href="<%=linkupload%>">
-                                                                                    Carica <i class="fa fa-upload"></i>
-                                                                                </a>  
-                                                                                <%}
-                                                                                    }%>
+                                                                                </a>                                                                                    
+                                                                                <%}%>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -1144,9 +1091,8 @@
                                                                             <div class="row">
                                                                                 <%
                                                                                     if (pres && mod) {
-                                                                                        if (!domandaCompleta && (
-                                                                                        dba.getCodicedoc().equals("DONLA")
-                                                                                                || dba.getCodicedoc().equals("DONLB") 
+                                                                                        if (!domandaCompleta && (dba.getCodicedoc().equals("DONLA")
+                                                                                                || dba.getCodicedoc().equals("DONLB")
                                                                                                 || dba.getCodicedoc().equals("DOCR")
                                                                                                 || dba.getCodicedoc().startsWith("DONL"))) {
                                                                                 %>
@@ -1161,8 +1107,8 @@
                                                                                     </button>
                                                                                 </div>
                                                                                 <%  } else {
-                                                                                    if (domandaCompleta && 
-dba.getCodicedoc().equals("ALB1") || !domandaCompleta && dba.getCodicedoc().equals("ALB1")) {
+                                                                                    if (domandaCompleta
+                                                                                            && dba.getCodicedoc().equals("ALB1") || !domandaCompleta && dba.getCodicedoc().equals("ALB1")) {
                                                                                 %>
                                                                                 <div class="col-md-4">
                                                                                     <button class="btn btn-outline blue" type="submit" onclick="return submitfor('x1<%=dba.getCodicedoc()%>');">
@@ -1268,7 +1214,7 @@ dba.getCodicedoc().equals("ALB1") || !domandaCompleta && dba.getCodicedoc().equa
                                                                                     </button> 
                                                                                 </div>
                                                                                 <%}
-                                                                                if (!dba.getCodicedoc().equals("DONLA")&& !dba.getCodicedoc().equals("DONLB") && !dba.getCodicedoc().equals("ALB1")) {%>
+                                                                                    if (!dba.getCodicedoc().equals("DONLA") && !dba.getCodicedoc().equals("DONLB") && !dba.getCodicedoc().equals("ALB1")) {%>
                                                                                 <div class="col-md-4">
                                                                                     <button class="btn btn-outline red" type="submit" onclick="return submitfor('f2<%=dba.getCodicedoc()%>');">
                                                                                         Carica <i class="fa fa-upload"></i>

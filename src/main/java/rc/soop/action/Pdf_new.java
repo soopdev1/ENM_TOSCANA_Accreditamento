@@ -113,7 +113,7 @@ public class Pdf_new {
             try ( InputStream is = new ByteArrayInputStream(decodeBase64(contentb64));  PdfReader reader = new PdfReader(is);  PdfWriter writer = new PdfWriter(pdfOut);  PdfDocument pdfDoc = new PdfDocument(reader, writer)) {
                 PdfAcroForm form = getAcroForm(pdfDoc, true);
                 form.setGenerateAppearance(true);
-                Map<String, PdfFormField> fields = form.getFormFields();
+                Map<String, PdfFormField> fields = form.getAllFormFields();
                 setFieldsValue(form, fields, "privacy0", "On");
 
                 try {
@@ -188,7 +188,7 @@ public class Pdf_new {
 
                 PdfAcroForm form = getAcroForm(pdfDoc, true);
                 form.setGenerateAppearance(true);
-                Map<String, PdfFormField> fields = form.getFormFields();
+                Map<String, PdfFormField> fields = form.getAllFormFields();
                 fields.get("privacy0").setValue("On");
                 try {
                     String comunecciaa = listavalori.stream().filter(re -> (re.getCampo().equals("comunecciaa"))).findAny().get().getValore().toUpperCase();
@@ -277,7 +277,7 @@ public class Pdf_new {
 
                 PdfAcroForm form = getAcroForm(pdfDoc, true);
                 form.setGenerateAppearance(true);
-                Map<String, PdfFormField> fields = form.getFormFields();
+                Map<String, PdfFormField> fields = form.getAllFormFields();
 
                 if (fields.get("iddoc") != null) {
                     fields.get("iddoc").setValue(iddocente);
@@ -352,7 +352,7 @@ public class Pdf_new {
             try ( InputStream is = new ByteArrayInputStream(decodeBase64(contentb64));  PdfReader reader = new PdfReader(is);  PdfWriter writer = new PdfWriter(pdfOut);  PdfDocument pdfDoc = new PdfDocument(reader, writer)) {
                 PdfAcroForm form = getAcroForm(pdfDoc, true);
                 form.setGenerateAppearance(true);
-                Map<String, PdfFormField> fields = form.getFormFields();
+                Map<String, PdfFormField> fields = form.getAllFormFields();
                 fields.forEach((K, V) -> {
                     UserValoriReg va  = listavalori.stream().filter(re -> re.getCampo().equals(K)).findAny().orElse(null);
                     if (va  != null) {
@@ -426,7 +426,7 @@ public class Pdf_new {
             try ( InputStream is = new ByteArrayInputStream(decodeBase64(contentb64));  PdfReader reader = new PdfReader(is);  PdfWriter writer = new PdfWriter(pdfOut);  PdfDocument pdfDoc = new PdfDocument(reader, writer)) {
                 PdfAcroForm form = getAcroForm(pdfDoc, true);
                 form.setGenerateAppearance(true);
-                Map<String, PdfFormField> fields = form.getFormFields();
+                Map<String, PdfFormField> fields = form.getAllFormFields();
 
                 Class<? extends Object> c = allegato_c2.getClass();
                 Field[] campi = c.getDeclaredFields();
@@ -512,7 +512,7 @@ public class Pdf_new {
     public static File nullaosta(String username, String protocollo, String nomesa, DateTime dataconsegna) {
         try {
             Db_Bando dbb = new Db_Bando();
-            String contentb64 = dbb.getPathDocModello(bando + "_A", "NUOS");
+            String contentb64 = dbb.getPathDocModello(bando + "_B", "NUOS");
             String pathtemp = dbb.getPath("pathtemp");
             dbb.closeDB();
             createDir(pathtemp);
@@ -521,7 +521,7 @@ public class Pdf_new {
             try ( PdfReader reader = new PdfReader(is);  PdfWriter writer = new PdfWriter(pdfOut);  PdfDocument pdfDoc = new PdfDocument(reader, writer)) {
                 PdfAcroForm form = getAcroForm(pdfDoc, true);
                 form.setGenerateAppearance(true);
-                Map<String, PdfFormField> fields = form.getFormFields();
+                Map<String, PdfFormField> fields = form.getAllFormFields();
                 //STATICI
 //                fields.get("sa").setValue("ENTE NAZIONALE MICROCREDITO");
 //                fields.get("dir_enm").setValue("SEG. GENERALE RICCARDO GRAZIANO");
@@ -884,44 +884,41 @@ public class Pdf_new {
 
     public static String verificaPDFA(String codicedoc, String username, byte[] content) {
         String out = "KO";
-        if (codicedoc.equals("DONLA")
-                || codicedoc.equals("DONLB")
-                || codicedoc.equals("CONV")
-                || codicedoc.equals("MOD2")) {
-            try {
-                setProperty("sun.java2d.cmm", "sun.java2d.cmm.kcms.KcmsServiceProvider");
-                if (content != null) {
-                    try ( InputStream is1 = new ByteArrayInputStream(content);  PDDocument doc = load(is1)) {
-                        PDDocumentInformation info = doc.getDocumentInformation();
-
-                        if (info.getSubject() != null) {
-                            if (info.getSubject().equals("PDF/A")) {
-                                out = "OK";
-                            } else {
-                                out = "ERRORE NEL FILE - NO PDF/A";
-                            }
-                        } else {
-                            out = "ERRORE NEL FILE - NO PDF/A";
-                        }
-                    }
-                }
-            } catch (Exception e) {
-                out = "ERRORE NEL FILE - " + e.getMessage();
-                trackingAction("ERROR SYSTEM", estraiEccezione(e));
-            }
-        } else { // non richiesto
+//        if (codicedoc.equals("DONLA")
+//                || codicedoc.equals("DONLB")
+//                || codicedoc.equals("CONV")
+//                ) {
+//            try {
+//                setProperty("sun.java2d.cmm", "sun.java2d.cmm.kcms.KcmsServiceProvider");
+//                if (content != null) {
+//                    try ( InputStream is1 = new ByteArrayInputStream(content);  PDDocument doc = load(is1)) {
+//                        PDDocumentInformation info = doc.getDocumentInformation();
+//
+//                        if (info.getSubject() != null) {
+//                            if (info.getSubject().equals("PDF/A")) {
+//                                out = "OK";
+//                            } else {
+//                                out = "ERRORE NEL FILE - NO PDF/A";
+//                            }
+//                        } else {
+//                            out = "ERRORE NEL FILE - NO PDF/A";
+//                        }
+//                    }
+//                }
+//            } catch (Exception e) {
+//                out = "ERRORE NEL FILE - " + e.getMessage();
+//                trackingAction("ERROR SYSTEM", estraiEccezione(e));
+//            }
+//        } else { // non richiesto
             out = "OK";
-        }
+//        }
         return out;
     }
 
     public static String verificaQRNOPDFA(String codicedoc, String username, byte[] content) {
         String out = "KO";
         if (codicedoc.equals("DONLA")
-                || codicedoc.equals("DONLB")
-                || codicedoc.equals("CONV")
-                || codicedoc.equals("MOD1")
-                || codicedoc.equals("MOD2")) {
+                || codicedoc.equals("DONLB")) {
             try {
                 setProperty("sun.java2d.cmm", "sun.java2d.cmm.kcms.KcmsServiceProvider");
                 if (content != null) {
@@ -1008,10 +1005,7 @@ public class Pdf_new {
             return pdfa;
         } else {
             String out = "KO";
-            if (codicedoc.equals("DONLA") || codicedoc.equals("DONLB")
-                    || codicedoc.equals("CONV")
-                    || codicedoc.equals("MOD1")
-                    || codicedoc.equals("MOD2")) {
+            if (codicedoc.equals("DONLA") || codicedoc.equals("DONLB")) {
                 try {
                     setProperty("sun.java2d.cmm", "sun.java2d.cmm.kcms.KcmsServiceProvider");
                     if (content != null) {
