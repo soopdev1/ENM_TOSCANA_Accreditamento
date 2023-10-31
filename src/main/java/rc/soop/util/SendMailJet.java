@@ -30,10 +30,21 @@ import rc.soop.entity.FileDownload;
 import static rc.soop.util.Utility.estraiEccezione;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import static java.nio.file.Files.probeContentType;
 import java.util.List;
+import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.zip.Deflater;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
+import okhttp3.OkHttpClient;
+import org.apache.commons.codec.binary.Base64;
 import static org.apache.commons.codec.binary.Base64.encodeBase64;
+import org.apache.commons.io.FileUtils;
 import static org.apache.commons.io.IOUtils.toByteArray;
 import org.joda.time.DateTime;
 import org.json.JSONArray;
@@ -49,7 +60,7 @@ public class SendMailJet {
         return sendMail(name, to, cc, txt, subject, null);
     }
 
-    public static boolean sendMailListAttach(String name, String[] to, String[] cc, String txt, String subject, List<FileDownload> listfile) {
+    public static boolean sendMailListAttach(String name, String[] to, String[] cc, String txt, String subject, List<FileDownload> listfile, String username) {
 
         try {
             MailjetClient client;
@@ -60,6 +71,8 @@ public class SendMailJet {
             String mailjet_api = dbb.getPath("mailjet_api");
             String mailjet_secret = dbb.getPath("mailjet_secret");
             String mailjet_name = dbb.getPath("mailjet_name");
+            String pathtemp = dbb.getPath("pathtemp");
+
             dbb.closeDB();
 
             ClientOptions options = builder()
@@ -68,7 +81,6 @@ public class SendMailJet {
                     .build();
 
             client = new MailjetClient(options);
-
             JSONArray dest = new JSONArray();
             JSONArray ccn = new JSONArray();
             JSONArray ccj = new JSONArray();
@@ -101,19 +113,47 @@ public class SendMailJet {
                 JSONArray contentfiles = new JSONArray();
 
                 try {
-                    listfile.forEach(fileingresso -> {
-                        JSONObject content = new JSONObject()
-                                .put("ContentType", fileingresso.getMimeType())
-                                .put("Filename", fileingresso.getName())
-                                .put("Base64Content", fileingresso.getContent());
-                        contentfiles.put(content);
-                    });
+                    File zipped = new File(pathtemp + username + "_" + UUID.randomUUID() + ".zip");
+                    try (FileOutputStream fos = new FileOutputStream(zipped); ZipOutputStream zipOut = new ZipOutputStream(fos)) {
+                        zipOut.setLevel(Deflater.BEST_COMPRESSION);
+                        for (FileDownload cf1 : listfile) {
+                            File fileToZip = new File(pathtemp + cf1.getName());
+                            FileUtils.writeByteArrayToFile(fileToZip, Base64.decodeBase64(cf1.getContent()));
+                            try (FileInputStream fis = new FileInputStream(fileToZip)) {
+                                ZipEntry zipEntry = new ZipEntry(fileToZip.getName());
+                                zipOut.putNextEntry(zipEntry);
+                                byte[] bytes = new byte[4096 * 4096];
+                                int length;
+                                while ((length = fis.read(bytes)) >= 0) {
+                                    zipOut.write(bytes, 0, length);
+                                }
+                            }
+                        }
 
+                    }
+
+                    if (zipped.canRead() && zipped.length() > 0) {
+                        JSONObject content = new JSONObject()
+                                .put("ContentType", "application/zip")
+                                .put("Filename", zipped.getName())
+                                .put("Base64Content", Base64.encodeBase64(FileUtils.readFileToByteArray(zipped)));
+                        contentfiles.put(content);
+                    }
+
+//                    listfile.forEach(fileingresso -> {
+//                        JSONObject content = new JSONObject()
+//                                .put("ContentType", fileingresso.getMimeType())
+//                                .put("Filename", fileingresso.getName())
+//                                .put("Base64Content", fileingresso.getContent());
+//                        contentfiles.put(content);
+//                    });
                     if (!contentfiles.isEmpty()) {
                         mail.put(ATTACHMENTS, contentfiles);
                     }
                 } catch (Exception e) {
+                    e.printStackTrace();
                     trackingAction("ERROR SYSTEM", estraiEccezione(e));
+                    return false;
                 }
             }
 
@@ -131,6 +171,8 @@ public class SendMailJet {
 
             return ok;
         } catch (Exception ex) {
+            ex.printStackTrace();
+
             trackingAction("ERROR SYSTEM", estraiEccezione(ex));
         }
         return false;

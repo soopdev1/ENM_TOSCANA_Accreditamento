@@ -378,6 +378,7 @@ public class Pdf_new {
                 BarcodeQRCode barcode = new BarcodeQRCode(username + " / ALLEGATO C / " + dataconsegna.toString("ddMMyyyyHHmmSSS"));
                 printbarcode(barcode, pdfDoc);
             }
+            
             if (checkPDF(pdfOut)) {
                 return pdfOut;
             }
@@ -512,7 +513,7 @@ public class Pdf_new {
     public static File nullaosta(String username, String protocollo, String nomesa, DateTime dataconsegna) {
         try {
             Db_Bando dbb = new Db_Bando();
-            String contentb64 = dbb.getPathDocModello(bando + "_B", "NUOS");
+            String contentb64 = dbb.getPathDocModello(bando + "_A", "NUOS");
             String pathtemp = dbb.getPath("pathtemp");
             dbb.closeDB();
             createDir(pathtemp);
@@ -630,7 +631,7 @@ public class Pdf_new {
                     PDDocument docSource = load(in);
                     PDFRenderer pdfRenderer = new PDFRenderer(docSource);
                     for (int i = 0; i < numPageTOT; i++) {
-                        BufferedImage imagePage = pdfRenderer.renderImageWithDPI(i, 200);
+                        BufferedImage imagePage = pdfRenderer.renderImageWithDPI(i, 100);
                         PDImageXObject pdfXOImage = createFromImage(doc, imagePage);
                         contents.drawImage(pdfXOImage, 0, 0, page.getMediaBox().getWidth(), page.getMediaBox().getHeight());
                     }

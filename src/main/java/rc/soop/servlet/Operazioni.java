@@ -589,7 +589,7 @@ public class Operazioni extends HttpServlet {
             boolean mailok = sendMailListAttach(
                     Constant.nomevisual, to, cc, text,
                     Constant.nomevisual + " - Invio convenzione da parte del Soggetto Attuatore: " + ragsoc,
-                    listafiledainviare);
+                    listafiledainviare, username);
 
             if (mailok) {
                 if (settaInvioEmailROMA(username)) {
