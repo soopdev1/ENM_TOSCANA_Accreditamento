@@ -4,28 +4,10 @@
  */
 package test;
 
-import static rc.soop.action.ActionB.preparefilefordownload;
-import static rc.soop.action.ActionB.preparefileforupload;
-import static rc.soop.action.Pdf_new.allegatoC;
-import static rc.soop.action.Pdf_new.extractSignatureInformation_P7M;
-import static rc.soop.action.Pdf_new.nullaosta;
-import rc.soop.db.Db_Bando;
-import rc.soop.entity.Docuserconvenzioni;
-import rc.soop.entity.FileDownload;
-import rc.soop.entity.SignedDoc;
 import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import static org.apache.commons.io.FileUtils.readFileToByteArray;
-import static org.apache.commons.io.FilenameUtils.getExtension;
-import org.joda.time.DateTime;
+import static org.apache.commons.lang3.StringUtils.substring;
+import rc.soop.db.Db_Bando;
 import rc.soop.action.ActionB;
-import rc.soop.action.Constant;
-import static rc.soop.util.SendMailJet.sendMailListAttach;
-import static rc.soop.util.Utility.getRequestValue;
 
 /**
  *
@@ -34,33 +16,49 @@ import static rc.soop.util.Utility.getRequestValue;
 public class NewFile {
 
     public static void main(String[] args) {
-        
+
         try {
-            
+
+            String dir = "C:\\Users\\Administrator\\Desktop\\da caricare\\";
+//
+            File[] listdir = new File(dir).listFiles((File dir1, String name) -> name.toLowerCase().endsWith(".p7m"));
+            Db_Bando db1 = new Db_Bando();
+            for (File f1 : listdir) {
+                String username = substring(f1.getName(), 0, 10);
+                if (username.startsWith("ALARI72772")) {
+                    username = substring(f1.getName(), 0, 9);
+                }
+                String update = "UPDATE docuserconvenzioni SET path = '"+ActionB.preparefileforupload(f1)+"' WHERE codicedoc='CONV' AND username='" + username + "'";
+
+                boolean up1 = db1.getConnection().createStatement().executeUpdate(update) > 0;
+
+                System.out.println(username + ": " + up1);
+            }
+            db1.closeDB();
+
+//            preparefileforupload();
 //            String username= "ADIBEN0622";
-            
-            List<String> userslist = new ArrayList<>();
-            
-            userslist.add("ADIBEN0622");
-            userslist.add("ALARI7277");
-            userslist.add("AMANUN8385");
-            userslist.add("BCULLA0838");
-            userslist.add("CTRIAR5660");
-            userslist.add("DBONFI3376");
-            userslist.add("DLAPIC1505");
-            userslist.add("ECARUL7877");
-            userslist.add("MTRIEL1081");
+//            List<String> userslist = new ArrayList<>();
+//            
+//            userslist.add("ADIBEN0622");
+//            userslist.add("ALARI7277");
+//            userslist.add("AMANUN8385");
+//            userslist.add("BCULLA0838");
+//            userslist.add("CTRIAR5660");
+//            userslist.add("DBONFI3376");
+//            userslist.add("DLAPIC1505");
+//            userslist.add("ECARUL7877");
+//            userslist.add("MTRIEL1081");
 //             Db_Bando db = new Db_Bando();
 //            String protocollo = db.getProtocolloDomandaInviata(username).toUpperCase();
 //            String ragsoc = db.getRagioneSociale(username).toUpperCase();
 //            String text = db.getPath("mail.invioconvenzione.roma").replaceAll("@prot", protocollo).replaceAll("@ragsoc", ragsoc);
 //            db.closeDB();
-            
-for(String username:userslist){
-            System.out.println("test.NewFile.main() "+allegatoC(username).getPath());
-    
-}
-            
+//            
+//for(String username:userslist){
+//            System.out.println("test.NewFile.main() "+allegatoC(username).getPath());
+//    
+//}
 //            
 //            String to[] = {"raffaele.cosco@smartoop.it"};
 //            String cc[] = {"info@smartoop.it"};
@@ -68,11 +66,10 @@ for(String username:userslist){
 //            List<FileDownload> listafiledainviare = ActionB.lista_file_Convenzione(username, protocollo, ragsoc);
 //            
 //            boolean mailok = sendMailListAttach(
-//                    Constant.nomevisual, to, cc, text,
-//                    Constant.nomevisual + " - Invio convenzione da parte del Soggetto Attuatore: " + ragsoc,
+//                    nomevisual, to, cc, text,
+//                    nomevisual + " - Invio convenzione da parte del Soggetto Attuatore: " + ragsoc,
 //                    listafiledainviare,username);
 //            System.out.println("test.NewFile.main() "+mailok);
-            
 //            System.out.println(getExtension(new File("C:\\Users\\Administrator\\Desktop\\da caricare\\FMIGLI2000171020220947443.A_All.A.pdf.p7m").getName()));
 //            
 //            SignedDoc dc = extractSignatureInformation_P7M(readFileToByteArray(new File("C:\\Users\\Administrator\\Desktop\\da caricare\\FMIGLI2000171020220947443.A_All.A.pdf.p7m")));

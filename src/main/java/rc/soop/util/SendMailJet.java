@@ -9,6 +9,7 @@ package rc.soop.util;
  *
  * @author srotella
  */
+import static com.mailjet.client.Base64.encode;
 import com.mailjet.client.ClientOptions;
 import static com.mailjet.client.ClientOptions.builder;
 import com.mailjet.client.MailjetClient;
@@ -122,7 +123,7 @@ public class SendMailJet {
                             try (FileInputStream fis = new FileInputStream(fileToZip)) {
                                 ZipEntry zipEntry = new ZipEntry(fileToZip.getName());
                                 zipOut.putNextEntry(zipEntry);
-                                byte[] bytes = new byte[4096 * 4096];
+                                byte[] bytes = new byte[4096];
                                 int length;
                                 while ((length = fis.read(bytes)) >= 0) {
                                     zipOut.write(bytes, 0, length);
@@ -136,7 +137,9 @@ public class SendMailJet {
                         JSONObject content = new JSONObject()
                                 .put("ContentType", "application/zip")
                                 .put("Filename", zipped.getName())
-                                .put("Base64Content", Base64.encodeBase64(FileUtils.readFileToByteArray(zipped)));
+                                .put("Base64Content", 
+                                        encode(FileUtils.readFileToByteArray(zipped))
+                                                );
                         contentfiles.put(content);
                     }
 

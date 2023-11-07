@@ -64,8 +64,9 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 import static org.apache.commons.codec.binary.Base64.decodeBase64;
 import static org.apache.commons.lang3.StringUtils.replace;
+import org.apache.pdfbox.Loader;
+import static org.apache.pdfbox.Loader.loadPDF;
 import org.apache.pdfbox.pdmodel.PDDocument;
-import static org.apache.pdfbox.pdmodel.PDDocument.load;
 import org.apache.pdfbox.pdmodel.PDDocumentCatalog;
 import org.apache.pdfbox.pdmodel.PDDocumentInformation;
 import org.apache.pdfbox.pdmodel.PDPage;
@@ -616,9 +617,8 @@ public class Pdf_new {
         try {
             byte[] byteICC = decodeBase64(getPath("pdf.icc"));
             File pdfOutA = new File(replace(pdf_ing.getPath(), ".pdf", "_pdfA.pdf"));
-            FileInputStream in = new FileInputStream(pdf_ing);
             setProperty("sun.java2d.cmm", "sun.java2d.cmm.kcms.KcmsServiceProvider");
-            try ( PDDocument doc = load(pdf_ing)) {
+            try ( PDDocument doc = loadPDF(pdf_ing)) {
                 int numPageTOT = 0;
                 Iterator<PDPage> it1 = doc.getPages().iterator();
                 while (it1.hasNext()) {
@@ -628,7 +628,7 @@ public class Pdf_new {
                 PDPage page = new PDPage();
                 doc.setVersion(1.7f);
                 try ( PDPageContentStream contents = new PDPageContentStream(doc, page)) {
-                    PDDocument docSource = load(in);
+                    PDDocument docSource = loadPDF(pdf_ing);
                     PDFRenderer pdfRenderer = new PDFRenderer(docSource);
                     for (int i = 0; i < numPageTOT; i++) {
                         BufferedImage imagePage = pdfRenderer.renderImageWithDPI(i, 100);
@@ -643,7 +643,7 @@ public class Pdf_new {
                     DublinCoreSchema dc = xmp.createAndAddDublinCoreSchema();
                     dc.addCreator("YISU");
                     dc.addDate(cal);
-                    PDFAIdentificationSchema id = xmp.createAndAddPFAIdentificationSchema();
+                    PDFAIdentificationSchema id = xmp.createAndAddPDFAIdentificationSchema();
                     id.setPart(3);  //value => 2|3
                     id.setConformance("A"); // value => A|B|U
                     XmpSerializer serializer = new XmpSerializer();
@@ -884,36 +884,36 @@ public class Pdf_new {
     }
 
     public static String verificaPDFA(String codicedoc, String username, byte[] content) {
-        String out = "KO";
-//        if (codicedoc.equals("DONLA")
-//                || codicedoc.equals("DONLB")
-//                || codicedoc.equals("CONV")
-//                ) {
-//            try {
-//                setProperty("sun.java2d.cmm", "sun.java2d.cmm.kcms.KcmsServiceProvider");
-//                if (content != null) {
-//                    try ( InputStream is1 = new ByteArrayInputStream(content);  PDDocument doc = load(is1)) {
-//                        PDDocumentInformation info = doc.getDocumentInformation();
-//
-//                        if (info.getSubject() != null) {
-//                            if (info.getSubject().equals("PDF/A")) {
-//                                out = "OK";
-//                            } else {
-//                                out = "ERRORE NEL FILE - NO PDF/A";
-//                            }
-//                        } else {
-//                            out = "ERRORE NEL FILE - NO PDF/A";
-//                        }
-//                    }
-//                }
-//            } catch (Exception e) {
-//                out = "ERRORE NEL FILE - " + e.getMessage();
-//                trackingAction("ERROR SYSTEM", estraiEccezione(e));
-//            }
-//        } else { // non richiesto
-            out = "OK";
+//        String out = "KO";
+////        if (codicedoc.equals("DONLA")
+////                || codicedoc.equals("DONLB")
+////                || codicedoc.equals("CONV")
+////                ) {
+////            try {
+////                setProperty("sun.java2d.cmm", "sun.java2d.cmm.kcms.KcmsServiceProvider");
+////                if (content != null) {
+////                    try ( InputStream is1 = new ByteArrayInputStream(content);  PDDocument doc = load(is1)) {
+////                        PDDocumentInformation info = doc.getDocumentInformation();
+////
+////                        if (info.getSubject() != null) {
+////                            if (info.getSubject().equals("PDF/A")) {
+////                                out = "OK";
+////                            } else {
+////                                out = "ERRORE NEL FILE - NO PDF/A";
+////                            }
+////                        } else {
+////                            out = "ERRORE NEL FILE - NO PDF/A";
+////                        }
+////                    }
+////                }
+////            } catch (Exception e) {
+////                out = "ERRORE NEL FILE - " + e.getMessage();
+////                trackingAction("ERROR SYSTEM", estraiEccezione(e));
+////            }
+////        } else { // non richiesto
+//            out = "OK";
 //        }
-        return out;
+        return "OK";
     }
 
     public static String verificaQRNOPDFA(String codicedoc, String username, byte[] content) {
@@ -923,7 +923,7 @@ public class Pdf_new {
             try {
                 setProperty("sun.java2d.cmm", "sun.java2d.cmm.kcms.KcmsServiceProvider");
                 if (content != null) {
-                    try ( InputStream is1 = new ByteArrayInputStream(content);  PDDocument doc = load(is1)) {
+                    try (PDDocument doc = loadPDF(content)) {
                         PDPage page = doc.getPage(0);
                         page.setCropBox(new PDRectangle(20, 0, 50, 50));
                         PDFRenderer pr = new PDFRenderer(doc);
@@ -1010,7 +1010,7 @@ public class Pdf_new {
                 try {
                     setProperty("sun.java2d.cmm", "sun.java2d.cmm.kcms.KcmsServiceProvider");
                     if (content != null) {
-                        try ( InputStream is1 = new ByteArrayInputStream(content);  PDDocument doc = load(is1)) {
+                        try (PDDocument doc = loadPDF(content)) {
                             PDPage page = doc.getPage(0);
                             page.setCropBox(new PDRectangle(20, 0, 50, 50));
                             PDFRenderer pr = new PDFRenderer(doc);
