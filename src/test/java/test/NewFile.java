@@ -24,14 +24,11 @@ public class NewFile {
             File[] listdir = new File(dir).listFiles((File dir1, String name) -> name.toLowerCase().endsWith(".p7m"));
             Db_Bando db1 = new Db_Bando();
             for (File f1 : listdir) {
-                String username = substring(f1.getName(), 0, 10);
-                if (username.startsWith("ALARI72772")) {
-                    username = substring(f1.getName(), 0, 9);
-                }
-                String update = "UPDATE docuserconvenzioni SET path = '"+ActionB.preparefileforupload(f1)+"' WHERE codicedoc='CONV' AND username='" + username + "'";
+                String username = substring(f1.getName(), f1.getName().lastIndexOf(".") - 10, f1.getName().lastIndexOf("."));
+                String update = "UPDATE convenzioniroma SET path = '" + ActionB.preparefileforupload(f1) + "' WHERE username='" + username + "'";
+//                String update = "UPDATE docuserconvenzioni SET path = '"+ActionB.preparefileforupload(f1)+"' WHERE codicedoc='CONV' AND username='" + username + "'";
 
                 boolean up1 = db1.getConnection().createStatement().executeUpdate(update) > 0;
-
                 System.out.println(username + ": " + up1);
             }
             db1.closeDB();
