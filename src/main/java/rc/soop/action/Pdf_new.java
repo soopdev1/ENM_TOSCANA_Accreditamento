@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package rc.soop.action;
 
 import com.google.zxing.BinaryBitmap;
@@ -64,7 +59,6 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 import static org.apache.commons.codec.binary.Base64.decodeBase64;
 import static org.apache.commons.lang3.StringUtils.replace;
-import org.apache.pdfbox.Loader;
 import static org.apache.pdfbox.Loader.loadPDF;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDDocumentCatalog;
