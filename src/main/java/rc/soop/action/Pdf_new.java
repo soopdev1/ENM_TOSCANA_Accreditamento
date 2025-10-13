@@ -105,7 +105,7 @@ public class Pdf_new {
             createDir(pathtemp);
 
             File pdfOut = new File(pathtemp + username + dataconsegna.toString("ddMMyyyyHHmmSSS") + ".A.pdf");
-            try ( InputStream is = new ByteArrayInputStream(decodeBase64(contentb64));  PdfReader reader = new PdfReader(is);  PdfWriter writer = new PdfWriter(pdfOut);  PdfDocument pdfDoc = new PdfDocument(reader, writer)) {
+            try (InputStream is = new ByteArrayInputStream(decodeBase64(contentb64)); PdfReader reader = new PdfReader(is); PdfWriter writer = new PdfWriter(pdfOut); PdfDocument pdfDoc = new PdfDocument(reader, writer)) {
                 PdfAcroForm form = getAcroForm(pdfDoc, true);
                 form.setGenerateAppearance(true);
                 Map<String, PdfFormField> fields = form.getAllFormFields();
@@ -179,7 +179,7 @@ public class Pdf_new {
             createDir(pathtemp);
             File pdfOut = new File(pathtemp + username + dataconsegna.toString("ddMMyyyyHHmmSSS") + ".B.pdf");
 
-            try ( InputStream is = new ByteArrayInputStream(decodeBase64(contentb64));  PdfReader reader = new PdfReader(is);  PdfWriter writer = new PdfWriter(pdfOut);  PdfDocument pdfDoc = new PdfDocument(reader, writer)) {
+            try (InputStream is = new ByteArrayInputStream(decodeBase64(contentb64)); PdfReader reader = new PdfReader(is); PdfWriter writer = new PdfWriter(pdfOut); PdfDocument pdfDoc = new PdfDocument(reader, writer)) {
 
                 PdfAcroForm form = getAcroForm(pdfDoc, true);
                 form.setGenerateAppearance(true);
@@ -268,7 +268,7 @@ public class Pdf_new {
             dbb.closeDB();
             createDir(pathtemp);
             File pdfOut = new File(pathtemp + username + dataconsegna.toString("ddMMyyyyHHmmSSS") + ".B1.pdf");
-            try ( InputStream is = new ByteArrayInputStream(decodeBase64(contentb64));  PdfReader reader = new PdfReader(is);  PdfWriter writer = new PdfWriter(pdfOut);  PdfDocument pdfDoc = new PdfDocument(reader, writer);) {
+            try (InputStream is = new ByteArrayInputStream(decodeBase64(contentb64)); PdfReader reader = new PdfReader(is); PdfWriter writer = new PdfWriter(pdfOut); PdfDocument pdfDoc = new PdfDocument(reader, writer);) {
 
                 PdfAcroForm form = getAcroForm(pdfDoc, true);
                 form.setGenerateAppearance(true);
@@ -344,7 +344,7 @@ public class Pdf_new {
 
             createDir(pathtemp);
             File pdfOut = new File(pathtemp + username + dataconsegna.toString("ddMMyyyyHHmmSSS") + ".C.pdf");
-            try ( InputStream is = new ByteArrayInputStream(decodeBase64(contentb64));  PdfReader reader = new PdfReader(is);  PdfWriter writer = new PdfWriter(pdfOut);  PdfDocument pdfDoc = new PdfDocument(reader, writer)) {
+            try (InputStream is = new ByteArrayInputStream(decodeBase64(contentb64)); PdfReader reader = new PdfReader(is); PdfWriter writer = new PdfWriter(pdfOut); PdfDocument pdfDoc = new PdfDocument(reader, writer)) {
                 PdfAcroForm form = getAcroForm(pdfDoc, true);
                 form.setGenerateAppearance(true);
                 Map<String, PdfFormField> fields = form.getAllFormFields();
@@ -373,7 +373,7 @@ public class Pdf_new {
                 BarcodeQRCode barcode = new BarcodeQRCode(username + " / ALLEGATO C / " + dataconsegna.toString("ddMMyyyyHHmmSSS"));
                 printbarcode(barcode, pdfDoc);
             }
-            
+
             if (checkPDF(pdfOut)) {
                 return pdfOut;
             }
@@ -393,7 +393,7 @@ public class Pdf_new {
             dbb.closeDB();
             createDir(pathtemp);
             File pdfOut = new File(pathtemp + username + dataconsegna.toString("ddMMyyyyHHmmSSS") + ".A.pdf");
-            try ( InputStream is = new ByteArrayInputStream(decodeBase64(contentb64));  PdfReader reader = new PdfReader(is);  PdfWriter writer = new PdfWriter(pdfOut);  PdfDocument pdfDoc = new PdfDocument(reader, writer)) {
+            try (InputStream is = new ByteArrayInputStream(decodeBase64(contentb64)); PdfReader reader = new PdfReader(is); PdfWriter writer = new PdfWriter(pdfOut); PdfDocument pdfDoc = new PdfDocument(reader, writer)) {
                 BarcodeQRCode barcode = new BarcodeQRCode(username + " / ALLEGATO 1 / " + dataconsegna.toString("ddMMyyyyHHmmSSS"));
                 printbarcode(barcode, pdfDoc);
             }
@@ -419,7 +419,7 @@ public class Pdf_new {
 
             createDir(pathtemp);
             File pdfOut = new File(pathtemp + username + dataconsegna.toString("ddMMyyyyHHmmSSS") + ".C2.pdf");
-            try ( InputStream is = new ByteArrayInputStream(decodeBase64(contentb64));  PdfReader reader = new PdfReader(is);  PdfWriter writer = new PdfWriter(pdfOut);  PdfDocument pdfDoc = new PdfDocument(reader, writer)) {
+            try (InputStream is = new ByteArrayInputStream(decodeBase64(contentb64)); PdfReader reader = new PdfReader(is); PdfWriter writer = new PdfWriter(pdfOut); PdfDocument pdfDoc = new PdfDocument(reader, writer)) {
                 PdfAcroForm form = getAcroForm(pdfDoc, true);
                 form.setGenerateAppearance(true);
                 Map<String, PdfFormField> fields = form.getAllFormFields();
@@ -514,7 +514,7 @@ public class Pdf_new {
             createDir(pathtemp);
             File pdfOut = new File(pathtemp + username + dataconsegna.toString("ddMMyyyyHHmmSSS") + ".NO.pdf");
             InputStream is = new ByteArrayInputStream(decodeBase64(contentb64));
-            try ( PdfReader reader = new PdfReader(is);  PdfWriter writer = new PdfWriter(pdfOut);  PdfDocument pdfDoc = new PdfDocument(reader, writer)) {
+            try (PdfReader reader = new PdfReader(is); PdfWriter writer = new PdfWriter(pdfOut); PdfDocument pdfDoc = new PdfDocument(reader, writer)) {
                 PdfAcroForm form = getAcroForm(pdfDoc, true);
                 form.setGenerateAppearance(true);
                 Map<String, PdfFormField> fields = form.getAllFormFields();
@@ -571,7 +571,7 @@ public class Pdf_new {
     }
 
     //FIRMA CON OTP
-////    private static File sign_otp(File f1, String username) {
+    ////    private static File sign_otp(File f1, String username) {
 ////        try {
 ////            Db_Bando dbb = new Db_Bando();
 ////            String nomecogn = dbb.nome_cognome_user(username);
@@ -612,7 +612,7 @@ public class Pdf_new {
             byte[] byteICC = decodeBase64(getPath("pdf.icc"));
             File pdfOutA = new File(replace(pdf_ing.getPath(), ".pdf", "_pdfA.pdf"));
             setProperty("sun.java2d.cmm", "sun.java2d.cmm.kcms.KcmsServiceProvider");
-            try ( PDDocument doc = loadPDF(pdf_ing)) {
+            try (PDDocument doc = loadPDF(pdf_ing)) {
                 int numPageTOT = 0;
                 Iterator<PDPage> it1 = doc.getPages().iterator();
                 while (it1.hasNext()) {
@@ -621,7 +621,7 @@ public class Pdf_new {
                 }
                 PDPage page = new PDPage();
                 doc.setVersion(1.7f);
-                try ( PDPageContentStream contents = new PDPageContentStream(doc, page)) {
+                try (PDPageContentStream contents = new PDPageContentStream(doc, page)) {
                     PDDocument docSource = loadPDF(pdf_ing);
                     PDFRenderer pdfRenderer = new PDFRenderer(docSource);
                     for (int i = 0; i < numPageTOT; i++) {
@@ -682,7 +682,7 @@ public class Pdf_new {
         return null;
     }
 
-////    public static File allegatoA_firmaotp(String username) {
+    ////    public static File allegatoA_firmaotp(String username) {
 ////        File out1 = allegatoA(username, new DateTime(), false);
 ////        if (out1 != null) {
 ////            File out2 = sign_otp(out1, username);
@@ -775,9 +775,19 @@ public class Pdf_new {
         try {
             cms = new CMSSignedData(p7m_bytes);
         } catch (CMSException e) {
-            doc.setErrore("ERRORE NEL FILE - " + e.getMessage());
-            return doc;
+//            e.printStackTrace();
+            cms = null;
         }
+        if (cms == null) {
+            try {
+                cms = new CMSSignedData(org.bouncycastle.util.encoders.Base64.decode(p7m_bytes));
+            } catch (CMSException e) {
+//                e.printStackTrace();
+                doc.setErrore("ERRORE NEL FILE - " + e.getMessage());
+                return doc;
+            }
+        }
+
         if (cms.getSignedContent() == null) {
             doc.setErrore("ERRORE NEL FILE - CONTENUTO ERRATO");
             return doc;
@@ -788,13 +798,14 @@ public class Pdf_new {
             if (!allCerts.isEmpty()) {
                 X509CertificateHolder x509h = allCerts.iterator().next();
                 CertificateFactory certFactory = getInstance("X.509");
-                try ( InputStream in = new ByteArrayInputStream(x509h.getEncoded())) {
+                try (InputStream in = new ByteArrayInputStream(x509h.getEncoded())) {
                     X509Certificate cert = (X509Certificate) certFactory.generateCertificate(in);
                     Principal principal = cert.getSubjectDN();
                     try {
                         cert.checkValidity();
                         doc.setValido(true);
                     } catch (Exception e) {
+                        e.printStackTrace();
                         doc.setValido(false);
                         doc.setErrore(e.getMessage());
                     }
@@ -813,6 +824,8 @@ public class Pdf_new {
                 return doc;
             }
         } catch (CertificateException | IOException ex) {
+            ex.printStackTrace();
+
             doc.setValido(false);
             doc.setErrore("ERRORE NEL FILE - " + ex.getMessage());
         }
@@ -824,7 +837,7 @@ public class Pdf_new {
         try {
             BouncyCastleProvider provider = new BouncyCastleProvider();
             addProvider(provider);
-            try ( InputStream is = new ByteArrayInputStream(pdf_bytes);  PdfReader read = new PdfReader(is);  PdfDocument pdfDoc = new PdfDocument(read, new PdfWriter(out))) {
+            try (InputStream is = new ByteArrayInputStream(pdf_bytes); PdfReader read = new PdfReader(is); PdfDocument pdfDoc = new PdfDocument(read, new PdfWriter(out))) {
                 AtomicInteger error = new AtomicInteger(0);
                 SignatureUtil signatureUtil = new SignatureUtil(pdfDoc);
                 List<String> li = signatureUtil.getSignatureNames();
@@ -879,7 +892,7 @@ public class Pdf_new {
 
     public static String verificaPDFA(String codicedoc, String username, byte[] content) {
 //        String out = "KO";
-////        if (codicedoc.equals("DONLA")
+        ////        if (codicedoc.equals("DONLA")
 ////                || codicedoc.equals("DONLB")
 ////                || codicedoc.equals("CONV")
 ////                ) {
@@ -1084,7 +1097,7 @@ public class Pdf_new {
         if (pdffile.exists()) {
             try {
                 int pag;
-                try ( InputStream is = new FileInputStream(pdffile);  PdfReader pdfReader = new PdfReader(is);  PdfDocument pd = new PdfDocument(pdfReader)) {
+                try (InputStream is = new FileInputStream(pdffile); PdfReader pdfReader = new PdfReader(is); PdfDocument pd = new PdfDocument(pdfReader)) {
                     pag = pd.getNumberOfPages();
                 }
                 return pag > 0;
