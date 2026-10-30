@@ -8,6 +8,7 @@ import java.io.File;
 import static org.apache.commons.lang3.StringUtils.substring;
 import rc.soop.db.Db_Bando;
 import rc.soop.action.ActionB;
+import static rc.soop.otp.OTP.generaOTP;
 
 /**
  *
@@ -17,21 +18,25 @@ public class NewFile {
 
     public static void main(String[] args) {
 
+        
+        String esitoOTP = generaOTP("BAT1", "3286137172", "ACECCH8999");
+        System.out.println("test.NewFile.main() "+esitoOTP);
+        
         try {
 
-            String dir = "C:\\Users\\Administrator\\Desktop\\da caricare\\";
+//            String dir = "C:\\Users\\Administrator\\Desktop\\da caricare\\";
+////
+//            File[] listdir = new File(dir).listFiles((File dir1, String name) -> name.toLowerCase().endsWith(".p7m"));
+//            Db_Bando db1 = new Db_Bando();
+//            for (File f1 : listdir) {
+//                String username = substring(f1.getName(), f1.getName().lastIndexOf(".") - 10, f1.getName().lastIndexOf("."));
+//                String update = "UPDATE convenzioniroma SET path = '" + ActionB.preparefileforupload(f1) + "' WHERE username='" + username + "'";
+////                String update = "UPDATE docuserconvenzioni SET path = '"+ActionB.preparefileforupload(f1)+"' WHERE codicedoc='CONV' AND username='" + username + "'";
 //
-            File[] listdir = new File(dir).listFiles((File dir1, String name) -> name.toLowerCase().endsWith(".p7m"));
-            Db_Bando db1 = new Db_Bando();
-            for (File f1 : listdir) {
-                String username = substring(f1.getName(), f1.getName().lastIndexOf(".") - 10, f1.getName().lastIndexOf("."));
-                String update = "UPDATE convenzioniroma SET path = '" + ActionB.preparefileforupload(f1) + "' WHERE username='" + username + "'";
-//                String update = "UPDATE docuserconvenzioni SET path = '"+ActionB.preparefileforupload(f1)+"' WHERE codicedoc='CONV' AND username='" + username + "'";
-
-                boolean up1 = db1.getConnection().createStatement().executeUpdate(update) > 0;
-                System.out.println(username + ": " + up1);
-            }
-            db1.closeDB();
+//                boolean up1 = db1.getConnection().createStatement().executeUpdate(update) > 0;
+//                System.out.println(username + ": " + up1);
+//            }
+//            db1.closeDB();
 
 //            preparefileforupload();
 //            String username= "ADIBEN0622";
